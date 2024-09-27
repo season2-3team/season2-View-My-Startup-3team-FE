@@ -12,7 +12,7 @@
 
 .list li {
     display: grid;
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: 68px 213px 304px 153.75px 230.63px auto;
     align-items: center;
 
     height: 64px;

@@ -1,6 +1,7 @@
 .bar {
     display: grid;
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: 68px 213px 304px 153.75px 230.63px auto;
+    align-items: center;
 
     max-width: 1200px;
     height: 39px;

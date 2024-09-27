@@ -1,0 +1,31 @@
+.list {
+    max-width: 1200px;
+
+    margin: auto;
+    border-radius: 4px;
+    background-color: var(--secondary-black-300);
+}
+
+.list ul:not(:last-child) {
+    border-bottom: 1px solid var(--secondary-gray-300);
+}
+
+.list li {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    align-items: center;
+
+    height: 64px;
+    border-radius: 4px;
+
+    color: var(--secondary-gray-100);
+    background-color: var(--secondary-black-300);
+}
+
+.list p {
+    color: var(--secondary-gray-100);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.71px;
+    text-align: center;
+}

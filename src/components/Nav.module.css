@@ -1,0 +1,34 @@
+.nav {
+    border-bottom: 1px solid var(--secondary-black-100);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+
+    max-width: 1200px;
+
+    margin: auto;
+    gap: 40px;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.menu a {
+    color: var(--secondary-gray-200);
+    text-decoration: none;
+}
+
+.menu li {
+    text-decoration: none;
+    padding: 21px 17px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 17.9px;
+    text-align: center;
+}

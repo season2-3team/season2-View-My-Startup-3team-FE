@@ -1,0 +1,20 @@
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 264px;
+    height: 48px;
+
+    border: 1px solid var(--secondary-gray-200);
+    border-radius: 10px;
+
+    background-color: var(--secondary-black-400);
+}
+
+.menu span {
+    color: #D8D8D8;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.71px;
+}

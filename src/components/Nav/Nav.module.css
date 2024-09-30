@@ -6,17 +6,17 @@
     display: flex;
     align-items: center;
 
-    max-width: 1200px;
+    max-width: 75rem;
 
     margin: auto;
-    gap: 40px;
+    gap: 2.5rem;
 }
 
 .menu {
     display: flex;
     align-items: center;
 
-    gap: 10px;
+    gap: 0.625rem;
 }
 
 .menu a {
@@ -26,9 +26,9 @@
 
 .menu li {
     text-decoration: none;
-    padding: 21px 17px;
-    font-size: 15px;
+    padding: 1.313rem 1.062rem;
+    font-size: 0.937rem;
     font-weight: 600;
-    line-height: 17.9px;
+    line-height: 1.125rem;
     text-align: center;
 }

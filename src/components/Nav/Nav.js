@@ -1,5 +1,5 @@
 import styles from './Nav.module.css';
-import siteLogo from '../assets/img_logo_pc.svg';
+import siteLogo from '../../assets/img_logo_pc.svg';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 

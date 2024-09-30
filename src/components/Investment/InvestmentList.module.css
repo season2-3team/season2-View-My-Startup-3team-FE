@@ -1,0 +1,46 @@
+.table {
+    max-width: 75rem;
+    width: 100%;
+
+    margin: 0.625rem auto;
+    border-radius: 0.25rem;
+
+    overflow: hidden;
+}
+
+.table tr:hover {
+    background-color: var(--secondary-black-200);
+    /* 부드러운 전환 효과 추가 */
+    transition: background-color 0.3s ease;
+}
+
+.table th,
+.table td {
+    padding: 0.625rem;
+
+    font-size: 0.875rem;
+    line-height: 1.062rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.head {
+    border-bottom: 1rem solid var(--secondary-black-400);
+
+    background-color: var(--secondary-black-100);
+    color: white;
+    font-weight: 500;
+}
+
+.body {
+    background-color: var(--secondary-black-300);
+    font-weight: 400;
+}
+
+.tr {
+    height: 4rem;
+}
+
+.body tr:not(:last-child) {
+    border-bottom: 1px solid var(--secondary-gray-300);
+}

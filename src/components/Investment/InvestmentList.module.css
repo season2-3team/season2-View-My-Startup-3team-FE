@@ -1,8 +1,17 @@
 .table {
-    width: 75rem;
+    max-width: 75rem;
+    width: 100%;
+
     margin: 0.625rem auto;
     border-radius: 0.25rem;
+
     overflow: hidden;
+}
+
+.table tr:hover {
+    background-color: var(--secondary-black-200);
+    /* 부드러운 전환 효과 추가 */
+    transition: background-color 0.3s ease;
 }
 
 .table th,

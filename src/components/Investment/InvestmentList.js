@@ -99,7 +99,7 @@ export default function InvestmentList() {
         </thead>
         <tbody className={styles.body}>
           {data.map((item) => (
-            <tr key={item.id} className={styles.tr}>
+            <tr key={item.id}>
               <td>{item.rank}</td>
               <td>{item.name}</td>
               <td>{item.description}</td>

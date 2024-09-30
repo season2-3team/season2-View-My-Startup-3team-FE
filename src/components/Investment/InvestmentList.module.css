@@ -37,8 +37,12 @@
     font-weight: 400;
 }
 
-.tr {
+.body td {
     height: 4rem;
+}
+
+.body td:nth-child(2) {
+    font-weight: 500;
 }
 
 .body tr:not(:last-child) {

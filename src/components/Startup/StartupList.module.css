@@ -1,0 +1,49 @@
+.table {
+  width: 100%;
+
+  margin-top: 1.6rem;
+  border-radius: 0.25rem;
+
+  overflow: hidden;
+}
+
+.table tr:hover {
+  background-color: var(--secondary-black-200);
+  /* 부드러운 전환 효과 추가 */
+  transition: background-color 0.3s ease;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table thead {
+  border-bottom: 1.6rem solid var(--secondary-black-400);
+
+  background-color: var(--secondary-black-100);
+  color: white;
+  font-weight: 500;
+}
+
+.table tbody {
+  background-color: var(--secondary-black-300);
+  font-weight: 400;
+}
+
+.table tbody td {
+  height: 6.4rem;
+}
+
+.table tbody td:nth-child(2) {
+  font-weight: 500;
+}
+
+.table tbody tr:not(:last-child) {
+  border-bottom: 0.1rem solid var(--secondary-gray-300);
+}

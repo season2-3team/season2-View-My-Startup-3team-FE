@@ -2,11 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    max-width: 120rem;
-
-    margin: auto;
-    margin-top: 5rem;
 }
 
 .header h1 {

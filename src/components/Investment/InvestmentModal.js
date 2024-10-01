@@ -20,13 +20,13 @@ export default function InvestmentModal() {
     <div className={styles.overlay}>
       <div className={styles.container}>
         <form className={styles.form}>
-          <div className={styles.head}>
+          <div>
             <h1>기업에 투자하기</h1>
             <img src={X} alt="close btn" />
           </div>
           <div>
             {/* 임시 하드 코딩 */}
-            <h2>투자 기업 정보</h2>
+            <h1>투자 기업 정보</h1>
             <p>코드잇</p>
           </div>
           <div className={styles.group}>
@@ -55,35 +55,43 @@ export default function InvestmentModal() {
           </div>
           <div className={styles.group}>
             <label htmlFor="password">비밀번호</label>
-            <input
-              type={isPasswordVisible ? 'text' : 'password'}
-              id="password"
-              placeholder="비밀번호를 입력해 주세요"
-            />
-            <img
-              src={isPasswordVisible ? visibilityOff : visibilityOn}
-              alt={
-                isPasswordVisible ? 'visibility off btn' : 'visibility on btn'
-              }
-              onClick={togglePasswordVisibility}
-            />
+            <div className={styles.password}>
+              <input
+                type={isPasswordVisible ? 'text' : 'password'}
+                id="password"
+                placeholder="비밀번호를 입력해 주세요"
+              />
+              <img
+                src={isPasswordVisible ? visibilityOff : visibilityOn}
+                alt={
+                  isPasswordVisible ? 'visibility off btn' : 'visibility on btn'
+                }
+                onClick={togglePasswordVisibility}
+              />
+            </div>
           </div>
           <div className={styles.group}>
             <label htmlFor="checkPassword">비밀번호 확인</label>
-            <input
-              type={checkPasswordVisible ? 'text' : 'password'}
-              id="checkPassword"
-              placeholder="비밀번호를 다시 한 번 입력해 주세요"
-            />
-            <img
-              src={checkPasswordVisible ? visibilityOff : visibilityOn}
-              alt={
-                checkPasswordVisible
-                  ? 'visibility off btn'
-                  : 'visibility on btn'
-              }
-              onClick={toggleCheckPasswordVisibility}
-            />
+            <div className={styles.password}>
+              <input
+                type={checkPasswordVisible ? 'text' : 'password'}
+                id="checkPassword"
+                placeholder="비밀번호를 다시 한 번 입력해 주세요"
+              />
+              <img
+                src={checkPasswordVisible ? visibilityOff : visibilityOn}
+                alt={
+                  checkPasswordVisible
+                    ? 'visibility off btn'
+                    : 'visibility on btn'
+                }
+                onClick={toggleCheckPasswordVisibility}
+              />
+            </div>
+          </div>
+          <div>
+            <button>취소</button>
+            <button>투자하기</button>
           </div>
         </form>
       </div>

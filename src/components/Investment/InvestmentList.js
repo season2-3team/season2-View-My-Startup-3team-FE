@@ -87,7 +87,7 @@ export default function InvestmentList() {
   return (
     <div>
       <table className={styles.table}>
-        <thead className={styles.head}>
+        <thead>
           <tr>
             <th>순위</th>
             <th>기업 명</th>
@@ -97,7 +97,7 @@ export default function InvestmentList() {
             <th>실제 누적 투자 금액</th>
           </tr>
         </thead>
-        <tbody className={styles.body}>
+        <tbody>
           {data.map((item) => (
             <tr key={item.id}>
               <td>{item.rank}</td>

@@ -5,7 +5,7 @@ export default function App() {
   return (
     <>
       <Nav />
-      <div>
+      <div style={{ margin: '1.6rem' }}>
         <Outlet />
       </div>
     </>

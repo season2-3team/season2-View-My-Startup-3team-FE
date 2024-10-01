@@ -28,17 +28,17 @@ export default function StartupList() {
     return <div className='error-message'>{error}</div>;
   }
   return (
-    <div>
+    <div style={{ width: '100%', overflowX: 'auto' }}>
       <table className={styles.table}>
       <thead>
         <tr>
-          <th>순위</th>
-          <th>기업명</th>
-          <th>기업소개</th>
-          <th>카테고리</th>
-          <th>누적 투자 금액</th>
-          <th>매출액</th>
-          <th>고용 인원</th>
+          <th style={{ width: '6.8rem' }}>순위</th>
+          <th style={{ width: '21.3rem' }}>기업명</th>
+          <th style={{ width: '30.4rem' }}>기업소개</th>
+          <th style={{ width: '15.4rem' }}>카테고리</th>
+          <th style={{ width: '15.4rem' }}>누적 투자 금액</th>
+          <th style={{ width: '15.4rem' }}>매출액</th>
+          <th style={{ width: '15.4rem' }}>고용 인원</th>
         </tr>
       </thead>
       <tbody>
@@ -49,9 +49,22 @@ export default function StartupList() {
       ) : (
       startups.map((startup, index) => (
         <tr key={startup.id}>
-          <td>{index += 1 + (currentPage -1) * MAX_ITEMS}위</td>
-          <td>{startup.name}</td>
-          <td>{startup.description}</td>
+          <td>{index + 1 + (currentPage -1) * MAX_ITEMS}위</td>
+
+          <td style={{ textAlign: 'left' }}>
+            <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+              <img 
+              src={startup.image} 
+              alt={startup.name + ' 로고'} 
+              style={{ width: '3.2rem', height: '3.2rem', marginRight: '0.8rem', verticalAlign: 'middle' }} 
+              />
+            </span>
+            <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+              {startup.name}
+            </span>
+          </td>
+
+          <td className={styles.description}>{startup.description}</td>
           <td>{startup.categoryId}</td>
           <td>{startup.simInvest}</td>
           <td>{startup.revenue}</td>

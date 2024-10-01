@@ -1,8 +1,7 @@
 .table {
-    max-width: 120rem;
     width: 100%;
 
-    margin: 0.625rem auto;
+    margin-top: 1.6rem;
     border-radius: 0.25rem;
 
     overflow: hidden;
@@ -16,31 +15,35 @@
 
 .table th,
 .table td {
-    padding: 0.625rem;
+    padding: 1rem;
 
-    font-size: 0.875rem;
-    line-height: 1.062rem;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
     text-align: center;
     vertical-align: middle;
 }
 
-.head {
-    border-bottom: 1rem solid var(--secondary-black-400);
+.table thead {
+    border-bottom: 1.6rem solid var(--secondary-black-400);
 
     background-color: var(--secondary-black-100);
     color: white;
     font-weight: 500;
 }
 
-.body {
+.table tbody {
     background-color: var(--secondary-black-300);
     font-weight: 400;
 }
 
-.tr {
-    height: 4rem;
+.table tbody td {
+    height: 6.4rem;
 }
 
-.body tr:not(:last-child) {
-    border-bottom: 1px solid var(--secondary-gray-300);
+.table tbody td:nth-child(2) {
+    font-weight: 500;
+}
+
+.table tbody tr:not(:last-child) {
+    border-bottom: 0.1rem solid var(--secondary-gray-300);
 }

@@ -1,22 +1,24 @@
 .nav {
-    border-bottom: 1px solid var(--secondary-black-100);
+    border-bottom: 0.1rem solid var(--secondary-black-100);
 }
 
 .container {
     display: flex;
     align-items: center;
 
-    max-width: 75rem;
+    max-width: 120rem;
 
     margin: auto;
-    gap: 2.5rem;
+    padding: 0 1.6rem;
+
+    gap: 4rem;
 }
 
 .menu {
     display: flex;
     align-items: center;
 
-    gap: 0.625rem;
+    gap: 1rem;
 }
 
 .menu a {
@@ -26,9 +28,9 @@
 
 .menu li {
     text-decoration: none;
-    padding: 1.313rem 1.062rem;
-    font-size: 0.937rem;
+    padding: 2.1rem 1.7rem;
+    font-size: 1.5rem;
     font-weight: 600;
-    line-height: 1.125rem;
+    line-height: 1.8rem;
     text-align: center;
 }

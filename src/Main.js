@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './Main.css';
 import StartupPage from './pages/StartupPage';
 import MyComparisonPage from './pages/MyComparisonPage';
 import ComparisonPage from './pages/ComparisonPage';

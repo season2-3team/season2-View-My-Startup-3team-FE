@@ -15,7 +15,7 @@ export default function Nav() {
     <nav className={styles.nav}>
       <div className={styles.container}>
         <Link to="/">
-          <img className={styles.logo} src={siteLogo} />
+          <img className={styles.logo} src={siteLogo} alt="View My Startup Logo" />
         </Link>
         <ul className={styles.menu}>
           <li>

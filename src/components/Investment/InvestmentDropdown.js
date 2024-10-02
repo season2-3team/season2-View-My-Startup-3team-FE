@@ -1,6 +1,5 @@
 import styles from './InvestmentDropdown.module.css';
 import arrowDown from '../../assets/ic_toggle.svg';
-import Dropdown from '../Dropdown';
 import { useState } from 'react';
 import { useSort } from '../../contexts/SortContext';
 

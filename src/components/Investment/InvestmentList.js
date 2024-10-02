@@ -45,6 +45,13 @@ export default function InvestmentList() {
     currentPage * pageSize
   );
 
+  // 투자 금액 억으로 변환
+  const convertToHundredMillion = (value) => {
+    const hundredMillionValue = value / 100000000;
+
+    return Math.floor(hundredMillionValue) + '억 원';
+  };
+
   return (
     <div>
       <table className={styles.table}>
@@ -72,8 +79,8 @@ export default function InvestmentList() {
               </td>
               <td className={styles.description}>{item.startup.description}</td>
               <td>{item.startup.category.category}</td>
-              <td>{item.investAmount}</td>
-              <td>{item.startup.actualInvest}</td>
+              <td>{convertToHundredMillion(item.investAmount)}</td>
+              <td>{convertToHundredMillion(item.startup.actualInvest)}</td>
             </tr>
           ))}
         </tbody>

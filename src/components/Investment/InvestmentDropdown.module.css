@@ -9,6 +9,9 @@
 
     border: 0.1rem solid var(--secondary-gray-200);
     border-radius: 1rem;
+
+    color: var(--secondary-gray-100);
+    background-color: transparent;
 }
 
 .menu span {

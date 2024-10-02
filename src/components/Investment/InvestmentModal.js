@@ -83,7 +83,7 @@ export default function InvestmentModal() {
               />
             </div>
           </div>
-          <div>
+          <div className={styles.buttons}>
             <button>취소</button>
             <button>투자하기</button>
           </div>

@@ -1,5 +1,4 @@
 import styles from './InvestmentList.module.css';
-import InvestmentModal from './InvestmentModal';
 
 export default function InvestmentList() {
   // 임시 하드코딩 데이터
@@ -87,7 +86,6 @@ export default function InvestmentList() {
   ];
   return (
     <div>
-      <InvestmentModal />
       <table className={styles.table}>
         <thead>
           <tr>

@@ -1,0 +1,19 @@
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 26.4rem;
+
+  padding: 1.2rem 1.6rem;
+
+  border: 0.1rem solid var(--secondary-gray-200);
+  border-radius: 1rem;
+}
+
+.menu span {
+  color: #D8D8D8;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.7rem;
+}

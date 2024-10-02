@@ -63,9 +63,7 @@ export default function InvestmentModal() {
               />
               <img
                 src={isPasswordVisible ? visibilityOff : visibilityOn}
-                alt={
-                  isPasswordVisible ? 'visibility off btn' : 'visibility on btn'
-                }
+                alt={isPasswordVisible ? '비밀번호 표시' : '비밀번호 숨기기'}
                 onClick={togglePasswordVisibility}
               />
             </div>
@@ -80,11 +78,7 @@ export default function InvestmentModal() {
               />
               <img
                 src={checkPasswordVisible ? visibilityOff : visibilityOn}
-                alt={
-                  checkPasswordVisible
-                    ? 'visibility off btn'
-                    : 'visibility on btn'
-                }
+                alt={checkPasswordVisible ? '비밀번호 표시' : '비밀번호 숨기기'}
                 onClick={toggleCheckPasswordVisibility}
               />
             </div>

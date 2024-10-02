@@ -1,10 +1,12 @@
 //import { useState } from 'react';
 import styles from './StartupList.module.css';
 import useFetchStartups from '../../hooks/useFetchStartups';
+import Pagination from './Pagination';
+import noImageIcon from '../../assets/no-image.png';
+
+const MAX_ITEMS = 10;
 
 export default function StartupList() {
-  const MAX_ITEMS = 10;
-
   const maxItems = MAX_ITEMS;
   //const [searchKeyword, setSeacrchKeyword] = useState('');
 
@@ -16,18 +18,27 @@ export default function StartupList() {
     //sort,
     //setSort,
     currentPage,
-    //setCurrentPage,
-    //totoalCount,
+    setCurrentPage,
+    totalCount,
     //setSearch,
     showLoading,
   } = useFetchStartups(1, maxItems, 'total_investment', 'desc');
 
-  //const totalPages = Math.ceil(totoalCount / maxItems);
+  const totalPages = Math.ceil(totalCount / maxItems);
+
+  console.log('totalCount', totalCount);
+  console.log('maxItems', maxItems);
+  console.log('totalPages', totalPages);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  }
 
   if (error) {
     return <div className='error-message'>{error}</div>;
   }
   return (
+    <>
     <div style={{ width: '100%', overflowX: 'auto' }}>
       <table className={styles.table}>
       <thead>
@@ -54,9 +65,9 @@ export default function StartupList() {
           <td style={{ textAlign: 'left' }}>
             <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
               <img 
-              src={startup.image} 
+              src={startup.image || noImageIcon} 
               alt={startup.name + ' 로고'} 
-              style={{ width: '3.2rem', height: '3.2rem', marginRight: '0.8rem', verticalAlign: 'middle' }} 
+              style={{ width: '3.2rem', height: '3.2rem', marginRight: '0.8rem', verticalAlign: 'middle', borderRadius: '50%', backgroundColor: 'white', objectFit: 'cover' }} 
               />
             </span>
             <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
@@ -65,7 +76,7 @@ export default function StartupList() {
           </td>
 
           <td className={styles.description}>{startup.description}</td>
-          <td>{startup.categoryId}</td>
+          <td>{startup.categoryName}</td>
           <td>{startup.simInvest}</td>
           <td>{startup.revenue}</td>
           <td>{startup.employees}</td>          
@@ -76,5 +87,9 @@ export default function StartupList() {
       </tbody>
       </table>
     </div>
+    <div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+    </div>
+    </>
   )
 }

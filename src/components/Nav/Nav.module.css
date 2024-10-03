@@ -14,6 +14,11 @@
     gap: 4rem;
 }
 
+.logo {
+    width: 11.2rem;
+    height: 4rem;
+}
+
 .menu {
     display: flex;
     align-items: center;
@@ -33,4 +38,19 @@
     font-weight: 600;
     line-height: 1.8rem;
     text-align: center;
+}
+
+@media (max-width: 743px) {
+    .logo {
+        width: 6.4rem;
+        height:2.3rem;
+    }
+    .menu li {
+        text-decoration: none;
+        padding: 1.9rem 0.8rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+        line-height: 1.5rem;
+        text-align: center;
+    }    
 }

@@ -7,7 +7,7 @@ import { formatAmount } from '../../utils/formatAmount';
 import StartupHeader from './StartupHeader';
 import { useEffect } from 'react';
 
-const MAX_ITEMS = 5;
+const MAX_ITEMS = 10;
 
 export default function StartupList() {
   const maxItems = MAX_ITEMS;

@@ -6,7 +6,7 @@ import { useSort } from '../../contexts/SortContext';
 
 export default function InvestmentList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = useState(10);
+  const pageSize = 10;
   const { sortOption } = useSort();
 
   // 데이터 불러오기
@@ -37,10 +37,28 @@ export default function InvestmentList() {
     return sortValues[sortOption] || 0;
   });
 
-  // 페이지네이션
-  const totalPages = Math.ceil(sortedList.length / pageSize);
+  // 중복 제거
+  let filteredList = sortedList;
 
-  const currentItems = sortedList.slice(
+  if (
+    sortOption === 'actual_invest_asc' ||
+    sortOption === 'actual_invest_desc'
+  ) {
+    const existIds = new Set();
+
+    filteredList = sortedList.filter((item) => {
+      if (!existIds.has(item.startup.id)) {
+        existIds.add(item.startup.id);
+        return true;
+      }
+      return false;
+    });
+  }
+
+  // 페이지네이션
+  const totalPages = Math.ceil(filteredList.length / pageSize);
+
+  const currentItems = filteredList.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -66,7 +84,7 @@ export default function InvestmentList() {
           </tr>
         </thead>
         <tbody>
-          {sortedList.map((item, index) => (
+          {filteredList.map((item, index) => (
             <tr key={item.id}>
               <td>{index + 1}위</td>
               <td>

@@ -25,7 +25,7 @@ export default function InvestmentDropdown() {
       <div className={styles.selected} onClick={() => setIsOpen(!isOpen)}>
         {options.find((option) => option.value === sortOption)?.label ||
           'Select...'}
-        <img className={styles.icon} src={arrowDown} />
+        <img className={styles.icon} src={arrowDown} alt="드롭다운 아이콘" />
       </div>
       {isOpen && (
         <ul className={styles.options}>

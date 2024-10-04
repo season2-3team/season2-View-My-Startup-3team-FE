@@ -12,14 +12,15 @@ const MAX_ITEMS = 10;
 export default function StartupList() {
   const maxItems = MAX_ITEMS;
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [sortOption, setSortOption] = useState('total_investment_desc');  //기본 정렬 옵션 추가
 
   const {
     startups,
     error,
     //order,
-    //setOrder,
+    setOrder,
     //sort,
-    //setSort,
+    setSort,
     currentPage,
     setCurrentPage,
     totalCount,
@@ -33,6 +34,13 @@ export default function StartupList() {
     setSearch(searchKeyword);
   }, [searchKeyword, setSearch]);
 
+  useEffect(() => {
+    // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
+    const [order, sort] = sortOption.split(/_(?=[^_]*$)/); 
+    setOrder(order);
+    setSort(sort);
+  }, [sortOption, setOrder, setSort]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   }
@@ -40,9 +48,10 @@ export default function StartupList() {
   if (error) {
     return <div className='error-message'>{error}</div>;
   }
+
   return (
     <>
-    <StartupHeader setSearchKeyword={setSearchKeyword} />
+    <StartupHeader setSearchKeyword={setSearchKeyword}  setSortOption={setSortOption} />
 
     <div style={{ width: '100%', overflowX: 'auto'}} >
       <table className={styles.table}>
@@ -84,8 +93,8 @@ export default function StartupList() {
 
           <td className={styles.description}>{startup.description}</td>
           <td>{startup.categoryName}</td>
-          <td style={{ textAlign: 'right', paddingRight: '4rem' }}>{formatAmount(startup.simInvest)} 원</td>
-          <td style={{ textAlign: 'right', paddingRight: '4rem' }}>{formatAmount(startup.revenue)} 원</td>
+          <td style={{ textAlign: 'center' }}>{formatAmount(startup.simInvest)} 원</td>
+          <td style={{ textAlign: 'center' }}>{formatAmount(startup.revenue)} 원</td>
           <td style={{ textAlign: 'right', paddingRight: '5rem' }}>{formatAmount(startup.employees)} 명</td>          
         </tr>
         ))

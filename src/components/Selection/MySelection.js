@@ -60,6 +60,22 @@ export default function MySelection() {
           )}
         </div>
       </div>
+      {selectedStartup.map(() => (
+        <div className={styles.section}>
+          <div className={styles.selectedHeader}>
+            <span>어떤 기업이 궁금하세요?</span>
+            <button className={styles.addBtn}>기업 추가하기</button>
+          </div>
+          <div className={styles.borderBox}>
+            <div className={styles.innerBox}>
+              <h2>
+                아직 추가된 기업이 없어요. <br /> 버튼을 눌러 기업을
+                추가해보세요!
+              </h2>
+            </div>
+          </div>
+        </div>
+      ))}
       <button className={styles.compareBtn}>기업 비교하기</button>
       {isModal && (
         <MySelectionModal

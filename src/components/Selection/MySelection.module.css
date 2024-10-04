@@ -65,6 +65,8 @@
 }
 
 .selectedStartup {
+  position: relative;
+  top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,7 +106,41 @@
   border: none;
   text-decoration: underline;
   position: relative;
-  bottom: 18rem;
+  bottom: 20rem;
   left: 53rem;
   cursor: pointer;
+}
+
+.selectedHeader {
+  width: 120rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.addBtn {
+  width: 14rem;
+  height: 4.3rem;
+  padding: 0.8rem 2.4rem;
+  gap: 1rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: var(--primary-orange);
+  color: var(--secondary-white);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.innerBox h2 {
+  text-align: center;
+  line-height: 2.3rem;
+  color: var(--secondary-gray-200);
 }

@@ -8,17 +8,35 @@ import { useState } from 'react';
 export default function MySelectionModal({ onClose, onSelectStartup }) {
   const { startups } = useFetchRecent();
   const [searchText, setSearchText] = useState('');
+  const [filteredStartups, setFilteredStartups] = useState([]);
 
   const handleChange = (e) => {
-    setSearchText(e.target.value);
+    const newValue = e.target.value;
+    setSearchText(newValue);
+
+    if (!newValue) {
+      setFilteredStartups([]);
+    }
   };
 
   const handleSearch = () => {
-    // 검색기능
+    if (!searchText) return;
+    const results = startups.filter((startup) =>
+      startup.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredStartups(results);
   };
 
   const handelClear = () => {
     setSearchText('');
+    setFilteredStartups([]);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch();
+    }
   };
 
   const handleSelect = (startup) => {
@@ -39,6 +57,7 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             value={searchText}
             onChange={handleChange}
             placeholder="검색어를 입력해주세요"
+            onKeyDown={handleKeyDown}
           />
           <div className={styles.searchImgBlock}>
             {searchText && (
@@ -53,29 +72,60 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             )}
           </div>
         </label>
-        <div>
-          <h3 className={styles.title}>최근 선택된 기업 ({startups.length})</h3>
-          <ul>
-            {startups.map((startup) => (
-              <li className={styles.list} key={startup.id}>
-                <div className={styles.listStartup}>
-                  <img src={startup.image} alt="startupImage" />
-                  <span className={styles.name}>{startup.name}</span>
-                  <span className={styles.category}>
-                    {startup.category.category}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  className={styles.selectionBtn}
-                  onClick={() => handleSelect(startup)}
-                >
-                  선택하기
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {!searchText && (
+          <div>
+            <h3 className={styles.title}>
+              최근 선택된 기업 ({startups.length})
+            </h3>
+            <ul>
+              {startups.map((startup) => (
+                <li className={styles.list} key={startup.id}>
+                  <div className={styles.listStartup}>
+                    <img src={startup.image} alt="startupImage" />
+                    <span className={styles.name}>{startup.name}</span>
+                    <span className={styles.category}>
+                      {startup.category.category}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.selectionBtn}
+                    onClick={() => handleSelect(startup)}
+                  >
+                    선택하기
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {searchText && (
+          <div>
+            <h3 className={styles.title}>
+              검색 결과 ({filteredStartups.length})
+            </h3>
+            <ul>
+              {filteredStartups.map((startup) => (
+                <li className={styles.list} key={startup.id}>
+                  <div className={styles.listStartup}>
+                    <img src={startup.image} alt="startupImage" />
+                    <span className={styles.name}>{startup.name}</span>
+                    <span className={styles.category}>
+                      {startup.category.category}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.selectionBtn}
+                    onClick={() => handleSelect(startup)}
+                  >
+                    선택하기
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </form>
     </div>
   );

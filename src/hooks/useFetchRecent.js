@@ -36,10 +36,6 @@ export default function useFetchRecent() {
     fetchRecentStartups();
   }, []);
 
-  // useEffect(() => {
-  //   fetchRecentStartups();
-  // }, [selectedStartups, comparedStartups]);
-
   return {
     startups,
     totalCount,

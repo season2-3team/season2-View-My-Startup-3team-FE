@@ -83,3 +83,10 @@
     line-clamp: 2;
     /* 표준 속성으로 정의하지만 아직 대부분의 브라우저에서 미지원 */
 }
+
+.null {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

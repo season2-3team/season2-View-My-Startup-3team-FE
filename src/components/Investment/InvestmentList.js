@@ -30,6 +30,8 @@ export default function InvestmentList() {
     const sortValues = {
       invest_amount_asc: a.investAmount - b.investAmount,
       invest_amount_desc: b.investAmount - a.investAmount,
+      sim_invest_asc: a.startup.simInvest - b.startup.simInvest,
+      sim_invest_desc: b.startup.simInvest - a.startup.simInvest,
       actual_invest_asc: a.startup.actualInvest - b.startup.actualInvest,
       actual_invest_desc: b.startup.actualInvest - a.startup.actualInvest
     };
@@ -42,7 +44,9 @@ export default function InvestmentList() {
 
   if (
     sortOption === 'actual_invest_asc' ||
-    sortOption === 'actual_invest_desc'
+    sortOption === 'actual_invest_desc' ||
+    sortOption === 'sim_invest_asc' ||
+    sortOption === 'sim_invest_desc'
   ) {
     const existIds = new Set();
 
@@ -75,11 +79,12 @@ export default function InvestmentList() {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th style={{ width: '6.8rem' }}>순위</th>
-            <th style={{ width: '21.3rem' }}>기업 명</th>
+            <th>순위</th>
+            <th>기업 명</th>
             <th style={{ width: '30.4rem' }}>기업 소개</th>
-            <th style={{ width: '15.375rem' }}>카테고리</th>
-            <th>View My Startup 투자 금액</th>
+            <th>카테고리</th>
+            <th>모의 투자 금액</th>
+            <th>모의 누적 투자 금액</th>
             <th>실제 누적 투자 금액</th>
           </tr>
         </thead>
@@ -98,6 +103,7 @@ export default function InvestmentList() {
               <td className={styles.description}>{item.startup.description}</td>
               <td>{item.startup.category.category}</td>
               <td>{convertToHundredMillion(item.investAmount)}</td>
+              <td>{convertToHundredMillion(item.startup.simInvest)}</td>
               <td>{convertToHundredMillion(item.startup.actualInvest)}</td>
             </tr>
           ))}

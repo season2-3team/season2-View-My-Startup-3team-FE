@@ -44,6 +44,8 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
     onClose();
   };
 
+  const inputPadding = searchText ? '1.2rem' : '1.2rem 1.2rem 1.2rem 3.7rem';
+
   return (
     <div className={styles.overlay}>
       <form className={styles.form}>
@@ -52,12 +54,16 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
           <img src={ic_X} alt="ic_X" onClick={onClose} />
         </div>
         <label className={styles.search}>
+          {!searchText && (
+            <img className={styles.searchImg} src={ic_search} alt="ic_search" />
+          )}
           <input
             type="text"
             value={searchText}
             onChange={handleChange}
             placeholder="검색어를 입력해주세요"
             onKeyDown={handleKeyDown}
+            style={{ padding: inputPadding }}
           />
           <div className={styles.searchImgBlock}>
             {searchText && (

@@ -41,6 +41,12 @@
   margin-bottom: 2rem;
 }
 
+.searchImg {
+  position: relative;
+  top: 3.3rem;
+  right: 18rem;
+}
+
 .search input {
   width: 100%;
   padding: 1.2rem;
@@ -49,6 +55,9 @@
   border: 1px solid var(--secondary-gray-200);
   background-color: var(--secondary-black-300);
   color: var(--secondary-gray-100);
+  transition: padding 0.3s ease;
+
+  padding-left: 3.7rem;
 }
 
 .searchImgBlock {

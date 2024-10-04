@@ -3,6 +3,8 @@ import { getInvestmentList } from '../../api/InvestmentService';
 import useQuery from '../../hooks/useQuery';
 import { useState } from 'react';
 import { useSort } from '../../contexts/SortContext';
+import { formatAmount } from '../../utils/formatAmount';
+import Pagination from '../Common/Pagination';
 
 export default function InvestmentList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -67,12 +69,13 @@ export default function InvestmentList() {
     currentPage * pageSize
   );
 
-  // 투자 금액 억으로 변환
-  const convertToHundredMillion = (value) => {
-    const hundredMillionValue = value / 100000000;
-
-    return Math.floor(hundredMillionValue) + '억 원';
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
+
+  console.log('Filtered List Length:', filteredList.length);
+  console.log('Total Pages:', totalPages);
+  console.log('Current Page:', currentPage);
 
   return (
     <div>
@@ -89,7 +92,7 @@ export default function InvestmentList() {
           </tr>
         </thead>
         <tbody>
-          {filteredList.map((item, index) => (
+          {currentItems.map((item, index) => (
             <tr key={item.id}>
               <td>{index + 1}위</td>
               <td>
@@ -102,13 +105,18 @@ export default function InvestmentList() {
               </td>
               <td className={styles.description}>{item.startup.description}</td>
               <td>{item.startup.category.category}</td>
-              <td>{convertToHundredMillion(item.investAmount)}</td>
-              <td>{convertToHundredMillion(item.startup.simInvest)}</td>
-              <td>{convertToHundredMillion(item.startup.actualInvest)}</td>
+              <td>{formatAmount(item.investAmount)} 원</td>
+              <td>{formatAmount(item.startup.simInvest)} 원</td>
+              <td>{formatAmount(item.startup.actualInvest)}원</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 export const formatAmount = (amount) => {
   const hundredMillion = amount / 100000000;
-  
+
   if (hundredMillion >= 1) {
     // 1억 이상이면 소수점 첫째 자리까지 표시, 정수인 경우는 소수점 없이 표시
     return hundredMillion % 1 === 0

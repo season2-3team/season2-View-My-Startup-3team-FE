@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import styles from './StartupList.module.css';
 import useFetchStartups from '../../hooks/useFetchStartups';
 import Pagination from '../Common/Pagination';
 import noImageIcon from '../../assets/no-image.png';
 import { formatAmount } from '../../utils/formatAmount';
 import StartupHeader from './StartupHeader';
-import { useEffect } from 'react';
 
 const MAX_ITEMS = 10;
 
@@ -68,16 +68,18 @@ export default function StartupList() {
           <td>{index + 1 + (currentPage -1) * MAX_ITEMS}위</td>
 
           <td style={{ textAlign: 'left' }}>
-            <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-              <img 
-              src={startup.image || noImageIcon} 
-              alt={startup.name + ' 로고'} 
-              style={{ width: '3.2rem', height: '3.2rem', marginRight: '0.8rem', verticalAlign: 'middle', borderRadius: '50%', backgroundColor: 'white', objectFit: 'cover' }} 
-              />
-            </span>
-            <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-              {startup.name}
-            </span>
+            <Link to={`/${startup.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <img 
+                src={startup.image || noImageIcon} 
+                alt={startup.name + ' 로고'} 
+                style={{ width: '3.2rem', height: '3.2rem', marginRight: '0.8rem', verticalAlign: 'middle', borderRadius: '50%', backgroundColor: 'white', objectFit: 'cover' }} 
+                />
+              </span>
+              <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                {startup.name}
+              </span>
+            </Link>
           </td>
 
           <td className={styles.description}>{startup.description}</td>

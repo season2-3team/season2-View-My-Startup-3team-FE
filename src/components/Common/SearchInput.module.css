@@ -1,0 +1,59 @@
+.searchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 63.2rem;
+  height: 4.8rem;
+  background-color: var(--secondary-black-200);
+  border-radius: 0.8rem;
+  padding: 1.2rem;
+}
+
+.inputField {
+  flex: 1;
+  width: 100%;
+  min-width: 18.9rem;
+  border: none;
+  background-color: transparent;
+  color: var(--secondary-gray-100);
+  font-size: 1.4rem;
+  outline: none;
+}
+
+.iconLeft {
+  position: absolute;
+  left: 1.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.iconsRight {
+  position: absolute;
+  right: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.clearIcon {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.8em;
+  cursor: pointer;
+}
+
+.iconRight {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+@media (max-width: 743px) {
+  .searchContainer {
+    height: 4rem; 
+    /* padding: 0.8rem 1.2rem; */
+    padding: 0.8rem 0.6rem; 
+  }
+
+  .inputField {
+    font-size: 1.3rem; /* 글자 크기 조정 */
+  }
+}

@@ -24,7 +24,7 @@ const useFetchStartups = (initialPage = 1, maxItems = 10, initialOrder = 'total_
         const startupList = await getStartupList(currentPage, maxItems, order, sort, search);
         console.log('startupList', startupList);
         setStartups(startupList.list || []);
-        setTotalCount(startupList.totoalCount || 0);
+        setTotalCount(startupList.totalCount || 0);
       } catch (e) {
         console.log(e.message);
         setError('스타트업 정보를 불러오는 데 실패하였습니다');
@@ -45,7 +45,7 @@ const useFetchStartups = (initialPage = 1, maxItems = 10, initialOrder = 'total_
     setSort,
     currentPage,
     setCurrentPage,
-    totoalCount: totalCount,
+    totalCount,
     setSearch,
     showLoading,
   };

@@ -8,13 +8,16 @@ export default function InvestmentDropdown() {
   const { sortOption, setSortOption } = useSort();
 
   const options = [
-    { value: 'invest_amount_desc', label: 'View My Startup 투자 금액 높은 순' },
-    { value: 'invest_amount_asc', label: 'View My Startup 투자 금액 낮은 순' },
     {
       value: 'sim_invest_desc',
       label: 'View My Startup 누적 투자 금액 높은 순'
     },
-    { value: 'sim_invest_asc', label: 'View My Startup 누적 투자 금액 낮은 순' }
+    {
+      value: 'sim_invest_asc',
+      label: 'View My Startup 누적 투자 금액 낮은 순'
+    },
+    { value: 'actual_invest_desc', label: '실제 누적 투자 금액 높은 순' },
+    { value: 'actual_invest_asc', label: '실제 누적 투자 금액 낮은 순' }
   ];
 
   const handleOptionClick = (val) => {

@@ -13,7 +13,7 @@ instance.interceptors.response.use(
 );
 
 async function get(url, params = {}) {
-  return instance.get(url, { params });
+  return await instance.get(url, { params });
 }
 
 async function post(url, body) {
@@ -28,14 +28,8 @@ async function remove(url) {
   return instance.delete(url);
 }
 
-export async function getInvestmentList({ page, limit, order }) {
-  const res = await get(`/api/investments`, {
-    params: {
-      page,
-      limit,
-      order
-    }
-  });
+export async function getInvestmentList({ page, limit, orderBy }) {
+  const res = await get(`/api/investments`, { page, limit, orderBy });
   return res.data;
 }
 

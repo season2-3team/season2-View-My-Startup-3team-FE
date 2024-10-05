@@ -41,6 +41,23 @@ export default function InvestmentList() {
     return sortValues[sortOption] || 0;
   });
 
+  // 순위 계산
+  let rank = null;
+  let previousValue = null;
+
+  const rankedList = sortedList.map((item, index) => {
+    const currentValue =
+      item.startup[sortOption.includes('sim') ? 'simInvest' : 'actualInvest'];
+
+    if (previousValue === currentValue) {
+      return { ...item, rank };
+    } else {
+      rank = (currentPage - 1) * pageSize + index + 1;
+      previousValue = currentValue;
+      return { ...item, rank };
+    }
+  });
+
   // 페이지네이션
   const totalPages = Math.ceil(data.totalCount / pageSize);
 
@@ -59,9 +76,9 @@ export default function InvestmentList() {
             </tr>
           </thead>
           <tbody>
-            {sortedList.map((item, index) => (
-              <tr key={item.id || index}>
-                <td>{(currentPage - 1) * pageSize + index + 1}위</td>
+            {rankedList.map((item) => (
+              <tr key={item.id}>
+                <td>{item.rank}위</td>
                 <td>
                   <div className={styles.name}>
                     <img

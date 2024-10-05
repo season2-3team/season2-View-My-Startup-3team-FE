@@ -3,10 +3,10 @@ import { createContext, useContext, useState } from 'react';
 const SortContext = createContext();
 
 export const SortProvider = ({ children }) => {
-  const [sortOption, setSortOption] = useState('sim_invest_desc');
+  const [orderBy, setOrderBy] = useState('sim_invest_desc');
 
   return (
-    <SortContext.Provider value={{ sortOption, setSortOption }}>
+    <SortContext.Provider value={{ orderBy, setOrderBy }}>
       {children}
     </SortContext.Provider>
   );

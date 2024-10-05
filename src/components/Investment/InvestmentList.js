@@ -10,18 +10,16 @@ import Pagination from '../Common/Pagination';
 export default function InvestmentList() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
-  const { sortOption } = useSort();
+  const { orderBy } = useSort();
 
   // 데이터 불러오기
   const fetchInvestmentList = useCallback(async () => {
     return await getInvestmentList({
-      page: currentPage,
-      limit: pageSize,
-      order: sortOption
+      limit: 1000 // 모든 데이터를 가져옵니다.
     });
-  }, [currentPage, pageSize, sortOption]);
+  }, []);
 
-  const [data, isLoading, error] = useQuery(fetchInvestmentList, [currentPage]);
+  const [data, isLoading, error] = useQuery(fetchInvestmentList, []);
 
   // 조건부 렌더링
   if (isLoading) return <div>Loading...</div>;
@@ -38,7 +36,7 @@ export default function InvestmentList() {
       actual_invest_desc: b.startup.actualInvest - a.startup.actualInvest
     };
 
-    return sortValues[sortOption] || 0;
+    return sortValues[orderBy] || 0;
   });
 
   // 순위 계산
@@ -47,12 +45,12 @@ export default function InvestmentList() {
 
   const rankedList = sortedList.map((item, index) => {
     const currentValue =
-      item.startup[sortOption.includes('sim') ? 'simInvest' : 'actualInvest'];
+      item.startup[orderBy.includes('sim') ? 'simInvest' : 'actualInvest'];
 
     if (previousValue === currentValue) {
       return { ...item, rank };
     } else {
-      rank = (currentPage - 1) * pageSize + index + 1;
+      rank = index + 1; // 전체 데이터에 대한 순위
       previousValue = currentValue;
       return { ...item, rank };
     }
@@ -60,6 +58,10 @@ export default function InvestmentList() {
 
   // 페이지네이션
   const totalPages = Math.ceil(data.totalCount / pageSize);
+  const currentList = rankedList.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   return (
     <div>
@@ -67,16 +69,16 @@ export default function InvestmentList() {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>순위</th>
-              <th>기업 명</th>
+              <th style={{ width: '6.8rem' }}>순위</th>
+              <th style={{ width: '21.3rem' }}>기업 명</th>
               <th style={{ width: '30.4rem' }}>기업 소개</th>
-              <th>카테고리</th>
+              <th style={{ width: '15.4rem' }}>카테고리</th>
               <th>View My Startup 누적 투자 금액</th>
               <th>실제 누적 투자 금액</th>
             </tr>
           </thead>
           <tbody>
-            {rankedList.map((item) => (
+            {currentList.map((item) => (
               <tr key={item.id}>
                 <td>{item.rank}위</td>
                 <td>

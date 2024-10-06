@@ -38,9 +38,19 @@
   color: #aaa;
   margin: 0 1rem;
 }
-
+/*
 .paginationButton:hover:not(.disabled):not(.active) {
   background-color: var(--secondary-black-100); 
+  color: #ffffff;
+}
+*/
+.paginationButton:hover:not(.paginationButtonDisabled):not(.paginationButtonActive) {
+  background-color: var(--secondary-black-100);
+  color: #ffffff;
+}
+
+.pagination .paginationButton.paginationButtonActive {
+  background-color: var(--primary-orange);
   color: #ffffff;
 }
 

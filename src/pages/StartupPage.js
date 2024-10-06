@@ -1,3 +1,10 @@
+
+import StartupList from "../components/Startup/StartupList";
+
 export default function StartupPage() {
-  return;
+  return (
+    <div>
+      <StartupList />
+    </div>
+  )
 }

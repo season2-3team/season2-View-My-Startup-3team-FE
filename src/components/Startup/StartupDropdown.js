@@ -1,11 +1,11 @@
-import styles from './InvestmentDropdown.module.css';
+import styles from './StartupDropdown.module.css';
 import arrowDown from '../../assets/ic_toggle.svg';
-import { useState, useRef, useEffect } from 'react';
-import { useSort } from '../../contexts/SortContext';
+import { useEffect, useRef, useState } from 'react';
+//import { useSort } from '../../contexts/SortContext';
 
-export default function InvestmentDropdown() {
+export default function StartupDropdown({ setSortOption }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { orderBy, setOrderBy } = useSort();
+  const [selectedOption, setSelectedOption] = useState('total_investment_desc');
   const dropdownRef = useRef(null);
 
   // 메뉴 외부 클릭 감지
@@ -18,7 +18,7 @@ export default function InvestmentDropdown() {
 
     // 마우스 클릭 이벤트 리스너 추가
     document.addEventListener('mousedown', handleClickOutside);
-
+    
     // 컴포넌트 언마운트 시 이벤트 리스너 제거
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -26,34 +26,26 @@ export default function InvestmentDropdown() {
   }, [dropdownRef]);
 
   const options = [
-    {
-      value: 'sim_invest_desc',
-      label: 'View My Startup 누적 투자 금액 높은 순'
-    },
-    {
-      value: 'sim_invest_asc',
-      label: 'View My Startup 누적 투자 금액 낮은 순'
-    },
-    {
-      value: 'actual_invest_desc',
-      label: '실제 누적 투자 금액 높은 순'
-    },
-    {
-      value: 'actual_invest_asc',
-      label: '실제 누적 투자 금액 낮은 순'
-    }
+    { value: 'total_investment_desc', label: '누적 투자금액 높은순' },
+    { value: 'total_investment_asc', label: '누적 투자금액 낮은순' },
+    { value: 'revenue_desc', label: '매출액 높은순' },
+    { value: 'revenue_asc', label: '매출액 낮은순' },
+    { value: 'employee_count_desc', label: '고용인원 높은순' },
+    { value: 'employee_count_asc', label: '고용인원 적은순' },
   ];
 
-  const handleOptionClick = (val) => {
-    setOrderBy(val);
+  const handleOptionClick = (value) => {
+    console.log('Seleted sort Option:', value);
+    setSelectedOption(value); // selectedOption 상태 업데이트
+    setSortOption(value); // 부모 컴포넌트로 선택된 옵션 전달
     setIsOpen(false);
   };
 
   return (
-    <div className={styles.menu} ref={dropdownRef}>
+    <div ref={dropdownRef} className={styles.menu}>
       <div className={styles.selected} onClick={() => setIsOpen(!isOpen)}>
-        {options.find((option) => option.value === orderBy)?.label ||
-          '정렬 선택...'}
+        {options.find((option) => option.value === selectedOption)?.label ||
+          'Select...'}
         <img className={styles.icon} src={arrowDown} alt="드롭다운 아이콘" />
       </div>
       {isOpen && (

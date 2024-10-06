@@ -1,0 +1,64 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 27rem;
+  max-height: 4.8rem;
+
+  width: auto;
+
+  padding: 1.2rem 1.6rem;
+
+  border: 0.1rem solid var(--secondary-gray-200);
+  border-radius: 1rem;
+
+  color: var(--secondary-gray-100);
+
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.671rem;
+  text-align: center;
+
+  background-color: transparent;
+
+  cursor: pointer;
+}
+
+.menu .selected {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  gap: 0.8rem;
+}
+
+.icon {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.options {
+  position: absolute;
+  top: 15.6rem;
+
+  max-width: inherit;
+  width: inherit;
+
+  border: 0.1rem solid var(--secondary-gray-200);
+  border-radius: 1rem;
+
+  background-color: var(--secondary-black-400);
+
+  z-index: 1;
+}
+
+.options li {
+  padding: 1.15rem 1.6rem;
+}
+
+.options li:not(:last-child) {
+  border-bottom: 0.1rem solid var(--secondary-gray-200);
+}

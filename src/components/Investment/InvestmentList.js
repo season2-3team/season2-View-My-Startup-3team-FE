@@ -1,117 +1,111 @@
 import styles from './InvestmentList.module.css';
-import InvestmentModal from './InvestmentModal';
+import noImageIcon from '../../assets/no-image.png';
+import { getInvestmentList } from '../../api/InvestmentService';
+import useQuery from '../../hooks/useQuery';
+import { useState, useCallback } from 'react';
+import { useSort } from '../../contexts/SortContext';
+import { formatAmount } from '../../utils/formatAmount';
+import Pagination from '../Common/Pagination';
 
 export default function InvestmentList() {
-  // 임시 하드코딩 데이터
-  const data = [
-    {
-      rank: 1,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 2,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 3,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 4,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 5,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 6,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 7,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 8,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 9,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
-    },
-    {
-      rank: 10,
-      name: '기업 이름',
-      description: '기업 소개',
-      category: '카테고리',
-      simInvest: 1000,
-      actualInvest: 1000
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const { orderBy } = useSort();
+
+  // 데이터 불러오기
+  const fetchInvestmentList = useCallback(async () => {
+    return await getInvestmentList({
+      limit: 1000 // 모든 데이터를 가져옵니다.
+    });
+  }, []);
+
+  const [data, isLoading, error] = useQuery(fetchInvestmentList, []);
+
+  // 조건부 렌더링
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!data || data.list.length === 0)
+    return <div className={styles.null}>아직 투자 현황이 없어요.</div>;
+
+  // 데이터 정렬
+  const sortedList = data.list.sort((a, b) => {
+    const sortValues = {
+      sim_invest_asc: a.startup.simInvest - b.startup.simInvest,
+      sim_invest_desc: b.startup.simInvest - a.startup.simInvest,
+      actual_invest_asc: a.startup.actualInvest - b.startup.actualInvest,
+      actual_invest_desc: b.startup.actualInvest - a.startup.actualInvest
+    };
+
+    return sortValues[orderBy] || 0;
+  });
+
+  // 순위 계산
+  let rank = null;
+  let previousValue = null;
+
+  const rankedList = sortedList.map((item, index) => {
+    const currentValue =
+      item.startup[orderBy.includes('sim') ? 'simInvest' : 'actualInvest'];
+
+    if (previousValue === currentValue) {
+      return { ...item, rank };
+    } else {
+      rank = index + 1; // 전체 데이터에 대한 순위
+      previousValue = currentValue;
+      return { ...item, rank };
     }
-  ];
+  });
+
+  // 페이지네이션
+  const totalPages = Math.ceil(data.totalCount / pageSize);
+  const currentList = rankedList.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
   return (
     <div>
-      <InvestmentModal />
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>순위</th>
-            <th>기업 명</th>
-            <th>기업 소개</th>
-            <th>카테고리</th>
-            <th>View My Startup 투자 금액</th>
-            <th>실제 누적 투자 금액</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.id}>
-              <td>{item.rank}</td>
-              <td>{item.name}</td>
-              <td>{item.description}</td>
-              <td>{item.category}</td>
-              <td>{item.simInvest}</td>
-              <td>{item.actualInvest}</td>
+      <div style={{ width: '100%', overflowX: 'auto' }}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th style={{ width: '6.8rem' }}>순위</th>
+              <th style={{ width: '21.3rem' }}>기업 명</th>
+              <th style={{ width: '30.4rem' }}>기업 소개</th>
+              <th style={{ width: '15.4rem' }}>카테고리</th>
+              <th>View My Startup 누적 투자 금액</th>
+              <th>실제 누적 투자 금액</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentList.map((item) => (
+              <tr key={item.id}>
+                <td>{item.rank}위</td>
+                <td>
+                  <div className={styles.name}>
+                    <img
+                      src={item.startup.image || noImageIcon}
+                      alt={item.startup.name}
+                    />
+                    {item.startup.name}
+                  </div>
+                </td>
+                <td className={styles.description}>
+                  {item.startup.description}
+                </td>
+                <td>{item.startup.category.category}</td>
+                <td>{formatAmount(item.startup.simInvest)} 원</td>
+                <td>{formatAmount(item.startup.actualInvest)} 원</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

@@ -47,3 +47,46 @@
 .table tbody tr:not(:last-child) {
     border-bottom: 0.1rem solid var(--secondary-gray-300);
 }
+
+.name {
+    display: flex;
+    align-items: center;
+
+    gap: 1.2rem;
+}
+
+.name img {
+    width: 3.2rem;
+    height: 3.2rem;
+
+    border-radius: 100%;
+    background-color: white;
+}
+
+.table td.description {
+    max-width: 30.4rem;
+    /* 기본적으로 최대 너비를 차지함 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* 두 줄까지만 허용 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 1.5rem;
+    max-height: 4.7rem;
+    /* 두 줄 높이만큼 설정 (line-height * 2) + padding 값 */
+    line-height: 1.7rem;
+    /* 줄 높이를 설정 */
+    text-align: left;
+
+    /* 표준 line-clamp 속성을 추가 : VS Code에서 경고문구 제거를 위해 */
+    line-clamp: 2;
+    /* 표준 속성으로 정의하지만 아직 대부분의 브라우저에서 미지원 */
+}
+
+.null {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

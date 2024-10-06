@@ -85,7 +85,7 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             </h3>
             <ul>
               {startups.map((startup) => (
-                <li className={styles.list} key={startup.id}>
+                <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
                     <img src={startup.image} alt="startupImage" />
                     <span className={styles.name}>{startup.name}</span>
@@ -112,7 +112,7 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             </h3>
             <ul>
               {filteredStartups.map((startup) => (
-                <li className={styles.list} key={startup.id}>
+                <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
                     <img src={startup.image} alt="startupImage" />
                     <span className={styles.name}>{startup.name}</span>

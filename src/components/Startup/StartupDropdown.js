@@ -35,7 +35,6 @@ export default function StartupDropdown({ setSortOption }) {
   ];
 
   const handleOptionClick = (value) => {
-    console.log('Seleted sort Option:', value);
     setSelectedOption(value); // selectedOption 상태 업데이트
     setSortOption(value); // 부모 컴포넌트로 선택된 옵션 전달
     setIsOpen(false);

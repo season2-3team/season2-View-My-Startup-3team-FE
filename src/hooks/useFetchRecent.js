@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 const COMPARISON_API_BASE_URL = 'http://localhost:3000/api/comparisons';
 
-const sessionId = localStorage.getItem('sessionId') || uuidv4();
-localStorage.setItem('sessionId', sessionId);
+// const sessionId = localStorage.getItem('sessionId') || uuidv4();
+// localStorage.setItem('sessionId', sessionId);
 
 export default function useFetchRecent() {
   const [startups, setStartups] = useState([]);

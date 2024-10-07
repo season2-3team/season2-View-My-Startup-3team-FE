@@ -36,10 +36,15 @@ export default function useFetchRecent() {
     fetchRecentStartups();
   }, []);
 
+  const searchStartups = (searchText) => {
+    fetchRecentStartups(searchText); // 검색어가 변경될 때 데이터를 가져옴
+  };
+
   return {
     startups,
     totalCount,
     currentPage,
-    totalPages
+    totalPages,
+    searchStartups
   };
 }

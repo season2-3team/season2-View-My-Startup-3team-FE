@@ -12,8 +12,8 @@ const MAX_ITEMS = 10;
 export default function StartupList() {
   const maxItems = MAX_ITEMS;
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [sortOption, setSortOption] = useState('total_investment_desc');  // 기본 정렬 옵션 추가
-  const [currentPage, setCurrentPage] = useState(1);            // currentPage 상태를 여기서 관리
+  const [sortOption, setSortOption] = useState('total_investment_desc'); // 기본 정렬 옵션 추가
+  const [currentPage, setCurrentPage] = useState(1); // currentPage 상태를 여기서 관리
 
   const {
     startups,
@@ -22,8 +22,8 @@ export default function StartupList() {
     setSort,
     totalCount,
     setSearch,
-    showLoading,
-  } = useFetchStartups(currentPage, maxItems, 'total_investment', 'desc');  // currentPage를 인자로 전달
+    showLoading
+  } = useFetchStartups(currentPage, maxItems, 'total_investment', 'desc'); // currentPage를 인자로 전달
 
   const totalPages = Math.ceil(totalCount / maxItems);
 
@@ -43,12 +43,15 @@ export default function StartupList() {
   };
 
   if (error) {
-    return <div className='error-message'>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   return (
     <>
-      <StartupHeader setSearchKeyword={setSearchKeyword} setSortOption={setSortOption} />
+      <StartupHeader
+        setSearchKeyword={setSearchKeyword}
+        setSortOption={setSortOption}
+      />
 
       <div style={{ width: '100%', overflowX: 'auto' }}>
         <table className={styles.table}>
@@ -66,15 +69,23 @@ export default function StartupList() {
           <tbody>
             {showLoading ? (
               <tr>
-                <td colSpan='7'>목록을 불러오는 중입니다....</td>
+                <td colSpan="7">목록을 불러오는 중입니다....</td>
               </tr>
             ) : (
               startups.map((startup) => (
                 <tr key={startup.id}>
                   <td>{startup.rank}위</td>
                   <td style={{ textAlign: 'left' }}>
-                    <Link to={`/${startup.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                    <Link
+                      to={`/${startup.id}`}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          verticalAlign: 'middle'
+                        }}
+                      >
                         <img
                           src={startup.image || noImageIcon}
                           alt={`${startup.name} 로고`}
@@ -85,19 +96,28 @@ export default function StartupList() {
                             verticalAlign: 'middle',
                             borderRadius: '50%',
                             backgroundColor: 'white',
-                            objectFit: 'cover',
+                            objectFit: 'cover'
                           }}
                         />
                       </span>
-                      <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          verticalAlign: 'middle'
+                        }}
+                      >
                         {startup.name}
                       </span>
                     </Link>
                   </td>
                   <td className={styles.description}>{startup.description}</td>
                   <td>{startup.categoryName}</td>
-                  <td style={{ textAlign: 'center' }}>{formatAmount(startup.simInvest)} 원</td>
-                  <td style={{ textAlign: 'center' }}>{formatAmount(startup.revenue)} 원</td>
+                  <td style={{ textAlign: 'center' }}>
+                    {formatAmount(startup.simInvest)} 원
+                  </td>
+                  <td style={{ textAlign: 'center' }}>
+                    {formatAmount(startup.revenue)} 원
+                  </td>
                   <td style={{ textAlign: 'right', paddingRight: '5rem' }}>
                     {formatAmount(startup.employees)} 명
                   </td>
@@ -108,7 +128,11 @@ export default function StartupList() {
         </table>
       </div>
       <div>
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </>
   );

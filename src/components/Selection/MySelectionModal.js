@@ -6,30 +6,27 @@ import useFetchRecent from '../../hooks/useFetchRecent';
 import { useState } from 'react';
 
 export default function MySelectionModal({ onClose, onSelectStartup }) {
-  const { startups } = useFetchRecent();
+  const { startups, searchStartups } = useFetchRecent();
   const [searchText, setSearchText] = useState('');
-  const [filteredStartups, setFilteredStartups] = useState([]);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
     setSearchText(newValue);
 
-    if (!newValue) {
-      setFilteredStartups([]);
+    if (newValue) {
+      searchStartups(newValue);
     }
   };
 
   const handleSearch = () => {
-    if (!searchText) return;
-    const results = startups.filter((startup) =>
-      startup.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setFilteredStartups(results);
+    if (searchText) {
+      searchStartups(searchText);
+    }
   };
 
   const handelClear = () => {
     setSearchText('');
-    setFilteredStartups([]);
+    searchStartups('');
   };
 
   const handleKeyDown = (e) => {
@@ -107,11 +104,9 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
         )}
         {searchText && (
           <div>
-            <h3 className={styles.title}>
-              검색 결과 ({filteredStartups.length})
-            </h3>
+            <h3 className={styles.title}>검색 결과 ({startups.length})</h3>
             <ul>
-              {filteredStartups.map((startup) => (
+              {startups.map((startup) => (
                 <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
                     <img src={startup.image} alt="startupImage" />

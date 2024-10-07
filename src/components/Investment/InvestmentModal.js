@@ -4,7 +4,7 @@ import visibilityOn from '../../assets/btn_visibility_on.svg';
 import visibilityOff from '../../assets/btn_visibility_off.svg';
 import { useState } from 'react';
 
-export default function InvestmentModal() {
+export default function InvestmentModal({ onClose }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
 
@@ -22,7 +22,12 @@ export default function InvestmentModal() {
         <form className={styles.form}>
           <div>
             <h1>기업에 투자하기</h1>
-            <img src={X} alt="close btn" />
+            <img
+              src={X}
+              onClick={onClose}
+              style={{ cursor: 'pointer' }}
+              alt="close btn"
+            />
           </div>
           <div>
             {/* 임시 하드 코딩 */}
@@ -84,7 +89,7 @@ export default function InvestmentModal() {
             </div>
           </div>
           <div className={styles.buttons}>
-            <button>취소</button>
+            <button onClick={onClose}>취소</button>
             <button>투자하기</button>
           </div>
         </form>

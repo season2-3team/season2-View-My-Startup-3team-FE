@@ -54,7 +54,7 @@ export default function InvestmentPatch() {
             />
           </div>
         </div>
-        <button className={styles.delete}>수정하기</button>
+        <button className={styles.patch}>수정하기</button>
       </div>
     </Modal>
   );

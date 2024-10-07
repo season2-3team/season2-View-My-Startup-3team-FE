@@ -1,30 +1,3 @@
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    max-height: 80vh;
-
-    padding: 2.4rem;
-    border-radius: 1.6rem;
-
-    background-color: var(--secondary-black-300);
-
-    overflow-y: auto;
-}
-
 .form,
 .form>:first-child,
 .form>:nth-child(2),
@@ -87,10 +60,9 @@
 .group input,
 .group textarea {
     padding: 1.6rem 2rem;
-    border: 0.1rem solid var(--secondary-gray-200);
     border-radius: 1rem;
 
-    color: var(--secondary-gray-200);
+    color: var(--secondary-gray-100);
     background-color: transparent;
 }
 
@@ -104,7 +76,6 @@
 
 .group input:focus,
 .group textarea:focus {
-    color: var(--secondary-gray-100);
     outline: 0.1rem solid var(--secondary-gray-100);
 }
 
@@ -150,7 +121,7 @@
     cursor: pointer;
 }
 
-.buttons>:first-child {
+.cancel {
     width: 19.4rem;
 
     border: 0.1rem solid var(--primary-orange);
@@ -161,7 +132,7 @@
     background-color: transparent;
 }
 
-.buttons>:last-child {
+.submit {
     width: 18.3rem;
 
     border: none;
@@ -171,4 +142,16 @@
     line-height: 1.909rem;
 
     background-color: var(--primary-orange);
+}
+
+.submit:disabled {
+    background-color: var(--secondary-gray-300);
+    cursor: default;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.671rem;
 }

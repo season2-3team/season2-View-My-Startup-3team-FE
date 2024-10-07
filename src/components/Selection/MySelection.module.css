@@ -1,0 +1,204 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerTxt {
+  font-family: Pretendard;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+  text-align: left;
+  margin-bottom: 3rem;
+  position: relative;
+  right: 50rem;
+}
+
+.borderBox {
+  width: 120rem;
+  height: 30rem;
+  top: 196px;
+  border-radius: 0.4rem;
+  border: 1px solid var(--secondary-black-300);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.innerBox {
+  width: 117rem;
+  height: 27rem;
+  border-radius: 0.4rem;
+  background-color: var(--secondary-black-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerBox img {
+  cursor: pointer;
+}
+
+.plusBtnImg {
+  width: 6.7rem;
+  height: 8.5rem;
+}
+
+.compareBtn {
+  width: 19rem;
+  height: 5.2rem;
+  padding: 1.3rem 4.8rem;
+  gap: 1rem;
+  border-radius: 5rem;
+  border: none;
+  background-color: var(--secondary-black-100);
+  font-family: Pretendard;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  text-align: center;
+  color: var(--secondary-gray-200);
+  cursor: pointer;
+}
+
+.compareActiveBtn {
+  color: var(--secondary-white);
+  background-color: var(--primary-orange);
+}
+
+.selectedStartup {
+  position: relative;
+  top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.startupImg {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+}
+
+.startupName {
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.9rem;
+  text-align: center;
+  color: var(--secondary-white);
+}
+
+.startupCategory {
+  font-family: Pretendard;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.6rem;
+  text-align: left;
+  color: var(--secondary-gray-200);
+}
+
+.removeBtn {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.9rem;
+  text-align: right;
+  background-color: var(--secondary-black-100);
+  color: var(--secondary-gray-100);
+  border: none;
+  text-decoration: underline;
+  position: relative;
+  bottom: 20rem;
+  left: 53rem;
+  cursor: pointer;
+}
+
+.selectedHeader {
+  width: 120rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.addBtn {
+  width: 14rem;
+  height: 4.3rem;
+  padding: 0.8rem 2.4rem;
+  gap: 1rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: var(--primary-orange);
+  color: var(--secondary-white);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.disabledBtn {
+  background-color: var(--secondary-black-100);
+  color: var(--secondary-gray-200);
+}
+
+.innerBox h2 {
+  text-align: center;
+  line-height: 2.3rem;
+  color: var(--secondary-gray-200);
+}
+
+.compareSelectedStartup {
+  width: 12.6rem;
+  height: 18.7rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--secondary-gray-400);
+  border-radius: 1.2rem;
+  position: relative;
+  margin-right: 2rem;
+}
+
+.minusIcon {
+  width: 2.4rem;
+  height: 2.4rem;
+  position: relative;
+  top: 1rem;
+  left: 4rem;
+}
+
+.myNav {
+  position: relative;
+  top: 4rem;
+}
+
+.resetBtn {
+  display: flex;
+  align-items: center;
+  position: relative;
+  bottom: 5.7rem;
+  left: 54rem;
+  width: 15.9rem;
+  height: 4.3rem;
+  padding: 0.8rem 2.4rem;
+  gap: 1rem;
+  border-radius: 2rem;
+  color: var(--secondary-white);
+  background-color: var(--primary-orange);
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  text-align: center;
+}

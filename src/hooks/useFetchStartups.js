@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { getStartupList } from "../api/StartupService";
 
-const useFetchStartups = (initialPage = 1, maxItems = 10, initialOrder = 'total_investment', initialSort = 'desc') => {
+//const useFetchStartups = (initialPage = 1, maxItems = 10, initialOrder = 'total_investment', initialSort = 'desc') => {
+  const useFetchStartups = (currentPage, maxItems = 10, initialOrder = 'total_investment', initialSort = 'desc') => {
   const [startups, setStartups] = useState([]);
   const [error, setError] = useState(null);
   const [order, setOrder] = useState(initialOrder);
   const [sort, setSort] = useState(initialSort);
-  const [currentPage, setCurrentPage] = useState(initialPage);
+//  const [currentPage, setCurrentPage] = useState(initialPage);
   const [totalCount, setTotalCount] = useState(0);
 
   const [search, setSearch] = useState('');
@@ -22,7 +23,7 @@ const useFetchStartups = (initialPage = 1, maxItems = 10, initialOrder = 'total_
       
       try {
         const startupList = await getStartupList(currentPage, maxItems, order, sort, search);
-        console.log('startupList', startupList);
+        //console.log('startupList', startupList);
         setStartups(startupList.list || []);
         setTotalCount(startupList.totalCount || 0);
       } catch (e) {
@@ -43,8 +44,8 @@ const useFetchStartups = (initialPage = 1, maxItems = 10, initialOrder = 'total_
     setOrder,
     sort,
     setSort,
-    currentPage,
-    setCurrentPage,
+//    currentPage,
+//    setCurrentPage,
     totalCount,
     setSearch,
     showLoading,

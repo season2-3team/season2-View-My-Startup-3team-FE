@@ -87,10 +87,9 @@
 .group input,
 .group textarea {
     padding: 1.6rem 2rem;
-    border: 0.1rem solid var(--secondary-gray-200);
     border-radius: 1rem;
 
-    color: var(--secondary-gray-200);
+    color: var(--secondary-gray-100);
     background-color: transparent;
 }
 
@@ -104,7 +103,6 @@
 
 .group input:focus,
 .group textarea:focus {
-    color: var(--secondary-gray-100);
     outline: 0.1rem solid var(--secondary-gray-100);
 }
 
@@ -150,7 +148,7 @@
     cursor: pointer;
 }
 
-.buttons>:first-child {
+.cancel {
     width: 19.4rem;
 
     border: 0.1rem solid var(--primary-orange);
@@ -161,7 +159,7 @@
     background-color: transparent;
 }
 
-.buttons>:last-child {
+.submit {
     width: 18.3rem;
 
     border: none;
@@ -171,4 +169,16 @@
     line-height: 1.909rem;
 
     background-color: var(--primary-orange);
+}
+
+.submit:disabled {
+    background-color: var(--secondary-gray-300);
+    cursor: default;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.671rem;
 }

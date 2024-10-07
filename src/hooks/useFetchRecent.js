@@ -40,11 +40,16 @@ export default function useFetchRecent() {
     fetchRecentStartups(searchText); // 검색어가 변경될 때 데이터를 가져옴
   };
 
+  const goToPage = (page) => {
+    fetchRecentStartups('', page); // 지정된 페이지로 이동
+  };
+
   return {
     startups,
     totalCount,
     currentPage,
     totalPages,
-    searchStartups
+    searchStartups,
+    goToPage
   };
 }

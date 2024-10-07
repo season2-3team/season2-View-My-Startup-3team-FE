@@ -20,7 +20,6 @@ export default function useFetchRecent() {
       }
 
       const data = await response.json();
-      console.log(data.list);
       setRecentStartups(data.list);
     } catch (err) {
       console.error('Failed to fetch startups', err);

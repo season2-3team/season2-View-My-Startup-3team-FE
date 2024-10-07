@@ -4,12 +4,23 @@ import ic_search from '../../assets/ic_search.svg';
 import ic_x_circle_small from '../../assets/ic_x_circle_small.svg';
 import ic_check from '../../assets/ic_check.svg';
 import useFetchRecent from '../../hooks/useFetchRecent';
-import { useState } from 'react';
+import SelectionPagination from './SelectionPagination.js';
+import { useState, useEffect } from 'react';
 
-export default function MySelectionModal({ onClose, onSelectStartup }) {
-  const { startups, searchStartups } = useFetchRecent();
+export default function CompareSelectionModal({
+  onClose,
+  onSelectStartup,
+  selectedStartups
+}) {
+  const { startups, currentPage, totalPages, searchStartups, goToPage } =
+    useFetchRecent();
   const [searchText, setSearchText] = useState('');
-  const [selectCompareStartups, setSelectComparedStartups] = useState([]);
+  const [selectCompareStartups, setSelectComparedStartups] =
+    useState(selectedStartups);
+
+  useEffect(() => {
+    setSelectComparedStartups(selectedStartups);
+  }, [selectedStartups]);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
@@ -41,14 +52,20 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
   };
 
   const handleSelectCompareStartups = (startup) => {
+    if (selectedStartups.some((selected) => selected.id === startup.id)) {
+      return; // 선택된 스타트업은 무시
+    }
     if (selectCompareStartups.includes(startup)) {
-      setSelectComparedStartups(
-        selectCompareStartups.filter((s) => s !== startup)
-      );
-      onSelectStartup(selectCompareStartups.filter((s) => s !== startup));
+      // 이미 선택된 스타트업을 해제
+      const newSelected = selectCompareStartups.filter((s) => s !== startup);
+      setSelectComparedStartups(newSelected);
+      onSelectStartup(newSelected);
     } else {
-      setSelectComparedStartups([...selectCompareStartups, startup]);
-      onSelectStartup([...selectCompareStartups, startup]);
+      // 새 스타트업을 선택
+      if (selectCompareStartups.length < 5) {
+        setSelectComparedStartups([...selectCompareStartups, startup]);
+        onSelectStartup([...selectCompareStartups, startup]);
+      }
     }
   };
 
@@ -77,17 +94,21 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             <button
               type="button"
               className={`${styles.selectionBtn} ${
-                selectCompareStartups.includes(startup)
+                selectCompareStartups.includes(startup) ||
+                selectedStartups.some((selected) => selected.id === startup.id)
                   ? styles.completeBtn
                   : styles.selectionBtn
               }`}
               onClick={() => handleSelectCompareStartups(startup)}
               disabled={
                 selectCompareStartups.includes(startup) ||
-                selectCompareStartups.length >= 5
+                selectedStartups.some((selected) => selected.id === startup.id)
               }
             >
-              {selectCompareStartups.includes(startup) ? (
+              {selectCompareStartups.includes(startup) ||
+              selectedStartups.some(
+                (selected) => selected.id === startup.id
+              ) ? (
                 <>
                   <img
                     src={ic_check}
@@ -165,7 +186,6 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             </ul>
           </div>
         )}
-
         {!searchText && (
           <StartupList
             title="기업"
@@ -182,6 +202,11 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             handleSelectCompareStartups={handleSelectCompareStartups}
           />
         )}
+        <SelectionPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+        />
       </form>
     </div>
   );

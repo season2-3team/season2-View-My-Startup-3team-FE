@@ -41,9 +41,10 @@ export default function MySelection() {
   };
 
   const handleCompareRemoveStartups = (id) => {
-    setCompareSelectedStartups((prev) =>
-      prev.filter((startup) => startup.id !== id)
-    );
+    setCompareSelectedStartups((prev) => {
+      const updatedStartups = prev.filter((startup) => startup.id !== id);
+      return updatedStartups;
+    });
   };
 
   const handleResetAll = () => {
@@ -173,6 +174,7 @@ export default function MySelection() {
       )}
       {isComparedModal && (
         <CompareSelectionModal
+          selectedStartups={compareSelectedStartups}
           onSelectStartup={handleCompareSelectStartups}
           onClose={handleCloseComparedModal}
         />

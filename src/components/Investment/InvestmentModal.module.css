@@ -15,10 +15,14 @@
     left: 50%;
     transform: translate(-50%, 0);
 
+    max-height: 80vh;
+
     padding: 2.4rem;
     border-radius: 1.6rem;
 
     background-color: var(--secondary-black-300);
+
+    overflow-y: auto;
 }
 
 .form,

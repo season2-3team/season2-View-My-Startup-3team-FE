@@ -3,9 +3,11 @@ import ic_X from '../../assets/ic_x.svg';
 import ic_search from '../../assets/ic_search.svg';
 import ic_x_circle_small from '../../assets/ic_x_circle_small.svg';
 import useFetchRecent from '../../hooks/useFetchRecent';
+import useFetchSelection from '../../hooks/useFetchSelection';
 import { useState } from 'react';
 
 export default function MySelectionModal({ onClose, onSelectStartup }) {
+  const { recentStartups } = useFetchSelection();
   const { startups, searchStartups } = useFetchRecent();
   const [searchText, setSearchText] = useState('');
 
@@ -78,22 +80,22 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
         {!searchText && (
           <div>
             <h3 className={styles.title}>
-              최근 선택된 기업 ({startups.length})
+              최근 선택된 기업 ({recentStartups.length})
             </h3>
             <ul>
-              {startups.map((startup) => (
+              {recentStartups.map((startup) => (
                 <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
-                    <img src={startup.image} alt="startupImage" />
-                    <span className={styles.name}>{startup.name}</span>
+                    <img src={startup.startup.image} alt="startupImage" />
+                    <span className={styles.name}>{startup.startup.name}</span>
                     <span className={styles.category}>
-                      {startup.category.category}
+                      {startup.startup.category.category}
                     </span>
                   </div>
                   <button
                     type="button"
                     className={styles.selectionBtn}
-                    onClick={() => handleSelect(startup)}
+                    onClick={() => handleSelect(startup.startup)}
                   >
                     선택하기
                   </button>

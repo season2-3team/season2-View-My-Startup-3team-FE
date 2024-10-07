@@ -7,17 +7,16 @@ import useFetchRecent from '../../hooks/useFetchRecent';
 import { useState } from 'react';
 
 export default function MySelectionModal({ onClose, onSelectStartup }) {
-  const { startups } = useFetchRecent();
+  const { startups, searchStartups } = useFetchRecent();
   const [searchText, setSearchText] = useState('');
-  const [filteredStartups, setFilteredStartups] = useState([]);
   const [selectCompareStartups, setSelectComparedStartups] = useState([]);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
     setSearchText(newValue);
 
-    if (!newValue) {
-      setFilteredStartups([]);
+    if (newValue) {
+      searchStartups(newValue);
     }
   };
 
@@ -26,12 +25,12 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
     const results = startups.filter((startup) =>
       startup.name.toLowerCase().includes(searchText.toLowerCase())
     );
-    setFilteredStartups(results);
+    searchStartups(results);
   };
 
   const handleClear = () => {
     setSearchText('');
-    setFilteredStartups([]);
+    searchStartups('');
   };
 
   const handleKeyDown = (e) => {
@@ -83,7 +82,10 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
                   : styles.selectionBtn
               }`}
               onClick={() => handleSelectCompareStartups(startup)}
-              disabled={selectCompareStartups.includes(startup)}
+              disabled={
+                selectCompareStartups.includes(startup) ||
+                selectCompareStartups.length >= 5
+              }
             >
               {selectCompareStartups.includes(startup) ? (
                 <>
@@ -175,7 +177,7 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
         {searchText && (
           <StartupList
             title="검색 결과"
-            startups={filteredStartups}
+            startups={startups}
             selectCompareStartups={selectCompareStartups}
             handleSelectCompareStartups={handleSelectCompareStartups}
           />

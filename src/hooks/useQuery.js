@@ -24,7 +24,7 @@ export default function useQuery(asyncFunction, dependencies = []) {
     return () => {
       isMounted = false;
     };
-  }, dependencies);
+  }, [asyncFunction, ...dependencies]);
 
   return [data, pending, error];
 }

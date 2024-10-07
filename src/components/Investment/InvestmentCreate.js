@@ -1,4 +1,4 @@
-import styles from './InvestmentModal.module.css';
+import styles from './InvestmentCreate.module.css';
 import X from '../../assets/ic_x.svg';
 import visibilityOn from '../../assets/btn_visibility_on.svg';
 import visibilityOff from '../../assets/btn_visibility_off.svg';
@@ -7,7 +7,7 @@ import { createInvestment } from '../../api/InvestmentService';
 import useValidate from '../../hooks/useValidate';
 import Modal from '../Common/Modal';
 
-export default function InvestmentModal({ onClose }) {
+export default function InvestmentCreate({ onClose }) {
   const { values, errors, handleChange, validate, handleBlur } = useValidate({
     name: '',
     investAmount: '',

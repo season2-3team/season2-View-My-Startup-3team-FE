@@ -174,7 +174,6 @@ export default function InvestmentModal({ onClose }) {
                 type={checkPasswordVisible ? 'text' : 'password'}
                 id="checkPassword"
                 placeholder="비밀번호를 다시 한 번 입력해 주세요"
-                onClick={togglePasswordVisibility}
                 value={values.checkPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}

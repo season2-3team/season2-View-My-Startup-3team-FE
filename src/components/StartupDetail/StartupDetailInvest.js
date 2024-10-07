@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Pagination from '../Common/Pagination';
 import InvestmentCreate from '../Investment/InvestmentCreate';
+import InvestmentPatch from '../Investment/InvestmentPatch';
+import InvestmentDelete from '../Investment/InvestmentDelete';
+import InvestmentComplete from '../Investment/InvestmentComplete';
 
 const MAX_ITEMS = 5;
 

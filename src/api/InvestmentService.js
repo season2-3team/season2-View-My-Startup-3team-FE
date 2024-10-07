@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: "http://localhost:3000",
 });
 
 instance.interceptors.response.use(
   (res) => res,
   (err) => {
-    console.log('주의 : 에러 발생!');
+    console.log("주의 : 에러 발생!");
     throw err;
   }
 );
@@ -33,8 +33,8 @@ export async function getInvestmentList({ page, limit, order }) {
     params: {
       page,
       limit,
-      order
-    }
+      order,
+    },
   });
   return res.data;
 }

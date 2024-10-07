@@ -1,12 +1,12 @@
-const STARTUP_API_BASE_URL = 'http://localhost:3000/api/startups';
+const STARTUP_API_BASE_URL = "http://localhost:3000/api/startups";
 
 // Article 목록 가져오기
 export async function getStartupList(
   page = 1,
   limit = 10,
-  order = 'simInvest',
-  sort = 'desc',
-  keyword = ''
+  order = "simInvest",
+  sort = "desc",
+  keyword = ""
 ) {
   try {
     const params = new URLSearchParams({
@@ -21,7 +21,7 @@ export async function getStartupList(
     );
     if (!response.ok) {
       const errorMessage = await response.text();
-      console.log('errMessage', errorMessage);
+      console.log("errMessage", errorMessage);
       throw new Error(`Error: ${response.status}`);
     }
     return await response.json();

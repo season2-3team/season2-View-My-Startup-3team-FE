@@ -1,22 +1,33 @@
-import useFetchStartups from "../../hooks/useFetchStartups";
-import StartupDetailHeader from "./StartupDetailHeader";
-import StartupDetailInfo from "./StartupDetailInfo";
-import StartupDetailInvest from "./StartupDetailInvest";
-
-const MAX_ITEMS = 10;
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getStartup } from '../../api/StartupDetailService';
+import StartupDetailHeader from './StartupDetailHeader';
+import StartupDetailInfo from './StartupDetailInfo';
+import StartupDetailInvest from './StartupDetailInvest';
 
 export default function StartupDetail() {
-  const maxItems = MAX_ITEMS;
-  const { error } = useFetchStartups(1, maxItems, "total_investment", "desc");
+  const { id } = useParams();
+  const [startup, setStartup] = useState(null);
+  const [mockInvestor, setMockInvestor] = useState(null);
+  const [error, setError] = useState('');
 
-  if (error) {
-    return <div className="error-message">{error}</div>;
-  }
+  useEffect(() => {
+    const fetchStartup = async () => {
+      try {
+        const data = await getStartup(id);
+        setStartup(data.startup);
+        setMockInvestor(data.mockInvestors);
+      } catch (err) {
+        setError('기업 정보를 불러오는 데 실패했습니다.');
+      }
+    };
+    fetchStartup();
+  }, [id]);
   return (
     <>
-      <StartupDetailHeader />
-      <StartupDetailInfo />
-      <StartupDetailInvest />
+      <StartupDetailHeader startup={startup} />
+      <StartupDetailInfo startup={startup} />
+      <StartupDetailInvest startup={startup} mockInvestor={mockInvestor} />
     </>
   );
 }

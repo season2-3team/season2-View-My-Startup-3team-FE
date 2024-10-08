@@ -1,44 +1,95 @@
-.header {
+.content {
   display: flex;
-  width: 120rem;
-  height: 4rem;
-  justify-content: space-between;
-  font-size: 2rem;
-  font-weight: 2.4rem;
+  flex-direction: column;
+
+  gap: 2.4rem
 }
 
-.button {
+.header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 0.8rem 2.4rem;
-  width: 13.1rem;
+
+  width: 100%;
   height: 4rem;
-  left: 106.9rem;
-  top: 0rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.387rem;
+}
+
+.header button {
+  width: auto;
+  height: 4rem;
+
+  padding: 0.8rem 2.4rem;
+  border-radius: 5rem;
+  border: none;
+
   color: white;
-  background: #eb5230;
-  border-radius: 50px;
   font-size: 1.6rem;
-  border: 0;
+  font-weight: 600;
+  line-height: 1.909rem;
+  text-align: center;
+
+  background-color: var(--primary-orange);
+}
+
+.content>:nth-child(2) h1 {
+  padding: 1.6rem 0;
+  border-top: 0.1rem solid var(--secondary-black-100);
+
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.387rem;
 }
 
 .table {
-  gap: 0 1.6rem;
+  width: 100%;
+
+  min-width: 80rem;
+  border-radius: 0.25rem;
+
+  overflow: hidden;
 }
 
+.table tr:hover {
+  background-color: var(--secondary-black-200);
+  /* 부드러운 전환 효과 추가 */
+  transition: background-color 0.3s ease;
+}
+
+.table th,
 .table td {
-  display: inline-block;
-  background-color: #2e2e2e;
-  border-radius: 0.4rem;
-  height: 3.9rem;
-  width: 120rem;
-  padding: 1rem 1.1rem;
+  padding: 1rem;
+
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.table tr {
-  height: 32rem;
-  width: 120rem;
-  background-color: #212121;
-  border-radius: 0.4rem;
+.table thead {
+  height: 3.9rem;
+
+  border-bottom: 1.6rem solid var(--secondary-black-400);
+
+  background-color: var(--secondary-black-100);
+  color: white;
+  font-weight: 500;
+}
+
+.table tbody {
+  background-color: var(--secondary-black-300);
+  font-weight: 400;
+}
+
+.table tbody td {
+  height: 6.4rem;
+}
+
+.table tbody tr:not(:last-child) {
+  border-bottom: 0.1rem solid var(--secondary-gray-300);
 }

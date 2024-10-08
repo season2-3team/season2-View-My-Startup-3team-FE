@@ -3,21 +3,32 @@ import ic_X from '../../assets/ic_x.svg';
 import ic_search from '../../assets/ic_search.svg';
 import ic_x_circle_small from '../../assets/ic_x_circle_small.svg';
 import ic_check from '../../assets/ic_check.svg';
-import useFetchRecent from '../../hooks/useFetchRecent';
-import { useState } from 'react';
+import useFetchMyStartup from '../../hooks/useFetchMyStartup.js';
+import SelectionPagination from './SelectionPagination.js';
+import { useState, useEffect } from 'react';
+import noImageIcon from '../../assets/no-image.png';
 
-export default function MySelectionModal({ onClose, onSelectStartup }) {
-  const { startups } = useFetchRecent();
+export default function CompareSelectionModal({
+  onClose,
+  onSelectStartup,
+  selectedStartups
+}) {
+  const { startups, currentPage, totalPages, searchStartups, goToPage } =
+    useFetchMyStartup();
   const [searchText, setSearchText] = useState('');
-  const [filteredStartups, setFilteredStartups] = useState([]);
-  const [selectCompareStartups, setSelectComparedStartups] = useState([]);
+  const [selectCompareStartups, setSelectComparedStartups] =
+    useState(selectedStartups);
+
+  useEffect(() => {
+    setSelectComparedStartups(selectedStartups);
+  }, [selectedStartups]);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
     setSearchText(newValue);
 
-    if (!newValue) {
-      setFilteredStartups([]);
+    if (newValue) {
+      searchStartups(newValue);
     }
   };
 
@@ -26,12 +37,12 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
     const results = startups.filter((startup) =>
       startup.name.toLowerCase().includes(searchText.toLowerCase())
     );
-    setFilteredStartups(results);
+    searchStartups(results);
   };
 
   const handleClear = () => {
     setSearchText('');
-    setFilteredStartups([]);
+    searchStartups('');
   };
 
   const handleKeyDown = (e) => {
@@ -41,15 +52,31 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
     }
   };
 
+  const handleDeselectCompareStartups = (startup) => {
+    // 선택된 스타트업을 해제
+    const newSelected = selectCompareStartups.filter(
+      (s) => s.id !== startup.id
+    );
+    setSelectComparedStartups(newSelected);
+    onSelectStartup(newSelected);
+  };
+
   const handleSelectCompareStartups = (startup) => {
+    if (selectedStartups.some((selected) => selected.id === startup.id)) {
+      return; // 선택된 스타트업은 무시
+    }
     if (selectCompareStartups.includes(startup)) {
-      setSelectComparedStartups(
-        selectCompareStartups.filter((s) => s !== startup)
-      );
-      onSelectStartup(selectCompareStartups.filter((s) => s !== startup));
+      // 이미 선택된 스타트업을 해제
+      const newSelected = selectCompareStartups.filter((s) => s !== startup);
+      setSelectComparedStartups(newSelected);
+      onSelectStartup(newSelected);
     } else {
-      setSelectComparedStartups([...selectCompareStartups, startup]);
-      onSelectStartup([...selectCompareStartups, startup]);
+      // 새 스타트업을 선택
+      if (selectCompareStartups.length < 5) {
+        const newSelected = [...selectCompareStartups, startup];
+        setSelectComparedStartups(newSelected);
+        onSelectStartup(newSelected);
+      }
     }
   };
 
@@ -69,7 +96,19 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
         {startups.map((startup) => (
           <li className={styles.list} key={startup.id}>
             <div className={styles.listStartup}>
-              <img src={startup.image} alt="startupImage" />
+              <img
+                src={startup.image || noImageIcon}
+                alt={`${startup.name} 로고`}
+                style={{
+                  width: '3.2rem',
+                  height: '3.2rem',
+                  marginRight: '0.8rem',
+                  verticalAlign: 'middle',
+                  borderRadius: '50%',
+                  backgroundColor: 'white',
+                  objectFit: 'cover'
+                }}
+              />
               <span className={styles.name}>{startup.name}</span>
               <span className={styles.category}>
                 {startup.category.category}
@@ -78,14 +117,21 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             <button
               type="button"
               className={`${styles.selectionBtn} ${
-                selectCompareStartups.includes(startup)
+                selectCompareStartups.includes(startup) ||
+                selectedStartups.some((selected) => selected.id === startup.id)
                   ? styles.completeBtn
                   : styles.selectionBtn
               }`}
               onClick={() => handleSelectCompareStartups(startup)}
-              disabled={selectCompareStartups.includes(startup)}
+              disabled={
+                selectCompareStartups.includes(startup) ||
+                selectedStartups.some((selected) => selected.id === startup.id)
+              }
             >
-              {selectCompareStartups.includes(startup) ? (
+              {selectCompareStartups.includes(startup) ||
+              selectedStartups.some(
+                (selected) => selected.id === startup.id
+              ) ? (
                 <>
                   <img
                     src={ic_check}
@@ -145,7 +191,19 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
               {selectCompareStartups.map((startup) => (
                 <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
-                    <img src={startup.image} alt="startupImage" />
+                    <img
+                      src={startup.image || noImageIcon}
+                      alt={`${startup.name} 로고`}
+                      style={{
+                        width: '3.2rem',
+                        height: '3.2rem',
+                        marginRight: '0.8rem',
+                        verticalAlign: 'middle',
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        objectFit: 'cover'
+                      }}
+                    />
                     <span className={styles.name}>{startup.name}</span>
                     <span className={styles.category}>
                       {startup.category.category}
@@ -154,7 +212,7 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
                   <button
                     type="button"
                     className={`${styles.selectionBtn} ${styles.canselBtn}`}
-                    onClick={() => handleSelectCompareStartups(startup)}
+                    onClick={() => handleDeselectCompareStartups(startup)}
                   >
                     선택 해제
                   </button>
@@ -163,7 +221,6 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
             </ul>
           </div>
         )}
-
         {!searchText && (
           <StartupList
             title="기업"
@@ -175,11 +232,16 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
         {searchText && (
           <StartupList
             title="검색 결과"
-            startups={filteredStartups}
+            startups={startups}
             selectCompareStartups={selectCompareStartups}
             handleSelectCompareStartups={handleSelectCompareStartups}
           />
         )}
+        <SelectionPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+        />
       </form>
     </div>
   );

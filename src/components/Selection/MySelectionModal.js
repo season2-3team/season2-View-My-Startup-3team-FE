@@ -2,11 +2,14 @@ import styles from './MySelectionModal.module.css';
 import ic_X from '../../assets/ic_x.svg';
 import ic_search from '../../assets/ic_search.svg';
 import ic_x_circle_small from '../../assets/ic_x_circle_small.svg';
-import useFetchRecent from '../../hooks/useFetchRecent';
+import useFetchMyStartup from '../../hooks/useFetchMyStartup.js';
+import useFetchRecent from '../../hooks/useFetchRecent.js';
 import { useState } from 'react';
+import noImageIcon from '../../assets/no-image.png';
 
 export default function MySelectionModal({ onClose, onSelectStartup }) {
-  const { startups, searchStartups } = useFetchRecent();
+  const { recentStartups } = useFetchRecent();
+  const { startups, searchStartups } = useFetchMyStartup();
   const [searchText, setSearchText] = useState('');
 
   const handleChange = (e) => {
@@ -78,22 +81,34 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
         {!searchText && (
           <div>
             <h3 className={styles.title}>
-              최근 선택된 기업 ({startups.length})
+              최근 선택된 기업 ({recentStartups.length && startups.length})
             </h3>
             <ul>
-              {startups.map((startup) => (
+              {recentStartups.slice(0, 5).map((startup) => (
                 <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
-                    <img src={startup.image} alt="startupImage" />
-                    <span className={styles.name}>{startup.name}</span>
+                    <img
+                      src={startup.startup.image || noImageIcon}
+                      alt={`${startup.name} 로고`}
+                      style={{
+                        width: '3.2rem',
+                        height: '3.2rem',
+                        marginRight: '0.8rem',
+                        verticalAlign: 'middle',
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        objectFit: 'cover'
+                      }}
+                    />
+                    <span className={styles.name}>{startup.startup.name}</span>
                     <span className={styles.category}>
-                      {startup.category.category}
+                      {startup.startup.category.category}
                     </span>
                   </div>
                   <button
                     type="button"
                     className={styles.selectionBtn}
-                    onClick={() => handleSelect(startup)}
+                    onClick={() => handleSelect(startup.startup)}
                   >
                     선택하기
                   </button>
@@ -109,7 +124,19 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
               {startups.map((startup) => (
                 <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
-                    <img src={startup.image} alt="startupImage" />
+                    <img
+                      src={startup.image || noImageIcon}
+                      alt={`${startup.name} 로고`}
+                      style={{
+                        width: '3.2rem',
+                        height: '3.2rem',
+                        marginRight: '0.8rem',
+                        verticalAlign: 'middle',
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        objectFit: 'cover'
+                      }}
+                    />
                     <span className={styles.name}>{startup.name}</span>
                     <span className={styles.category}>
                       {startup.category.category}

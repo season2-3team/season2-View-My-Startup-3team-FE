@@ -11,7 +11,7 @@
   font-weight: 700;
   line-height: 2.4rem;
   text-align: left;
-  margin-bottom: 3rem;
+  margin-bottom: 7rem;
   position: relative;
   right: 50rem;
 }
@@ -184,9 +184,10 @@
 
 .resetBtn {
   display: flex;
+  justify-content: center;
   align-items: center;
   position: relative;
-  bottom: 5.7rem;
+  bottom: 9.5rem;
   left: 54rem;
   width: 15.9rem;
   height: 4.3rem;

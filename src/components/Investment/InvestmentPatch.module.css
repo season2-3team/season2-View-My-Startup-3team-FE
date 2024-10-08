@@ -86,3 +86,27 @@
 
     cursor: pointer;
 }
+
+/***** Mobile *****/
+@media (max-width: 743px) {
+    .content {
+        max-width: 31.1rem;
+    }
+
+    .header h1 {
+        font-size: 1.6rem;
+        line-height: 1.909rem;
+    }
+
+    .group h1 {
+        font-size: 1.4rem;
+        line-height: 1.671rem;
+    }
+
+    .patch {
+        height: 4.4rem;
+
+        font-size: 1.4rem;
+        line-height: 1.671rem;
+    }
+}

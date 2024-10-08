@@ -6,11 +6,14 @@ import { useState, useCallback } from 'react';
 import { useSort } from '../../contexts/SortContext';
 import { formatAmount } from '../../utils/formatAmount';
 import Pagination from '../Common/Pagination';
+import InvestmentCreate from './InvestmentCreate';
 
 export default function InvestmentList() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const { orderBy } = useSort();
+  const [selectedStartup, setSelectedStartup] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 데이터 불러오기
   const fetchInvestmentList = useCallback(async () => {
@@ -63,9 +66,14 @@ export default function InvestmentList() {
     currentPage * pageSize
   );
 
+  const handleStartupClick = (item) => {
+    setSelectedStartup(item.startup);
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
-      <div style={{ width: '100%', overflowX: 'auto' }}>
+      <div className={styles.wrapper}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -73,13 +81,20 @@ export default function InvestmentList() {
               <th style={{ width: '21.3rem' }}>기업 명</th>
               <th style={{ width: '30.4rem' }}>기업 소개</th>
               <th style={{ width: '15.4rem' }}>카테고리</th>
-              <th>View My Startup 누적 투자 금액</th>
-              <th>실제 누적 투자 금액</th>
+              <th style={{ width: '23.1rem' }}>
+                View My Startup
+                <br className={styles.br} /> 누적 투자 금액
+              </th>
+              <th style={{ width: '23rem' }}>실제 누적 투자 금액</th>
             </tr>
           </thead>
           <tbody>
             {currentList.map((item) => (
-              <tr key={item.id}>
+              <tr
+                key={item.id}
+                onClick={() => handleStartupClick(item)}
+                style={{ cursor: 'pointer' }}
+              >
                 <td>{item.rank}위</td>
                 <td>
                   <div className={styles.name}>
@@ -93,7 +108,7 @@ export default function InvestmentList() {
                 <td className={styles.description}>
                   {item.startup.description}
                 </td>
-                <td>{item.startup.category.category}</td>
+                <td>{item.startup.categoryName}</td>
                 <td>{formatAmount(item.startup.simInvest)} 원</td>
                 <td>{formatAmount(item.startup.actualInvest)} 원</td>
               </tr>
@@ -106,6 +121,12 @@ export default function InvestmentList() {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
+      {isModalOpen && (
+        <InvestmentCreate
+          onClose={() => setIsModalOpen(false)}
+          startup={selectedStartup}
+        />
+      )}
     </div>
   );
 }

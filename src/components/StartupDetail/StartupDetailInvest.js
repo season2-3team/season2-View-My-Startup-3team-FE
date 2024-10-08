@@ -2,7 +2,10 @@ import styles from './StartupDetailInvest.module.css';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Pagination from '../Common/Pagination';
-import InvestmentModal from '../Investment/InvestmentModal';
+import InvestmentCreate from '../Investment/InvestmentCreate';
+import InvestmentPatch from '../Investment/InvestmentPatch';
+import InvestmentDelete from '../Investment/InvestmentDelete';
+import InvestmentComplete from '../Investment/InvestmentComplete';
 
 const MAX_ITEMS = 5;
 
@@ -40,7 +43,7 @@ export default function StartupDetailInvest() {
           <Pagination />
         </div>
       </table>
-      {showModal && <InvestmentModal onClose={handleCloseModal} />}
+      {showModal && <InvestmentCreate onClose={handleCloseModal} />}
     </>
   );
 }

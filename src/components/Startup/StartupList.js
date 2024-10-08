@@ -132,6 +132,9 @@ export default function StartupList() {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
+          pageButtonSize='4.8rem'
+          pageButtonBorderRaius='1rem'
+          pageButtonFontSize='1.8rem'
         />
       </div>
     </>

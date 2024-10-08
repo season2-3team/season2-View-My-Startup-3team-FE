@@ -5,13 +5,16 @@ import CompareSelectionModal from './CompareSelectionModal';
 import { useState } from 'react';
 import ic_minus from '../../assets/ic_minus.svg';
 import ic_restart from '../../assets/ic_restart.svg';
+import useFetchMySelection from '../../hooks/useFetchMySelection';
+import useFetchCompare from '../../hooks/useFetchCompare.js';
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
   const [isComparedModal, setIsComparedModal] = useState(false);
   const [selectedStartup, setSelectedStartup] = useState([]);
   const [compareSelectedStartups, setCompareSelectedStartups] = useState([]);
-
+  const { fetchMySelection } = useFetchMySelection();
+  const { fetchComparison } = useFetchCompare();
   const handleOpenModal = () => {
     setIsModal(true);
   };
@@ -41,14 +44,24 @@ export default function MySelection() {
   };
 
   const handleCompareRemoveStartups = (id) => {
-    setCompareSelectedStartups((prev) =>
-      prev.filter((startup) => startup.id !== id)
-    );
+    setCompareSelectedStartups((prev) => {
+      const updatedStartups = prev.filter((startup) => startup.id !== id);
+      return updatedStartups;
+    });
   };
 
   const handleResetAll = () => {
     setSelectedStartup([]);
     setCompareSelectedStartups([]);
+  };
+
+  const handleCompareButtonClick = () => {
+    selectedStartup.forEach((startup) => {
+      fetchMySelection(startup.id);
+    });
+
+    const ids = compareSelectedStartups.map((startup) => startup.id);
+    fetchComparison(ids);
   };
 
   return (
@@ -158,10 +171,11 @@ export default function MySelection() {
             : styles.compareBtn
         }`}
         disabled={
-          selectedStartup.length > 0 && compareSelectedStartups > 0
+          selectedStartup.length > 0 && compareSelectedStartups.length > 0
             ? false
             : true
         }
+        onClick={handleCompareButtonClick}
       >
         기업 비교하기
       </button>
@@ -173,6 +187,7 @@ export default function MySelection() {
       )}
       {isComparedModal && (
         <CompareSelectionModal
+          selectedStartups={compareSelectedStartups}
           onSelectStartup={handleCompareSelectStartups}
           onClose={handleCloseComparedModal}
         />

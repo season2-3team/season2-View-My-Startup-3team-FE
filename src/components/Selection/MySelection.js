@@ -159,8 +159,8 @@ export default function MySelection() {
         }`}
         disabled={
           selectedStartup.length > 0 && compareSelectedStartups > 0
-            ? 'false'
-            : 'true'
+            ? false
+            : true
         }
       >
         기업 비교하기

@@ -4,7 +4,14 @@ import arrowRightIcon from '../../assets/ic_arrow_right.svg';
 
 const MAX_PAGE_DISPLAY = 5; // 한 번에 보여줄 페이지 수
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ 
+  currentPage, 
+  totalPages, 
+  onPageChange, 
+  pageButtonSize = '4.8rem', 
+  pageButtonBorderRaius='1rem', 
+  pageButtonFontSize='1.8rem' 
+}) => {
 
   if (totalPages <= 1) {
     return null;
@@ -45,6 +52,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <button
           className={styles.paginationButton}
           onClick={handlePrevGroupClick}
+          style={{ 
+            width: pageButtonSize, 
+            height: pageButtonSize,
+            borderRadius: pageButtonBorderRaius,
+            fontSize: pageButtonFontSize
+          }}
         >
           <img
             src={arrowLeftIcon}
@@ -60,6 +73,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={() => {
             onPageChange(page);  // 페이지 변경
           }}
+          style={{ 
+            width: pageButtonSize, 
+            height: pageButtonSize,
+            borderRadius: pageButtonBorderRaius,
+            fontSize: pageButtonFontSize
+          }}
         >
           {page}
         </button>
@@ -69,6 +88,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <button
           className={styles.paginationButton}
           onClick={handleNextGroupClick}
+          style={{ 
+            width: pageButtonSize, 
+            height: pageButtonSize,
+            borderRadius: pageButtonBorderRaius,
+            fontSize: pageButtonFontSize
+          }}
         >
           <img
             src={arrowRightIcon}

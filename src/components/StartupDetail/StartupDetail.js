@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getStartup } from '../../api/StartupDetail';
+import { getStartup } from '../../api/StartupDetailService';
 import StartupDetailHeader from './StartupDetailHeader';
 import StartupDetailInfo from './StartupDetailInfo';
 import StartupDetailInvest from './StartupDetailInvest';

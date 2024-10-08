@@ -3,7 +3,7 @@ import ic_X from '../../assets/ic_x.svg';
 import ic_search from '../../assets/ic_search.svg';
 import ic_x_circle_small from '../../assets/ic_x_circle_small.svg';
 import ic_check from '../../assets/ic_check.svg';
-import useFetchRecent from '../../hooks/useFetchRecent';
+import useFetchMyStartup from '../../hooks/useFetchMyStartup.js';
 import SelectionPagination from './SelectionPagination.js';
 import { useState, useEffect } from 'react';
 
@@ -13,7 +13,7 @@ export default function CompareSelectionModal({
   selectedStartups
 }) {
   const { startups, currentPage, totalPages, searchStartups, goToPage } =
-    useFetchRecent();
+    useFetchMyStartup();
   const [searchText, setSearchText] = useState('');
   const [selectCompareStartups, setSelectComparedStartups] =
     useState(selectedStartups);

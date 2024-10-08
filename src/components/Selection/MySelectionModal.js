@@ -2,13 +2,13 @@ import styles from './MySelectionModal.module.css';
 import ic_X from '../../assets/ic_x.svg';
 import ic_search from '../../assets/ic_search.svg';
 import ic_x_circle_small from '../../assets/ic_x_circle_small.svg';
-import useFetchRecent from '../../hooks/useFetchRecent';
-import useFetchSelection from '../../hooks/useFetchSelection';
+import useFetchMyStartup from '../../hooks/useFetchMyStartup.js';
+import useFetchRecent from '../../hooks/useFetchRecent.js';
 import { useState } from 'react';
 
 export default function MySelectionModal({ onClose, onSelectStartup }) {
-  const { recentStartups } = useFetchSelection();
-  const { startups, searchStartups } = useFetchRecent();
+  const { recentStartups } = useFetchRecent();
+  const { startups, searchStartups } = useFetchMyStartup();
   const [searchText, setSearchText] = useState('');
 
   const handleChange = (e) => {

@@ -13,8 +13,14 @@ export default function CompareSelectionModal({
   onSelectStartup,
   selectedStartups
 }) {
-  const { startups, currentPage, totalPages, searchStartups, goToPage } =
-    useFetchMyStartup();
+  const {
+    startups,
+    currentPage,
+    totalPages,
+    searchStartups,
+    goToPage,
+    totalCount
+  } = useFetchMyStartup();
   const [searchText, setSearchText] = useState('');
   const [selectCompareStartups, setSelectComparedStartups] =
     useState(selectedStartups);
@@ -44,6 +50,13 @@ export default function CompareSelectionModal({
     setSearchText('');
     searchStartups('');
   };
+
+  useEffect(() => {
+    if (!searchText) {
+      // 검색어가 비어있을 때 전체 스타트업 목록을 로드
+      searchStartups(''); // 초기화하여 모든 스타트업 표시
+    }
+  }, [searchText, searchStartups]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -90,7 +103,7 @@ export default function CompareSelectionModal({
   }) => (
     <div>
       <h3 className={styles.title}>
-        {title} ({startups.length})
+        {title} ({totalCount})
       </h3>
       <ul>
         {startups.map((startup) => (

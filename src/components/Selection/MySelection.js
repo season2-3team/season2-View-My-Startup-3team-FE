@@ -62,14 +62,15 @@ export default function MySelection() {
     setIsComparisonDone(false);
   };
 
-  const handleCompareButtonClick = () => {
-    selectedStartup.forEach((startup) => {
-      fetchMySelection(startup.id);
+  const handleCompareButtonClick = async () => {
+    const promise = selectedStartup.map((startup) => {
+      return fetchMySelection(startup.id);
     });
+    await Promise.all(promise);
 
     const ids = compareSelectedStartups.map((startup) => startup.id);
-    fetchComparison(ids);
-    fetchResult();
+    await fetchComparison(ids);
+    await fetchResult();
     setIsComparisonDone(true);
   };
 
@@ -228,6 +229,7 @@ export default function MySelection() {
           onClose={handleCloseComparedModal}
         />
       )}
+
       {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
         <div className={styles.section}>
           <div className={styles.myNav}>

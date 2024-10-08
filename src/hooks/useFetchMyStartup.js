@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
-// import { v4 as uuidv4 } from 'uuid';
 
 const COMPARISON_API_BASE_URL = 'http://localhost:3000/api/comparisons';
-
-// const sessionId = localStorage.getItem('sessionId') || uuidv4();
-// localStorage.setItem('sessionId', sessionId);
 
 export default function useFetchMyStartup() {
   const [startups, setStartups] = useState([]);
@@ -12,7 +8,7 @@ export default function useFetchMyStartup() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const fetchRecentStartups = async (search = '', page = 1, limit = 5) => {
+  const fetchStartups = async (search = '', page = 1, limit = 5) => {
     try {
       const response = await fetch(
         `${COMPARISON_API_BASE_URL}/recent-select?search=${search}&page=${page}&limit=${limit}`
@@ -33,15 +29,15 @@ export default function useFetchMyStartup() {
   };
 
   useEffect(() => {
-    fetchRecentStartups();
+    fetchStartups();
   }, []);
 
   const searchStartups = (searchText) => {
-    fetchRecentStartups(searchText); // 검색어가 변경될 때 데이터를 가져옴
+    fetchStartups(searchText); // 검색어가 변경될 때 데이터를 가져옴
   };
 
   const goToPage = (page) => {
-    fetchRecentStartups('', page); // 지정된 페이지로 이동
+    fetchStartups('', page); // 지정된 페이지로 이동
   };
 
   return {

@@ -6,6 +6,7 @@ import ic_check from '../../assets/ic_check.svg';
 import useFetchMyStartup from '../../hooks/useFetchMyStartup.js';
 import SelectionPagination from './SelectionPagination.js';
 import { useState, useEffect } from 'react';
+import noImageIcon from '../../assets/no-image.png';
 
 export default function CompareSelectionModal({
   onClose,
@@ -51,6 +52,15 @@ export default function CompareSelectionModal({
     }
   };
 
+  const handleDeselectCompareStartups = (startup) => {
+    // 선택된 스타트업을 해제
+    const newSelected = selectCompareStartups.filter(
+      (s) => s.id !== startup.id
+    );
+    setSelectComparedStartups(newSelected);
+    onSelectStartup(newSelected);
+  };
+
   const handleSelectCompareStartups = (startup) => {
     if (selectedStartups.some((selected) => selected.id === startup.id)) {
       return; // 선택된 스타트업은 무시
@@ -63,8 +73,9 @@ export default function CompareSelectionModal({
     } else {
       // 새 스타트업을 선택
       if (selectCompareStartups.length < 5) {
-        setSelectComparedStartups([...selectCompareStartups, startup]);
-        onSelectStartup([...selectCompareStartups, startup]);
+        const newSelected = [...selectCompareStartups, startup];
+        setSelectComparedStartups(newSelected);
+        onSelectStartup(newSelected);
       }
     }
   };
@@ -85,7 +96,19 @@ export default function CompareSelectionModal({
         {startups.map((startup) => (
           <li className={styles.list} key={startup.id}>
             <div className={styles.listStartup}>
-              <img src={startup.image} alt="startupImage" />
+              <img
+                src={startup.image || noImageIcon}
+                alt={`${startup.name} 로고`}
+                style={{
+                  width: '3.2rem',
+                  height: '3.2rem',
+                  marginRight: '0.8rem',
+                  verticalAlign: 'middle',
+                  borderRadius: '50%',
+                  backgroundColor: 'white',
+                  objectFit: 'cover'
+                }}
+              />
               <span className={styles.name}>{startup.name}</span>
               <span className={styles.category}>
                 {startup.category.category}
@@ -168,7 +191,19 @@ export default function CompareSelectionModal({
               {selectCompareStartups.map((startup) => (
                 <li key={startup.id} className={styles.list}>
                   <div className={styles.listStartup}>
-                    <img src={startup.image} alt="startupImage" />
+                    <img
+                      src={startup.image || noImageIcon}
+                      alt={`${startup.name} 로고`}
+                      style={{
+                        width: '3.2rem',
+                        height: '3.2rem',
+                        marginRight: '0.8rem',
+                        verticalAlign: 'middle',
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        objectFit: 'cover'
+                      }}
+                    />
                     <span className={styles.name}>{startup.name}</span>
                     <span className={styles.category}>
                       {startup.category.category}
@@ -177,7 +212,7 @@ export default function CompareSelectionModal({
                   <button
                     type="button"
                     className={`${styles.selectionBtn} ${styles.canselBtn}`}
-                    onClick={() => handleSelectCompareStartups(startup)}
+                    onClick={() => handleDeselectCompareStartups(startup)}
                   >
                     선택 해제
                   </button>

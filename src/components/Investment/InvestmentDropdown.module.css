@@ -61,3 +61,21 @@
 .options li:not(:last-child) {
     border-bottom: 0.1rem solid var(--secondary-gray-200);
 }
+
+/***** Mobile *****/
+@media (max-width: 743px) {
+    .menu {
+        padding: 0.8rem 1.2rem;
+
+        font-size: 1.2rem;
+        line-height: 1.4rem;
+    }
+
+    .options {
+        top: 14.5rem;
+    }
+
+    .options li {
+        padding: 1rem 1.4rem;
+    }
+}

@@ -1,31 +1,4 @@
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    max-height: 80vh;
-
-    padding: 2.4rem;
-    border-radius: 1.6rem;
-
-    background-color: var(--secondary-black-300);
-
-    overflow-y: auto;
-}
-
-.form,
+form,
 .form>:first-child,
 .form>:nth-child(2),
 .group,
@@ -38,6 +11,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    max-width: 44.8rem;
 
     gap: 2.4rem;
 }
@@ -62,12 +37,35 @@
     font-weight: 700;
     line-height: 2.148rem;
 
-
     gap: 1.6rem;
 }
 
-.form>:nth-child(2) p {
+.startup {
+    display: flex;
+    align-items: center;
+
+    gap: 0.8rem;
+}
+
+.startup img {
+    width: 4rem;
+    height: 4rem;
+
+    border-radius: 100%;
+    background-color: white;
+}
+
+.startup h1 {
+    font-size: 1.8rem;
     font-weight: 500;
+    line-height: 2.148rem;
+}
+
+.startup p {
+    color: var(--secondary-gray-200);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.909rem;
 }
 
 /**** 인풋 그룹 설정 ****/
@@ -87,10 +85,9 @@
 .group input,
 .group textarea {
     padding: 1.6rem 2rem;
-    border: 0.1rem solid var(--secondary-gray-200);
     border-radius: 1rem;
 
-    color: var(--secondary-gray-200);
+    color: var(--secondary-gray-100);
     background-color: transparent;
 }
 
@@ -104,14 +101,12 @@
 
 .group input:focus,
 .group textarea:focus {
-    color: var(--secondary-gray-100);
     outline: 0.1rem solid var(--secondary-gray-100);
 }
 
 .group textarea {
     height: 10.8rem;
 }
-
 
 /**** 비밀번호 인풋 설정 ****/
 .password {
@@ -150,7 +145,7 @@
     cursor: pointer;
 }
 
-.buttons>:first-child {
+.cancel {
     width: 19.4rem;
 
     border: 0.1rem solid var(--primary-orange);
@@ -161,7 +156,7 @@
     background-color: transparent;
 }
 
-.buttons>:last-child {
+.submit {
     width: 18.3rem;
 
     border: none;
@@ -171,4 +166,38 @@
     line-height: 1.909rem;
 
     background-color: var(--primary-orange);
+}
+
+.submit:disabled {
+    background-color: var(--secondary-gray-300);
+    cursor: default;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.671rem;
+}
+
+/***** Mobile *****/
+@media (max-width: 743px) {
+    .form {
+        max-width: 31.1rem;
+    }
+
+    .buttons button {
+        height: 4rem;
+
+        font-size: 1.4rem;
+        line-height: 1.671rem;
+    }
+
+    .cancel {
+        width: 13rem;
+    }
+
+    .submit {
+        width: 15rem;
+    }
 }

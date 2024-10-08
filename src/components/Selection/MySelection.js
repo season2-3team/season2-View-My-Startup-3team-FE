@@ -9,6 +9,9 @@ import useFetchMySelection from '../../hooks/useFetchMySelection';
 import useFetchCompare from '../../hooks/useFetchCompare.js';
 import useFetchCompareResult from '../../hooks/useFetchCompareResult';
 import noImageIcon from '../../assets/no-image.png';
+import { formatAmount } from '../../utils/formatAmount.js';
+import useFetchCancelMySelection from '../../hooks/useFetchCancelMySelection.js';
+import useFetchCancelCompare from '../../hooks/useFetchCancelCompare.js';
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
@@ -19,6 +22,8 @@ export default function MySelection() {
   const { fetchComparison } = useFetchCompare();
   const [isComparisonDone, setIsComparisonDone] = useState(false);
   const { allResults, fetchResult } = useFetchCompareResult();
+  const { fetchCancelMySelection } = useFetchCancelMySelection();
+  const { fetchCancelComparison } = useFetchCancelCompare();
 
   const handleOpenModal = () => {
     setIsModal(true);
@@ -78,6 +83,17 @@ export default function MySelection() {
     setIsComparisonDone(false);
   };
 
+  const handleCancelButtonClick = async () => {
+    const promise = selectedStartup.map((startup) => {
+      return fetchCancelMySelection(startup.id);
+    });
+    await Promise.all(promise);
+
+    const ids = compareSelectedStartups.map((startup) => startup.id);
+    await fetchCancelComparison(ids);
+    await fetchResult();
+  };
+
   return (
     <div className={styles.section}>
       <div className={styles.myNav}>
@@ -103,7 +119,10 @@ export default function MySelection() {
               className={`${styles.resetBtn} ${
                 isComparisonDone ? styles.beforeBtn : ''
               }`}
-              onClick={handleCloseCompare}
+              onClick={() => {
+                handleCloseCompare();
+                handleCancelButtonClick();
+              }}
             >
               다른 기업 비교하기
             </button>
@@ -118,20 +137,28 @@ export default function MySelection() {
           {selectedStartup.map((startup) => (
             <div key={startup.id} className={styles.selectedStartup}>
               <img
-                src={startup.image}
+                src={startup.image || noImageIcon}
                 alt="startupImg"
                 className={styles.startupImg}
+                style={{
+                  verticalAlign: 'middle',
+                  borderRadius: '50%',
+                  backgroundColor: 'white',
+                  objectFit: 'cover'
+                }}
               />
               <span className={styles.startupName}>{startup.name}</span>
               <span className={styles.startupCategory}>
                 {startup.category.category}
               </span>
-              <button
-                className={styles.removeBtn}
-                onClick={() => handleRemoveStartup(startup.id)}
-              >
-                선택 취소
-              </button>
+              {!isComparisonDone && (
+                <button
+                  className={styles.removeBtn}
+                  onClick={() => handleRemoveStartup(startup.id)}
+                >
+                  선택 취소
+                </button>
+              )}
             </div>
           ))}
           {selectedStartup.length === 0 && (
@@ -183,9 +210,15 @@ export default function MySelection() {
                       onClick={() => handleCompareRemoveStartups(startup.id)}
                     />
                     <img
-                      src={startup.image}
+                      src={startup.image || noImageIcon}
                       alt="startupImg"
                       className={styles.startupImg}
+                      style={{
+                        verticalAlign: 'middle',
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        objectFit: 'cover'
+                      }}
                     />
                     <span className={styles.startupName}>{startup.name}</span>
                     <span className={styles.startupCategory}>
@@ -236,7 +269,7 @@ export default function MySelection() {
             <h2 className={styles.headerTxt}>비교 결과 확인하기</h2>
           </div>
           <div style={{ width: '117rem', overflowX: 'auto' }}>
-            <table>
+            <table className={styles.table}>
               <thead>
                 <tr>
                   <th style={{ width: '21.3rem' }}>기업명</th>
@@ -259,7 +292,7 @@ export default function MySelection() {
                         : ''
                     }
                   >
-                    <td>
+                    <td style={{ textAlign: 'left', paddingLeft: '7rem' }}>
                       <span
                         style={{
                           display: 'inline-block',
@@ -292,10 +325,14 @@ export default function MySelection() {
                     <td className={styles.description}>{result.description}</td>
                     <td>{result.category.category}</td>
                     <td style={{ textAlign: 'center' }}>
-                      {result.simInvest} 원
+                      {formatAmount(result.simInvest)} 원
                     </td>
-                    <td style={{ textAlign: 'center' }}>{result.revenue} 원</td>
-                    <td style={{ textAlign: 'center' }}>{result.employees}</td>
+                    <td style={{ textAlign: 'center' }}>
+                      {formatAmount(result.revenue)} 원
+                    </td>
+                    <td style={{ textAlign: 'right', paddingRight: '5.5rem' }}>
+                      {formatAmount(result.employees)} 명
+                    </td>
                   </tr>
                 ))}
               </tbody>

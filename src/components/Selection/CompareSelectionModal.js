@@ -35,6 +35,8 @@ export default function CompareSelectionModal({
 
     if (newValue) {
       searchStartups(newValue);
+    } else {
+      searchStartups([]);
     }
   };
 
@@ -48,15 +50,8 @@ export default function CompareSelectionModal({
 
   const handleClear = () => {
     setSearchText('');
-    searchStartups('');
+    searchStartups([]);
   };
-
-  useEffect(() => {
-    if (!searchText) {
-      // 검색어가 비어있을 때 전체 스타트업 목록을 로드
-      searchStartups(''); // 초기화하여 모든 스타트업 표시
-    }
-  }, [searchText, searchStartups]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {

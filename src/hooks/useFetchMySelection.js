@@ -27,7 +27,6 @@ export default function useFetchMySelection(id) {
       const data = await response.json();
       setUpdateStartup(data.updateStartup);
       setNewSelection(data.newSelection);
-      console.log('Startup updated:', data);
     } catch (err) {
       console.error('Failed to fetch startups', err);
     }

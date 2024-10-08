@@ -1,29 +1,27 @@
-const STARTUP_API_BASE_URL = "http://localhost:3000/api/startups";
+import axios from 'axios';
 
-export async function getStartupInfo(page, limit, order, sort, keyword) {
-  const params = new URLSearchParams({
-    page,
-    limit,
-    order,
-    sort,
-    keyword,
-  });
+const instance = axios.create({
+  baseURL: 'http://localhost:3000'
+});
 
-  try {
-    const response = await fetch(
-      `${STARTUP_API_BASE_URL}?${params.toString()}`
+instance.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    console.log(
+      '주의 : 에러 발생!',
+      err.response ? err.response.data : err.message
     );
-    // 응답 상태 확인
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      console.log("errMessage", errorMessage);
-      throw new Error(`Error: ${response.status}`);
-    }
 
-    const data = await response.json();
-    console.log(data); // 받아온 데이터를 콘솔에 출력
-    return data; // 필요한 경우 데이터를 반환
-  } catch (error) {
-    console.error("Fetch error:", error);
+    throw err;
   }
+);
+
+async function get(url, params = {}) {
+  return await instance.get(url, { params });
+}
+
+export async function getStartup(id) {
+  const res = await get(`/api/startups/${id}`);
+  console.log(res.data);
+  return res.data;
 }

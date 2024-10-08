@@ -1,7 +1,8 @@
 import styles from './StartupDetailInvest.module.css';
-import { Link } from 'react-router-dom';
+import kebab from '../../assets/ic_kebab.svg';
 import { useState } from 'react';
 import Pagination from '../Common/Pagination';
+import { formatAmount } from '../../utils/formatAmount';
 import InvestmentCreate from '../Investment/InvestmentCreate';
 import InvestmentPatch from '../Investment/InvestmentPatch';
 import InvestmentDelete from '../Investment/InvestmentDelete';
@@ -9,7 +10,7 @@ import InvestmentComplete from '../Investment/InvestmentComplete';
 
 const MAX_ITEMS = 5;
 
-export default function StartupDetailInvest() {
+export default function StartupDetailInvest({ startup, mockInvestor }) {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -20,30 +21,48 @@ export default function StartupDetailInvest() {
     setShowModal(false);
   };
 
+  if (!startup) {
+    return <div>Loading...</div>;
+  }
+
+  if (!mockInvestor.list) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
+    <div className={styles.content}>
       <div className={styles.header}>
-        View My Startup에서 받은 투자
-        <button className={styles.button} onClick={handleOpenModal}>
-          기업 투자하기
-        </button>
+        <h1>View My Startup에서 받은 투자</h1>
+        <button onClick={handleOpenModal}>기업 투자하기</button>
       </div>
-      <div style={{ margin: '1.6rem', fontSize: '2rem', fontWeight: '2.4rem' }}>
-        총 원
+      <div>
+        <h1>총 {formatAmount(startup.simInvest)}원</h1>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th style={{ width: '8.4rem' }}>투자자 이름</th>
+              <th style={{ width: '8.4rem' }}>순위</th>
+              <th style={{ width: '8.4rem' }}>투자 금액</th>
+              <th style={{ width: '8.84rem' }}>투자 코멘트</th>
+              <th style={{ width: '6.4rem' }}> </th>
+            </tr>
+          </thead>
+          <tbody>
+            {mockInvestor.list.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.rank}위</td>
+                <td>{formatAmount(item.investAmount)} 원</td>
+                <td style={{ textAlign: 'left' }}>{item.comment}</td>
+                <td>
+                  <img src={kebab} alt="더보기 아이콘" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <table className={styles.table}>
-        <td className={styles.td}>
-          <th style={{ width: '8.4rem' }}>투자자 이름</th>
-          <th style={{ width: '8.4rem' }}>순위</th>
-          <th style={{ width: '8.4rem' }}>투자금액</th>
-          <th style={{ width: '88.4rem' }}>투자 코멘트</th>
-        </td>
-        <tr>투자 상세 목록 금액순 출력-수정삭제 기능 추가(한번에 5줄 로딩)</tr>
-        <div>
-          <Pagination />
-        </div>
-      </table>
       {showModal && <InvestmentCreate onClose={handleCloseModal} />}
-    </>
+    </div>
   );
 }

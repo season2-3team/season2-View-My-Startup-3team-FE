@@ -9,7 +9,7 @@ import Modal from '../Common/Modal';
 import InvestmentComplete from './InvestmentComplete';
 
 export default function InvestmentCreate({ onClose, startup }) {
-  const { id: startupId, image, name, category } = startup || {};
+  const { id: startupId, image, name, categoryName } = startup || {};
   const { values, errors, handleChange, validate, handleBlur } = useValidate({
     name: '',
     investAmount: '',
@@ -96,7 +96,7 @@ export default function InvestmentCreate({ onClose, startup }) {
             <div className={styles.startup}>
               <img src={image} alt={name} />
               <h1>{name}</h1>
-              <p>{category.category}</p>
+              <p>{categoryName}</p>
             </div>
           </div>
 

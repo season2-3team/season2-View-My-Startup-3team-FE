@@ -108,7 +108,7 @@ export default function InvestmentList() {
                 <td className={styles.description}>
                   {item.startup.description}
                 </td>
-                <td>{item.startup.category.category}</td>
+                <td>{item.startup.categoryName}</td>
                 <td>{formatAmount(item.startup.simInvest)} 원</td>
                 <td>{formatAmount(item.startup.actualInvest)} 원</td>
               </tr>

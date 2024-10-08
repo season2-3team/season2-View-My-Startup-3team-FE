@@ -63,10 +63,10 @@ export default function InvestmentCreate({ onClose, startup }) {
 
       const investmentID = res.id;
 
-      if (investmentID) {
-        setIsComplete(true);
-      } else {
+      if (!investmentID) {
         setError('투자 ID를 얻는 데 실패하였습니다.');
+      } else {
+        setIsComplete(true);
       }
     } catch (error) {
       setError('투자에 실패하였습니다.');

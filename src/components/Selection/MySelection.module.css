@@ -5,15 +5,19 @@
   align-items: center;
 }
 
+.headerBox {
+  width: 117rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4em;
+}
+
 .headerTxt {
-  font-family: Pretendard;
   font-size: 2rem;
   font-weight: 700;
   line-height: 2.4rem;
   text-align: left;
-  margin-bottom: 7rem;
-  position: relative;
-  right: 50rem;
 }
 
 .borderBox {
@@ -117,7 +121,7 @@
 }
 
 .selectedHeader {
-  width: 120rem;
+  width: 117rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -187,8 +191,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  bottom: 9.5rem;
-  left: 54rem;
+
   width: 15.9rem;
   height: 4.3rem;
   padding: 0.8rem 2.4rem;
@@ -206,6 +209,53 @@
 
 .beforeBtn {
   width: 17rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4.3rem;
+  padding: 0.8rem 2.4rem;
+  gap: 1rem;
+  border-radius: 2rem;
+  color: var(--secondary-white);
+  background-color: var(--primary-orange);
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  text-align: center;
+}
+
+.doneNav {
+  width: 117rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.doneTxt {
+  font-family: Pretendard;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+  text-align: left;
+}
+
+.doneCompareBox {
+  width: 117rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4.5rem;
+}
+
+.doneCompareTxt {
+  font-family: Pretendard;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+  text-align: left;
 }
 
 .table {

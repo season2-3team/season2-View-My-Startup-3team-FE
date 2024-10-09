@@ -2,7 +2,7 @@ import styles from './MySelection.module.css';
 import btn_plus from '../../assets/btn_plus.svg';
 import MySelectionModal from './MySelectionModal';
 import CompareSelectionModal from './CompareSelectionModal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ic_minus from '../../assets/ic_minus.svg';
 import ic_restart from '../../assets/ic_restart.svg';
 import useFetchMySelection from '../../hooks/useFetchMySelection';
@@ -12,6 +12,7 @@ import noImageIcon from '../../assets/no-image.png';
 import { formatAmount } from '../../utils/formatAmount.js';
 import useFetchCancelMySelection from '../../hooks/useFetchCancelMySelection.js';
 import useFetchCancelCompare from '../../hooks/useFetchCancelCompare.js';
+import CompareDropdown from './CompareDropdown.js';
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
@@ -21,9 +22,20 @@ export default function MySelection() {
   const { fetchMySelection } = useFetchMySelection();
   const { fetchComparison } = useFetchCompare();
   const [isComparisonDone, setIsComparisonDone] = useState(false);
-  const { allResults, fetchResult } = useFetchCompareResult();
+  const { allResults, fetchResult, setOrder, setSort } = useFetchCompareResult(
+    'desc',
+    'simInvest'
+  );
   const { fetchCancelMySelection } = useFetchCancelMySelection();
   const { fetchCancelComparison } = useFetchCancelCompare();
+  const [sortOption, setSortOption] = useState('simInvest_desc');
+
+  useEffect(() => {
+    // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
+    const [sortValue, orderValue] = sortOption.split(/_(?=[^_]*$)/);
+    setSort(sortValue);
+    setOrder(orderValue);
+  }, [sortOption, setOrder, setSort]);
 
   const handleOpenModal = () => {
     setIsModal(true);
@@ -98,7 +110,7 @@ export default function MySelection() {
     <div className={styles.section}>
       <div className={styles.myNav}>
         {!isComparisonDone && (
-          <>
+          <div className={styles.headerBox}>
             <h2 className={styles.headerTxt}>나의 기업을 선택해주세요!</h2>
             {compareSelectedStartups.length > 0 && (
               <button className={styles.resetBtn} onClick={handleResetAll}>
@@ -110,15 +122,13 @@ export default function MySelection() {
                 전체 초기화
               </button>
             )}
-          </>
+          </div>
         )}
         {isComparisonDone && (
-          <>
-            <h2 className={styles.headerTxt}>내가 선택한 기업</h2>
+          <div className={styles.doneCompareBox}>
+            <h2 className={styles.doneCompareTxt}>내가 선택한 기업</h2>
             <button
-              className={`${styles.resetBtn} ${
-                isComparisonDone ? styles.beforeBtn : ''
-              }`}
+              className={styles.beforeBtn}
               onClick={() => {
                 handleCloseCompare();
                 handleCancelButtonClick();
@@ -126,7 +136,7 @@ export default function MySelection() {
             >
               다른 기업 비교하기
             </button>
-          </>
+          </div>
         )}
       </div>
       <div
@@ -190,8 +200,14 @@ export default function MySelection() {
               기업 추가하기
             </button>
           </div>
-          <div className={styles.borderBox}>
-            <div className={styles.innerBox}>
+          <div
+            className={styles.borderBox}
+            style={{ border: selectedStartup.length > 0 ? 'none' : '' }}
+          >
+            <div
+              style={{ border: selectedStartup.length > 0 ? 'none' : '' }}
+              className={styles.innerBox}
+            >
               {compareSelectedStartups.length === 0 ? (
                 <h2>
                   아직 추가된 기업이 없어요. <br /> 버튼을 눌러 기업을
@@ -265,8 +281,13 @@ export default function MySelection() {
 
       {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
         <div className={styles.section}>
-          <div className={styles.myNav}>
-            <h2 className={styles.headerTxt}>비교 결과 확인하기</h2>
+          <div className={isComparisonDone ? styles.doneNav : styles.myNav}>
+            <h2
+              className={isComparisonDone ? styles.doneTxt : styles.headerTxt}
+            >
+              비교 결과 확인하기
+            </h2>
+            <CompareDropdown setSortOption={setSortOption} />
           </div>
           <div style={{ width: '117rem', overflowX: 'auto' }}>
             <table className={styles.table}>

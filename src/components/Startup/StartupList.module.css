@@ -13,6 +13,11 @@
   transition: background-color 0.3s ease;
 }
 
+.table tr:active {
+  background-color: var(--secondary-black-400); /* 클릭 시 색상 */
+  transition: background-color 0.1s ease;
+}
+
 .table th,
 .table td {
   padding: 1rem;

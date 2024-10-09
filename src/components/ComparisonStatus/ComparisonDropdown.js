@@ -1,11 +1,11 @@
-import styles from './StatusDropdown.module.css';
+import styles from './ComparisonDropdown.module.css';
 import arrowDown from '../../assets/ic_toggle.svg';
 import { useEffect, useRef, useState } from 'react';
 //import { useSort } from '../../contexts/SortContext';
 
-export default function StatusDropdown({ setSortOption }) {
+export default function ComparisonDropdown({ setSortOption }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('my_selection_count_desc');
+  const [selectedOption, setSelectedOption] = useState('selected_count_desc');
   const dropdownRef = useRef(null);
 
   // 메뉴 외부 클릭 감지
@@ -26,10 +26,10 @@ export default function StatusDropdown({ setSortOption }) {
   }, [dropdownRef]);
 
   const options = [
-    { value: 'my_selection_count_desc', label: '나의 기업 선택 횟수 높은순' },
-    { value: 'my_selection_count_asc', label: '나의 기업 선택 횟수 낮은순' },
-    { value: 'compare_selection_count_desc', label: '비교 기업 선택 횟수 높은순' },
-    { value: 'compare_selection_count_asc', label: '비교 기업 선택 횟수 낮은순' },
+    { value: 'selected_count_desc', label: '나의 기업 선택 횟수 높은순' },
+    { value: 'selected_count_asc', label: '나의 기업 선택 횟수 낮은순' },
+    { value: 'compared_count_desc', label: '비교 기업 선택 횟수 높은순' },
+    { value: 'compared_count_asc', label: '비교 기업 선택 횟수 낮은순' },
   ];
 
   const handleOptionClick = (value) => {

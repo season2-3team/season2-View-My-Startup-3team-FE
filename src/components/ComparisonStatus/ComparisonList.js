@@ -1,18 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import styles from './StatusList.module.css';
+import styles from './ComparisonList.module.css';
 import useFetchStartups from '../../hooks/useFetchStartups';
 import Pagination from '../Common/Pagination';
 import noImageIcon from '../../assets/no-image.png';
 import { formatAmount } from '../../utils/formatAmount';
-import StartupHeader from './StatusHeader';
+import ComparisonHeader from './ComparisonHeader';
 
 const MAX_ITEMS = 10;
 
-export default function StartupList() {
+export default function ComparisonList() {
   const maxItems = MAX_ITEMS;
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [sortOption, setSortOption] = useState('my_selection_count_desc'); // 기본 정렬 옵션 추가
+  const [sortOption, setSortOption] = useState('selected_count_desc'); // 기본 정렬 옵션 추가y
   const [currentPage, setCurrentPage] = useState(1); // currentPage 상태를 여기서 관리
 
   const {
@@ -23,13 +22,10 @@ export default function StartupList() {
     totalCount,
     setSearch,
     showLoading
-  } = useFetchStartups(currentPage, maxItems, 'my_selection_count', 'desc'); // currentPage를 인자로 전달
+  } = useFetchStartups(currentPage, maxItems, 'selected_count', 'desc'); // currentPage를 인자로 전달
 
   const totalPages = Math.ceil(totalCount / maxItems);
 
-  useEffect(() => {
-    setSearch(searchKeyword);
-  }, [searchKeyword, setSearch]);
 
   useEffect(() => {
     // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
@@ -48,7 +44,7 @@ export default function StartupList() {
 
   return (
     <>
-      <StatusHeader setSortOption={setSort} />
+      <ComparisonHeader setSortOption={setSort} />
 
       <div style={{ width: '100%', overflowX: 'auto' }}>
         <table className={styles.table}>
@@ -109,10 +105,10 @@ export default function StartupList() {
                   <td className={styles.description}>{startup.description}</td>
                   <td>{startup.categoryName}</td>
                   <td style={{ textAlign: 'center' }}>
-                    {formatAmount(startup.mySelectionCount)}
+                    {formatAmount(startup.selectedCount)}
                   </td>
                   <td style={{ textAlign: 'center' }}>
-                    {formatAmount(startup.compareSelectionCount)}
+                    {formatAmount(startup.comparedCount)}
                   </td>
                 </tr>
               ))

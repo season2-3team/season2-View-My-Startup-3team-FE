@@ -20,7 +20,6 @@ export default function ComparisonList() {
     setOrder,
     setSort,
     totalCount,
-    setSearch,
     showLoading
   } = useFetchStartups(currentPage, maxItems, 'selected_count', 'desc'); // currentPage를 인자로 전달
 

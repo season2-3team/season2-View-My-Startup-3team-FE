@@ -6,21 +6,38 @@ import Modal from '../Common/Modal';
 import { useState } from 'react';
 import { deleteInvestment } from '../../api/InvestmentService';
 
-export default function InvestmentDelete() {
+export default function InvestmentDelete({ investmentId, onClose }) {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [showModal, setShowModal] = useState(true);
+  const [success, setSuccess] = useState(false);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
+  // 임시 핸들러
   const handleChange = (e) => {
     setPassword(e.target.value);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    onClose();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // try {
+    //   const res = await deleteInvestment(investmentId, { password });
+    //   if (res.status === 204) {
+    //     setSuccess(true);
+    //   } else {
+    //     const data = await res.json();
+    //     setError(data.message);
+    //   }
+    // } catch (err) {
+    //   setError('삭제 요청 중 오류가 발생했습니다.');
+    // }
   };
 
   return (
@@ -54,7 +71,9 @@ export default function InvestmentDelete() {
             />
           </div>
         </div>
-        <button className={styles.delete}>삭제하기</button>
+        <button className={styles.delete} onClick={handleSubmit}>
+          삭제하기
+        </button>
       </div>
     </Modal>
   );

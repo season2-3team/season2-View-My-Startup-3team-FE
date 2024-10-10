@@ -1,11 +1,12 @@
 import styles from './StartupDetailInvest.module.css';
 import kebab from '../../assets/ic_kebab.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Pagination from '../Common/Pagination';
 import { formatAmount } from '../../utils/formatAmount';
 import InvestmentCreate from '../Investment/InvestmentCreate';
 import InvestmentPatch from '../Investment/InvestmentPatch';
 import InvestmentDelete from '../Investment/InvestmentDelete';
+import StartupDetailDropdown from './StartupDetailDropdown';
 
 const MAX_ITEMS = 5;
 
@@ -18,6 +19,7 @@ export default function StartupDetailInvest({ startup, mockInvestor }) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const [selectedInvestor, setSelectedInvestor] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleOpenCreateModal = () => {
     setCreateModalOpen(true);
@@ -45,7 +47,21 @@ export default function StartupDetailInvest({ startup, mockInvestor }) {
 
   const handleMenuClick = (investor) => {
     setSelectedInvestor(investor);
+    setDropdownOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownOpen && selectedInvestor && !event.target.closest('.menu')) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen, selectedInvestor]);
 
   if (!startup) {
     return <div>Loading...</div>;
@@ -95,11 +111,11 @@ export default function StartupDetailInvest({ startup, mockInvestor }) {
                     onClick={() => handleMenuClick(item)}
                     style={{ cursor: 'pointer' }}
                   />
-                  {selectedInvestor?.id === item.id && (
-                    <ul className={styles.menu}>
-                      <li onClick={() => handleOpenPatchModal(true)}>수정</li>
-                      <li onClick={() => handleOpenDeleteModal(true)}>삭제</li>
-                    </ul>
+                  {selectedInvestor?.id === item.id && dropdownOpen && (
+                    <StartupDetailDropdown
+                      onPatch={() => handleOpenPatchModal(true)}
+                      onDelete={() => handleOpenDeleteModal(true)}
+                    />
                   )}
                 </td>
               </tr>

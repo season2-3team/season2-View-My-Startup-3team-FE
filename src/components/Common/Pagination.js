@@ -9,7 +9,7 @@ const Pagination = ({
   totalPages, 
   onPageChange, 
   pageButtonSize = '4.8rem', 
-  pageButtonBorderRaius='1rem', 
+  pageButtonBorderRadius='1rem', 
   pageButtonFontSize='1.8rem' 
 }) => {
 
@@ -55,7 +55,7 @@ const Pagination = ({
           style={{ 
             width: pageButtonSize, 
             height: pageButtonSize,
-            borderRadius: pageButtonBorderRaius,
+            borderRadius: pageButtonBorderRadius,
             fontSize: pageButtonFontSize
           }}
         >
@@ -76,7 +76,7 @@ const Pagination = ({
           style={{ 
             width: pageButtonSize, 
             height: pageButtonSize,
-            borderRadius: pageButtonBorderRaius,
+            borderRadius: pageButtonBorderRadius,
             fontSize: pageButtonFontSize
           }}
         >
@@ -91,7 +91,7 @@ const Pagination = ({
           style={{ 
             width: pageButtonSize, 
             height: pageButtonSize,
-            borderRadius: pageButtonBorderRaius,
+            borderRadius: pageButtonBorderRadius,
             fontSize: pageButtonFontSize
           }}
         >

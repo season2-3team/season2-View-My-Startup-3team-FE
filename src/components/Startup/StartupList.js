@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './StartupList.module.css';
 import useFetchStartups from '../../hooks/useFetchStartups';
@@ -6,6 +6,7 @@ import Pagination from '../Common/Pagination';
 import noImageIcon from '../../assets/no-image.png';
 import { formatAmount } from '../../utils/formatAmount';
 import StartupHeader from './StartupHeader';
+import Warn from '../Warn';
 
 const MAX_ITEMS = 10;
 
@@ -14,6 +15,7 @@ export default function StartupList() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [sortOption, setSortOption] = useState('total_investment_desc'); // 기본 정렬 옵션 추가
   const [currentPage, setCurrentPage] = useState(1); // currentPage 상태를 여기서 관리
+  const navigate = useNavigate();
 
   const {
     startups,
@@ -42,17 +44,33 @@ export default function StartupList() {
     setCurrentPage(page);
   };
 
-  if (error) {
-    return <div className="error-message">{error}</div>;
+  const handleRowClick = (id) => {
+    navigate(`/startup/${id}`);
   }
 
+  if (error) {
+    //return <div className="error-message">{error}</div>;
+    return (
+      <Warn
+        variant = "error"
+        title="오류발생"
+        description={error}
+      />
+    )
+  }
+
+  if (showLoading) {
+    return (
+      <div>목록을 불러오는 중입니다....</div>
+    );
+  }
+  
   return (
     <>
       <StartupHeader
         setSearchKeyword={setSearchKeyword}
         setSortOption={setSortOption}
       />
-
       <div style={{ width: '100%', overflowX: 'auto' }}>
         <table className={styles.table}>
           <thead>
@@ -67,63 +85,57 @@ export default function StartupList() {
             </tr>
           </thead>
           <tbody>
-            {showLoading ? (
-              <tr>
-                <td colSpan="7">목록을 불러오는 중입니다....</td>
-              </tr>
-            ) : (
+            {
               startups.map((startup) => (
-                <tr key={startup.id}>
-                  <td>{startup.rank}위</td>
-                  <td style={{ textAlign: 'left' }}>
-                    <Link
-                      to={`/${startup.id}`}
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          verticalAlign: 'middle'
-                        }}
-                      >
-                        <img
-                          src={startup.image || noImageIcon}
-                          alt={`${startup.name} 로고`}
-                          style={{
-                            width: '3.2rem',
-                            height: '3.2rem',
-                            marginRight: '0.8rem',
-                            verticalAlign: 'middle',
-                            borderRadius: '50%',
-                            backgroundColor: 'white',
-                            objectFit: 'cover'
-                          }}
-                        />
-                      </span>
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          verticalAlign: 'middle'
-                        }}
-                      >
-                        {startup.name}
-                      </span>
-                    </Link>
-                  </td>
-                  <td className={styles.description}>{startup.description}</td>
-                  <td>{startup.categoryName}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    {formatAmount(startup.simInvest)} 원
-                  </td>
-                  <td style={{ textAlign: 'center' }}>
-                    {formatAmount(startup.revenue)} 원
-                  </td>
-                  <td style={{ textAlign: 'right', paddingRight: '5rem' }}>
-                    {formatAmount(startup.employees)} 명
-                  </td>
-                </tr>
-              ))
-            )}
+              <tr 
+                key={startup.id}
+                onClick={() => handleRowClick(startup.id)}  // 행 클릭 이벤트 추가
+                style={{ cursor: 'pointer' }}
+              >
+                <td>{startup.rank}위</td>
+                <td style={{ textAlign: 'left' }}>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      verticalAlign: 'middle'
+                    }}
+                  >
+                    <img
+                      src={startup.image || noImageIcon}
+                      alt={`${startup.name} 로고`}
+                      style={{
+                        width: '3.2rem',
+                        height: '3.2rem',
+                        marginRight: '0.8rem',
+                        verticalAlign: 'middle',
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  </span>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      verticalAlign: 'middle'
+                    }}
+                  >
+                    {startup.name}
+                  </span>
+                </td>
+                <td className={styles.description}>{startup.description}</td>
+                <td>{startup.categoryName}</td>
+                <td style={{ textAlign: 'center' }}>
+                  {formatAmount(startup.simInvest)} 원
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  {formatAmount(startup.revenue)} 원
+                </td>
+                <td style={{ textAlign: 'right', paddingRight: '5rem' }}>
+                  {formatAmount(startup.employees)} 명
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -133,7 +145,7 @@ export default function StartupList() {
           totalPages={totalPages}
           onPageChange={handlePageChange}
           pageButtonSize='4.8rem'
-          pageButtonBorderRaius='1rem'
+          pageButtonBorderRadius='1rem'
           pageButtonFontSize='1.8rem'
         />
       </div>

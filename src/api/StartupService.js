@@ -1,4 +1,4 @@
-const STARTUP_API_BASE_URL = "http://localhost:3000/api/startups";
+const STARTUP_API_BASE_URL = "https://season2-view-my-startup-3team-be.onrender.com/api/startups";
 
 // Article 목록 가져오기
 export async function getStartupList(

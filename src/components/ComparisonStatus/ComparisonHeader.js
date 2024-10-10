@@ -1,4 +1,3 @@
-import SearchInput from '../Common/SearchInput';
 import styles from './ComparisonHeader.module.css';
 import ComparisonDropdown from './ComparisonDropdown';
 

@@ -1,4 +1,7 @@
 export const formatAmount = (amount) => {
+  if (amount === null || amount === undefined || isNaN(amount)) {
+    return 'N/A'; // 값이 없거나 유효하지 않은 경우 'N/A'를 반환
+  }  
   const hundredMillion = amount / 100000000;
 
   if (hundredMillion >= 1) {

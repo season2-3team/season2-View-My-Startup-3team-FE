@@ -13,7 +13,7 @@ import { formatAmount } from '../../utils/formatAmount.js';
 import useFetchCancelMySelection from '../../hooks/useFetchCancelMySelection.js';
 import useFetchCancelCompare from '../../hooks/useFetchCancelCompare.js';
 import CompareDropdown from './CompareDropdown.js';
-import InvestmentCreate from '../Investment/InvestmentCreate.js';
+import InvestModal from './InvestModal.js';
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
@@ -112,8 +112,9 @@ export default function MySelection() {
     setIsInvestModal(true);
   };
 
-  const handleCloseInvestModal = () => {
+  const handleCloseInvestModal = (e) => {
     setIsInvestModal(false);
+    e.preventDefault();
   };
 
   return (
@@ -274,7 +275,6 @@ export default function MySelection() {
           기업 비교하기
         </button>
       )}
-
       {isModal && (
         <MySelectionModal
           onClose={handleCloseModal}
@@ -289,7 +289,6 @@ export default function MySelection() {
           existingSelectedStartups={selectedStartup}
         />
       )}
-
       {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
         <div className={`${styles.section} ${styles.comparisonDoneBox}`}>
           <div className={isComparisonDone ? styles.doneNav : styles.myNav}>
@@ -372,7 +371,6 @@ export default function MySelection() {
           </div>
         </div>
       )}
-
       {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
         <div className={`${styles.section} ${styles.comparisonDoneBox}`}>
           <div className={isComparisonDone ? styles.doneNav : styles.myNav}>
@@ -462,7 +460,12 @@ export default function MySelection() {
           나의 기업에 투자하기
         </button>
       )}
-      {isInvestModal && <InvestmentCreate onClose={handleCloseInvestModal} />}
+      {isInvestModal && (
+        <InvestModal
+          onClose={handleCloseInvestModal}
+          startup={selectedStartup}
+        />
+      )}
     </div>
   );
 }

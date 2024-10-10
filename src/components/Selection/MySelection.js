@@ -276,6 +276,7 @@ export default function MySelection() {
           selectedStartups={compareSelectedStartups}
           onSelectStartup={handleCompareSelectStartups}
           onClose={handleCloseComparedModal}
+          existingSelectedStartups={selectedStartup}
         />
       )}
 

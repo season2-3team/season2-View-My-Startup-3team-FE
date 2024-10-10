@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './ComparisonList.module.css';
 import useFetchStartups from '../../hooks/useFetchStartups';
@@ -6,6 +6,7 @@ import Pagination from '../Common/Pagination';
 import noImageIcon from '../../assets/no-image.png';
 import { formatAmount } from '../../utils/formatAmount';
 import ComparisonHeader from './ComparisonHeader';
+import Warn from '../Warn';
 
 const MAX_ITEMS = 10;
 
@@ -13,6 +14,7 @@ export default function ComparisonList() {
   const maxItems = MAX_ITEMS;
   const [sortOption, setSortOption] = useState('selected_count_desc'); // 기본 정렬 옵션 추가y
   const [currentPage, setCurrentPage] = useState(1); // currentPage 상태를 여기서 관리
+  const navigate = useNavigate();
 
   const {
     startups,
@@ -37,10 +39,27 @@ export default function ComparisonList() {
     setCurrentPage(page);
   };
 
-  if (error) {
-    return <div className="error-message">{error}</div>;
+  const handleRowClick = (id) => {
+    navigate(`/startup/${id}`);
   }
 
+
+  if (error) {
+    //return <div className="error-message">{error}</div>;
+    return (
+      <Warn
+        variant = "error"
+        title="오류발생"
+        description={error}
+      />
+    )
+  }
+
+  if (showLoading) {
+    return (
+      <div>목록을 불러오는 중입니다....</div>
+    );
+  }
   return (
     <>
       <ComparisonHeader setSortOption={setSortOption} />
@@ -58,19 +77,15 @@ export default function ComparisonList() {
             </tr>
           </thead>
           <tbody>
-            {showLoading ? (
-              <tr>
-                <td colSpan="7">목록을 불러오는 중입니다....</td>
-              </tr>
-            ) : (
+            {
               startups.map((startup) => (
-                <tr key={startup.id}>
+                <tr 
+                  key={startup.id}
+                  onClick={() => handleRowClick(startup.id)}
+                  style={{ cursor: 'pointer'}}
+                >
                   <td>{startup.rank}위</td>
                   <td style={{ textAlign: 'left' }}>
-                    <Link
-                      to={`/${startup.id}`}
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
                       <span
                         style={{
                           display: 'inline-block',
@@ -99,7 +114,6 @@ export default function ComparisonList() {
                       >
                         {startup.name}
                       </span>
-                    </Link>
                   </td>
                   <td className={styles.description}>{startup.description}</td>
                   <td>{startup.categoryName}</td>
@@ -110,8 +124,8 @@ export default function ComparisonList() {
                     {formatAmount(startup.comparedCount)}
                   </td>
                 </tr>
-              ))
-            )}
+              
+            ))}
           </tbody>
         </table>
       </div>

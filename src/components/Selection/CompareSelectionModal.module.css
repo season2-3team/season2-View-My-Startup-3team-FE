@@ -177,3 +177,24 @@
   width: 2.4rem;
   height: 2.4rem;
 }
+
+.mySelectedBtn {
+  width: 11rem;
+  height: 4.8rem;
+  padding: 1.3rem 2.4rem;
+  gap: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--primary-blue);
+  background-color: var(--secondary-black-300);
+  color: var(--primary-blue);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.9rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.errorMessage {
+  margin-top: 1rem;
+  color: var(--error-color);
+}

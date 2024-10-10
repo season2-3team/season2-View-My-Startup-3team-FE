@@ -13,6 +13,7 @@ import { formatAmount } from '../../utils/formatAmount.js';
 import useFetchCancelMySelection from '../../hooks/useFetchCancelMySelection.js';
 import useFetchCancelCompare from '../../hooks/useFetchCancelCompare.js';
 import CompareDropdown from './CompareDropdown.js';
+import InvestModal from './InvestModal.js';
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
@@ -29,6 +30,7 @@ export default function MySelection() {
   const { fetchCancelMySelection } = useFetchCancelMySelection();
   const { fetchCancelComparison } = useFetchCancelCompare();
   const [sortOption, setSortOption] = useState('simInvest_desc');
+  const [isInvestModal, setIsInvestModal] = useState(false);
 
   useEffect(() => {
     // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
@@ -104,6 +106,15 @@ export default function MySelection() {
     const ids = compareSelectedStartups.map((startup) => startup.id);
     await fetchCancelComparison(ids);
     await fetchResult();
+  };
+
+  const handleOpenInvestModal = () => {
+    setIsInvestModal(true);
+  };
+
+  const handleCloseInvestModal = (e) => {
+    setIsInvestModal(false);
+    e.preventDefault();
   };
 
   return (
@@ -264,7 +275,6 @@ export default function MySelection() {
           기업 비교하기
         </button>
       )}
-
       {isModal && (
         <MySelectionModal
           onClose={handleCloseModal}
@@ -276,11 +286,11 @@ export default function MySelection() {
           selectedStartups={compareSelectedStartups}
           onSelectStartup={handleCompareSelectStartups}
           onClose={handleCloseComparedModal}
+          existingSelectedStartups={selectedStartup}
         />
       )}
-
       {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
-        <div className={styles.section}>
+        <div className={`${styles.section} ${styles.comparisonDoneBox}`}>
           <div className={isComparisonDone ? styles.doneNav : styles.myNav}>
             <h2
               className={isComparisonDone ? styles.doneTxt : styles.headerTxt}
@@ -360,6 +370,101 @@ export default function MySelection() {
             </table>
           </div>
         </div>
+      )}
+      {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
+        <div className={`${styles.section} ${styles.comparisonDoneBox}`}>
+          <div className={isComparisonDone ? styles.doneNav : styles.myNav}>
+            <h2
+              className={isComparisonDone ? styles.doneTxt : styles.headerTxt}
+            >
+              기업 순위 확인하기
+            </h2>
+            <CompareDropdown setSortOption={setSortOption} />
+          </div>
+          <div style={{ width: '117rem', overflowX: 'auto' }}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th style={{ width: '6.8rem' }}>순위</th>
+                  <th style={{ width: '21.3rem' }}>기업명</th>
+                  <th style={{ width: '30.4rem' }}>기업소개</th>
+                  <th style={{ width: '15.4rem' }}>카테고리</th>
+                  <th style={{ width: '15.4rem' }}>누적 투자 금액</th>
+                  <th style={{ width: '15.4rem' }}>매출액</th>
+                  <th style={{ width: '15.4rem' }}>고용 인원</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allResults.map((result) => (
+                  <tr
+                    key={result.id}
+                    className={
+                      selectedStartup.some(
+                        (startup) => startup.id === result.id
+                      )
+                        ? styles.selectedStartupRow
+                        : ''
+                    }
+                  >
+                    <td>{result.rank}위</td>
+                    <td style={{ textAlign: 'left' }}>
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          verticalAlign: 'middle'
+                        }}
+                      >
+                        <img
+                          src={result.image || noImageIcon}
+                          alt={`${result.name} 로고`}
+                          style={{
+                            width: '3.2rem',
+                            height: '3.2rem',
+                            marginRight: '0.8rem',
+                            verticalAlign: 'middle',
+                            borderRadius: '50%',
+                            backgroundColor: 'white',
+                            objectFit: 'cover'
+                          }}
+                        />
+                      </span>
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          verticalAlign: 'middle'
+                        }}
+                      >
+                        {result.name}
+                      </span>
+                    </td>
+                    <td className={styles.description}>{result.description}</td>
+                    <td>{result.category.category}</td>
+                    <td style={{ textAlign: 'center' }}>
+                      {formatAmount(result.simInvest)} 원
+                    </td>
+                    <td style={{ textAlign: 'center' }}>
+                      {formatAmount(result.revenue)} 원
+                    </td>
+                    <td style={{ textAlign: 'right', paddingRight: '5rem' }}>
+                      {formatAmount(result.employees)} 명
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+      {isComparisonDone && (
+        <button className={styles.investBtn} onClick={handleOpenInvestModal}>
+          나의 기업에 투자하기
+        </button>
+      )}
+      {isInvestModal && (
+        <InvestModal
+          onClose={handleCloseInvestModal}
+          startup={selectedStartup}
+        />
       )}
     </div>
   );

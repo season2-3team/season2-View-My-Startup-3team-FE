@@ -11,7 +11,8 @@ import noImageIcon from '../../assets/no-image.png';
 export default function CompareSelectionModal({
   onClose,
   onSelectStartup,
-  selectedStartups
+  selectedStartups,
+  existingSelectedStartups
 }) {
   const {
     startups,
@@ -24,6 +25,7 @@ export default function CompareSelectionModal({
   const [searchText, setSearchText] = useState('');
   const [selectCompareStartups, setSelectComparedStartups] =
     useState(selectedStartups);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setSelectComparedStartups(selectedStartups);
@@ -67,6 +69,7 @@ export default function CompareSelectionModal({
     );
     setSelectComparedStartups(newSelected);
     onSelectStartup(newSelected);
+    setErrorMessage('');
   };
 
   const handleSelectCompareStartups = (startup) => {
@@ -78,12 +81,15 @@ export default function CompareSelectionModal({
       const newSelected = selectCompareStartups.filter((s) => s !== startup);
       setSelectComparedStartups(newSelected);
       onSelectStartup(newSelected);
+      setErrorMessage('');
     } else {
       // 새 스타트업을 선택
       if (selectCompareStartups.length < 5) {
         const newSelected = [...selectCompareStartups, startup];
         setSelectComparedStartups(newSelected);
         onSelectStartup(newSelected);
+      } else {
+        setErrorMessage('*비교할 기업은 최대 5개까지 선택 가능합니다.'); // 오류 메시지 설정
       }
     }
   };
@@ -122,36 +128,56 @@ export default function CompareSelectionModal({
                 {startup.category.category}
               </span>
             </div>
-            <button
-              type="button"
-              className={`${styles.selectionBtn} ${
-                selectCompareStartups.includes(startup) ||
-                selectedStartups.some((selected) => selected.id === startup.id)
-                  ? styles.completeBtn
-                  : styles.selectionBtn
-              }`}
-              onClick={() => handleSelectCompareStartups(startup)}
-              disabled={
-                selectCompareStartups.includes(startup) ||
-                selectedStartups.some((selected) => selected.id === startup.id)
-              }
-            >
-              {selectCompareStartups.includes(startup) ||
-              selectedStartups.some(
-                (selected) => selected.id === startup.id
-              ) ? (
-                <>
-                  <img
-                    src={ic_check}
-                    alt="checkImg"
-                    className={styles.checkIcon}
-                  />
-                  선택완료
-                </>
-              ) : (
-                '선택하기'
-              )}
-            </button>
+            {existingSelectedStartups.some(
+              (existing) => existing.id === startup.id
+            ) && (
+              <button
+                type="button"
+                className={styles.mySelectedBtn}
+                onClick={() => handleSelectCompareStartups(startup)}
+                disabled={true}
+              >
+                나의 기업
+              </button>
+            )}
+            {!existingSelectedStartups.some(
+              (existing) => existing.id === startup.id
+            ) && (
+              <button
+                type="button"
+                className={`${styles.selectionBtn} ${
+                  selectCompareStartups.includes(startup) ||
+                  selectedStartups.some(
+                    (selected) => selected.id === startup.id
+                  )
+                    ? styles.completeBtn
+                    : styles.selectionBtn
+                }`}
+                onClick={() => handleSelectCompareStartups(startup)}
+                disabled={
+                  selectCompareStartups.includes(startup) ||
+                  selectedStartups.some(
+                    (selected) => selected.id === startup.id
+                  )
+                }
+              >
+                {selectCompareStartups.includes(startup) ||
+                selectedStartups.some(
+                  (selected) => selected.id === startup.id
+                ) ? (
+                  <>
+                    <img
+                      src={ic_check}
+                      alt="checkImg"
+                      className={styles.checkIcon}
+                    />
+                    선택완료
+                  </>
+                ) : (
+                  '선택하기'
+                )}
+              </button>
+            )}
           </li>
         ))}
       </ul>
@@ -245,6 +271,7 @@ export default function CompareSelectionModal({
             handleSelectCompareStartups={handleSelectCompareStartups}
           />
         )}
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
         <SelectionPagination
           currentPage={currentPage}
           totalPages={totalPages}

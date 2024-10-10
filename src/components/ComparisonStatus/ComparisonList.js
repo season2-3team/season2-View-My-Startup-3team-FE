@@ -43,7 +43,7 @@ export default function ComparisonList() {
 
   return (
     <>
-      <ComparisonHeader setSortOption={setSort} />
+      <ComparisonHeader setSortOption={setSortOption} />
 
       <div style={{ width: '100%', overflowX: 'auto' }}>
         <table className={styles.table}>

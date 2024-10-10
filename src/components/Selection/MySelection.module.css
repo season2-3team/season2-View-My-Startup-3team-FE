@@ -334,6 +334,10 @@
   background-color: var(--secondary-black-100);
 }
 
+.comparisonDoneBox {
+  margin-bottom: 5rem;
+}
+
 @media (max-width: 1199px) and (min-width: 744px) {
   /* 태블릿 사이즈에서 첫 번째 열 숨기기 */
   .table thead th:nth-child(1),

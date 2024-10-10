@@ -1,4 +1,4 @@
-import styles from "./StartupDetailDropdown.module.css";
+import styles from './StartupDetailDropdown.module.css';
 
 export default function DropdownMenu({ onPatch, onDelete }) {
   return (

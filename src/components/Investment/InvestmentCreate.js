@@ -66,12 +66,16 @@ export default function InvestmentCreate({ onClose, startup }) {
       if (!investmentID) {
         setError('투자 ID를 얻는 데 실패하였습니다.');
       } else {
-        onClose();
         setIsComplete(true);
       }
     } catch (error) {
       setError('투자에 실패하였습니다.');
     }
+  };
+
+  const handleCloseCompleteModal = () => {
+    setIsComplete(false);
+    onClose();
   };
 
   return (
@@ -227,7 +231,7 @@ export default function InvestmentCreate({ onClose, startup }) {
           {error && <div className={styles.error}>{error}</div>}
         </form>
       </Modal>
-      {isComplete && <InvestmentComplete setIsComplete={setIsComplete} />}
+      {isComplete && <InvestmentComplete onClose={handleCloseCompleteModal} />}
     </>
   );
 }

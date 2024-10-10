@@ -13,8 +13,14 @@ export default function CompareSelectionModal({
   onSelectStartup,
   selectedStartups
 }) {
-  const { startups, currentPage, totalPages, searchStartups, goToPage } =
-    useFetchMyStartup();
+  const {
+    startups,
+    currentPage,
+    totalPages,
+    searchStartups,
+    goToPage,
+    totalCount
+  } = useFetchMyStartup();
   const [searchText, setSearchText] = useState('');
   const [selectCompareStartups, setSelectComparedStartups] =
     useState(selectedStartups);
@@ -29,6 +35,8 @@ export default function CompareSelectionModal({
 
     if (newValue) {
       searchStartups(newValue);
+    } else {
+      searchStartups([]);
     }
   };
 
@@ -42,7 +50,7 @@ export default function CompareSelectionModal({
 
   const handleClear = () => {
     setSearchText('');
-    searchStartups('');
+    searchStartups([]);
   };
 
   const handleKeyDown = (e) => {
@@ -90,7 +98,7 @@ export default function CompareSelectionModal({
   }) => (
     <div>
       <h3 className={styles.title}>
-        {title} ({startups.length})
+        {title} ({totalCount})
       </h3>
       <ul>
         {startups.map((startup) => (

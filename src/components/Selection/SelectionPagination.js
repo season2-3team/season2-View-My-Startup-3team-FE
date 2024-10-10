@@ -1,4 +1,4 @@
-import styles from '../Common/Pagination.module.css';
+import styles from './SelectionPagination.module.css';
 import arrowLeftIcon from '../../assets/ic_arrow_left.svg';
 import arrowRightIcon from '../../assets/ic_arrow_right.svg';
 

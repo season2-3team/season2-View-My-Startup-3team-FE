@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react';
 
 const SELECTION_API_BASE_URL = 'http://localhost:3000/api/selections';
 
-export default function useFetchCompare(ids) {
-  const [updateStartups, setUpdateStartups] = useState(null);
-  const [newComparisons, setNewComparisons] = useState(null);
+export default function useFetchMySelection(id) {
+  const [cancelStartup, setCancelStartup] = useState(null);
+  const [beforeSelection, setBeforeSelection] = useState(null);
 
-  const fetchComparison = async (ids) => {
+  const fetchCancelMySelection = async (id) => {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
       const response = await fetch(
-        `${SELECTION_API_BASE_URL}/comparison-startups`,
+        `${SELECTION_API_BASE_URL}/cancel-my-startups`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            ids,
+            id: id,
             sessionId: sessionId
           })
         }
@@ -28,18 +28,22 @@ export default function useFetchCompare(ids) {
       }
 
       const data = await response.json();
-      setUpdateStartups(data.updateStartups);
-      setNewComparisons(data.newComparisons);
+      setCancelStartup(data.cancelStartup);
+      setBeforeSelection(data.beforeSelection);
     } catch (err) {
       console.error('Failed to fetch startups', err);
     }
   };
 
   useEffect(() => {
-    if (ids) {
-      fetchComparison(ids);
+    if (id) {
+      fetchCancelMySelection();
     }
-  }, [ids]);
+  }, [id]);
 
-  return { updateStartups, newComparisons, fetchComparison };
+  return {
+    cancelStartup,
+    beforeSelection,
+    fetchCancelMySelection
+  };
 }

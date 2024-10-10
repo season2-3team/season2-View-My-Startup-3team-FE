@@ -16,6 +16,18 @@
   height: 9.2rem;
   background-color: #282828;
   border-radius: 1rem;
+
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 2rem;
+}
+
+.body h1,
+.description h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.909rem;
+  color: white;
 }
 
 .description {
@@ -31,4 +43,8 @@
   background-color: #212121;
   border-radius: 10px;
   margin-bottom: 3.2rem;
+
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.671rem;
 }

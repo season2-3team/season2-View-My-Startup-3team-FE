@@ -22,6 +22,5 @@ async function get(url, params = {}) {
 
 export async function getStartup(id) {
   const res = await get(`/api/startups/${id}`);
-  console.log(res.data);
   return res.data;
 }

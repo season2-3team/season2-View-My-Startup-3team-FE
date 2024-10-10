@@ -3,25 +3,28 @@ import X from '../../assets/ic_x.svg';
 import visibilityOn from '../../assets/btn_visibility_on.svg';
 import visibilityOff from '../../assets/btn_visibility_off.svg';
 import { useState } from 'react';
-import { createInvestment } from '../../api/InvestmentService';
+import { patchInvestment } from '../../api/InvestmentService';
 import useValidate from '../../hooks/useValidate';
 import Modal from '../Common/Modal';
-import InvestmentComplete from './InvestmentComplete';
 
-export default function InvestmentCreate({ onClose, startup }) {
-  const { id: startupId, image, name, categoryName } = startup || {};
+export default function InvestmentCreate({
+  onClose,
+  startup,
+  mockInvestor,
+  initialValues
+}) {
+  const { image, name, categoryName } = startup || {};
   const { values, errors, handleChange, validate, handleBlur } = useValidate({
-    name: '',
-    investAmount: '',
-    comment: '',
-    password: '',
+    name: initialValues?.name || '',
+    investAmount: initialValues?.investAmount || '',
+    comment: initialValues?.comment || '',
+    password: initialValues?.password || '',
     checkPassword: ''
   });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
   const [error, setError] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -41,7 +44,7 @@ export default function InvestmentCreate({ onClose, startup }) {
     );
   };
 
-  const handleSubmit = async (e) => {
+  const handleUpdateSubmit = async (e) => {
     e.preventDefault();
 
     if (!validate()) {
@@ -51,33 +54,28 @@ export default function InvestmentCreate({ onClose, startup }) {
     const investAmount = parseFloat(values.investAmount);
 
     try {
-      const investment = { ...values, investAmount, startupId };
+      const investment = { ...values, investAmount };
       delete investment.checkPassword;
 
-      const res = await createInvestment(investment);
+      const updateRes = await patchInvestment(mockInvestor.id, investment);
+      console.log('Update Response:', updateRes);
 
-      if (!res) {
-        setError('투자 생성 요청이 실패했습니다.');
-        return;
-      }
-
-      const investmentID = res.id;
-
-      if (!investmentID) {
-        setError('투자 ID를 얻는 데 실패하였습니다.');
-      } else {
+      if (updateRes.status === 200) {
         onClose();
-        setIsComplete(true);
+      } else {
+        console.log(updateRes.status);
+        setError('수정 요청이 실패했습니다.');
       }
-    } catch (error) {
-      setError('투자에 실패하였습니다.');
+    } catch (err) {
+      console.error(err);
+      setError('투자 수정 중 오류가 발생했습니다.');
     }
   };
 
   return (
     <>
       <Modal>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleUpdateSubmit}>
           <div>
             <h1>기업에 투자하기</h1>
             <img
@@ -221,13 +219,12 @@ export default function InvestmentCreate({ onClose, startup }) {
               type="submit"
               disabled={!isInputEmpty()}
             >
-              투자하기
+              수정하기
             </button>
           </div>
           {error && <div className={styles.error}>{error}</div>}
         </form>
       </Modal>
-      {isComplete && <InvestmentComplete setIsComplete={setIsComplete} />}
     </>
   );
 }

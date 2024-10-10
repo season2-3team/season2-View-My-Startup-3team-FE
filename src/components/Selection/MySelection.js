@@ -13,6 +13,7 @@ import { formatAmount } from '../../utils/formatAmount.js';
 import useFetchCancelMySelection from '../../hooks/useFetchCancelMySelection.js';
 import useFetchCancelCompare from '../../hooks/useFetchCancelCompare.js';
 import CompareDropdown from './CompareDropdown.js';
+import InvestmentCreate from '../Investment/InvestmentCreate.js';
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
@@ -29,6 +30,7 @@ export default function MySelection() {
   const { fetchCancelMySelection } = useFetchCancelMySelection();
   const { fetchCancelComparison } = useFetchCancelCompare();
   const [sortOption, setSortOption] = useState('simInvest_desc');
+  const [isInvestModal, setIsInvestModal] = useState(false);
 
   useEffect(() => {
     // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
@@ -104,6 +106,14 @@ export default function MySelection() {
     const ids = compareSelectedStartups.map((startup) => startup.id);
     await fetchCancelComparison(ids);
     await fetchResult();
+  };
+
+  const handleOpenInvestModal = () => {
+    setIsInvestModal(true);
+  };
+
+  const handleCloseInvestModal = () => {
+    setIsInvestModal(false);
   };
 
   return (
@@ -448,8 +458,11 @@ export default function MySelection() {
         </div>
       )}
       {isComparisonDone && (
-        <button className={styles.investBtn}>나의 기업에 투자하기</button>
+        <button className={styles.investBtn} onClick={handleOpenInvestModal}>
+          나의 기업에 투자하기
+        </button>
       )}
+      {isInvestModal && <InvestmentCreate onClose={handleCloseInvestModal} />}
     </div>
   );
 }

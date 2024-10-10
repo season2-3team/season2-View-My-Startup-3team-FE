@@ -7,7 +7,10 @@ const instance = axios.create({
 instance.interceptors.response.use(
   (res) => res,
   (err) => {
-    console.log('주의 : 에러 발생!');
+    console.log(
+      '주의 : 에러 발생!',
+      err.response ? err.response.data : err.message
+    );
     throw err;
   }
 );
@@ -24,8 +27,8 @@ async function patch(url, body) {
   return instance.patch(url, body);
 }
 
-async function remove(url) {
-  return instance.delete(url);
+async function remove(url, body) {
+  return instance.delete(url, body);
 }
 
 export async function getInvestmentList({ page, limit, orderBy }) {
@@ -40,10 +43,10 @@ export async function createInvestment(investment) {
 
 export async function patchInvestment(id, investment) {
   const res = await patch(`/api/investments/${id}`, investment);
-  return res.data;
+  return res;
 }
 
 export async function deleteInvestment(id) {
   const res = await remove(`/api/investments/${id}`);
-  return res.data;
+  return res;
 }

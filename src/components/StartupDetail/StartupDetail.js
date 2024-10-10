@@ -25,6 +25,7 @@ export default function StartupDetail() {
   }, [id]);
   return (
     <>
+      {error && <div style={{ color: 'var(--error-color)' }}>{error}</div>}
       <StartupDetailHeader startup={startup} />
       <StartupDetailInfo startup={startup} />
       <StartupDetailInvest startup={startup} mockInvestor={mockInvestor} />

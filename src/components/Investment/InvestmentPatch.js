@@ -11,7 +11,6 @@ export default function InvestmentPatch({ onClose, mockInvestor, startup }) {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [showInvestmentUpdate, setShowInvestmentUpdate] = useState(false);
-  const [error, setError] = useState('');
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -25,12 +24,9 @@ export default function InvestmentPatch({ onClose, mockInvestor, startup }) {
     e.preventDefault();
 
     if (password !== storedPassword) {
-      setError('비밀번호가 일치하지 않습니다.');
       console.log('비밀번호 불일치');
     } else {
-      setError('');
       setShowInvestmentUpdate(true);
-      console.log('비밀번호 일치, 모달 열기');
     }
   };
 

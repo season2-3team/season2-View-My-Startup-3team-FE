@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 const SELECTION_API_BASE_URL = 'http://localhost:3000/api/selections';
 
 export default function useFetchCompare(ids) {
-  const [updateStartups, setUpdateStartups] = useState(null);
-  const [newComparisons, setNewComparisons] = useState(null);
+  const [cancelStartups, setCancelStartups] = useState(null);
+  const [beforeComparisons, setBeforeComparisons] = useState(null);
 
-  const fetchComparison = async (ids) => {
+  const fetchCancelComparison = async (ids) => {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
       const response = await fetch(
-        `${SELECTION_API_BASE_URL}/comparison-startups`,
+        `${SELECTION_API_BASE_URL}/cancel-comparison-startups`,
         {
           method: 'POST',
           headers: {
@@ -28,8 +28,8 @@ export default function useFetchCompare(ids) {
       }
 
       const data = await response.json();
-      setUpdateStartups(data.updateStartups);
-      setNewComparisons(data.newComparisons);
+      setCancelStartups(data.cancelStartups);
+      setBeforeComparisons(data.beforeComparisons);
     } catch (err) {
       console.error('Failed to fetch startups', err);
     }
@@ -37,9 +37,9 @@ export default function useFetchCompare(ids) {
 
   useEffect(() => {
     if (ids) {
-      fetchComparison(ids);
+      fetchCancelComparison(ids);
     }
   }, [ids]);
 
-  return { updateStartups, newComparisons, fetchComparison };
+  return { cancelStartups, beforeComparisons, fetchCancelComparison };
 }

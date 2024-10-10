@@ -11,7 +11,7 @@ export default function useFetchMyStartup() {
   const fetchStartups = async (search = '', page = 1, limit = 5) => {
     try {
       const response = await fetch(
-        `${COMPARISON_API_BASE_URL}/recent-select?search=${search}&page=${page}&limit=${limit}`
+        `${COMPARISON_API_BASE_URL}/?search=${search}&page=${page}&limit=${limit}`
       );
 
       if (!response.ok) {

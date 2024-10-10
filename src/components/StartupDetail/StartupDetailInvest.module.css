@@ -93,3 +93,5 @@
 .table tbody tr:not(:last-child) {
   border-bottom: 0.1rem solid var(--secondary-gray-300);
 }
+
+.menu {}

@@ -8,13 +8,13 @@ import useValidate from '../../hooks/useValidate';
 import Modal from '../Common/Modal';
 import InvestmentComplete from './InvestmentComplete';
 
-export default function InvestmentCreate({ onClose, startup }) {
+export default function InvestmentCreate({ onClose, startup, initialValues }) {
   const { id: startupId, image, name, categoryName } = startup || {};
   const { values, errors, handleChange, validate, handleBlur } = useValidate({
-    name: '',
-    investAmount: '',
-    comment: '',
-    password: '',
+    name: initialValues?.name || '',
+    investAmount: initialValues?.investAmount || '',
+    comment: initialValues?.comment || '',
+    password: initialValues?.password || '',
     checkPassword: ''
   });
 
@@ -66,7 +66,6 @@ export default function InvestmentCreate({ onClose, startup }) {
       if (!investmentID) {
         setError('투자 ID를 얻는 데 실패하였습니다.');
       } else {
-        onClose();
         setIsComplete(true);
       }
     } catch (error) {

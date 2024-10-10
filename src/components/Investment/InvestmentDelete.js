@@ -5,39 +5,49 @@ import visibilityOff from '../../assets/btn_visibility_off.svg';
 import Modal from '../Common/Modal';
 import { useState } from 'react';
 import { deleteInvestment } from '../../api/InvestmentService';
+import InvestmentDeleteFail from './InvestmentDeleteFail';
 
-export default function InvestmentDelete({ investmentId, onClose }) {
+export default function InvestmentDelete({ onClose, mockInvestor }) {
+  const { id } = mockInvestor || {};
+
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [success, setSuccess] = useState(false);
+
+  const [error, setError] = useState('');
+  const [deleteFail, setDeleteFail] = useState(false);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  // 임시 핸들러
   const handleChange = (e) => {
     setPassword(e.target.value);
-  };
-
-  const handleCloseModal = () => {
-    onClose();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   const res = await deleteInvestment(investmentId, { password });
-    //   if (res.status === 204) {
-    //     setSuccess(true);
-    //   } else {
-    //     const data = await res.json();
-    //     setError(data.message);
-    //   }
-    // } catch (err) {
-    //   setError('삭제 요청 중 오류가 발생했습니다.');
-    // }
+    try {
+      const res = await deleteInvestment(id, { password });
+      console.log('응답:', res); // 응답 출력
+
+      if (res.status === 204) {
+        // 삭제 성공 시 모달 닫기
+        onClose();
+      } else if (res.status === 403) {
+        // 비밀번호가 틀린 경우 실패 모달 표시
+        console.log('비밀번호 틀림'); // 확인용 로그
+        setDeleteFail(true);
+      } else {
+        // 기타 오류 처리
+        setError('알 수 없는 오류가 발생했습니다.');
+        console.error('삭제 요청 중 오류 발생:', res);
+      }
+    } catch (err) {
+      console.error('삭제 요청 중 오류 발생:', err);
+      console.error(err.response.data); // 에러 응답 출력
+      setError('삭제 요청 중 오류가 발생했습니다.');
+    }
   };
 
   return (
@@ -47,7 +57,7 @@ export default function InvestmentDelete({ investmentId, onClose }) {
           <h1>삭제 권한 인증</h1>
           <img
             src={X}
-            onClick={handleCloseModal}
+            onClick={onClose}
             style={{ cursor: 'pointer' }}
             alt="close btn"
           />
@@ -75,6 +85,8 @@ export default function InvestmentDelete({ investmentId, onClose }) {
           삭제하기
         </button>
       </div>
+
+      {deleteFail && <InvestmentDeleteFail setDeleteFail={setDeleteFail} />}
     </Modal>
   );
 }

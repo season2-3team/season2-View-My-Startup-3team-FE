@@ -43,10 +43,10 @@ export async function createInvestment(investment) {
 
 export async function patchInvestment(id, investment) {
   const res = await patch(`/api/investments/${id}`, investment);
-  return res.data;
+  return res;
 }
 
 export async function deleteInvestment(id) {
   const res = await remove(`/api/investments/${id}`);
-  return res.data;
+  return res;
 }

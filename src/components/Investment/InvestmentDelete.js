@@ -8,12 +8,10 @@ import { deleteInvestment } from '../../api/InvestmentService';
 import InvestmentDeleteFail from './InvestmentDeleteFail';
 
 export default function InvestmentDelete({ onClose, mockInvestor }) {
-  const { id } = mockInvestor || {};
+  const { id, password: storedPassword } = mockInvestor || {};
 
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-  const [error, setError] = useState('');
   const [deleteFail, setDeleteFail] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -27,26 +25,18 @@ export default function InvestmentDelete({ onClose, mockInvestor }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== storedPassword) {
+      setDeleteFail(true);
+      return;
+    }
+
     try {
       const res = await deleteInvestment(id, { password });
-      console.log('응답:', res); // 응답 출력
-
-      if (res.status === 204) {
-        // 삭제 성공 시 모달 닫기
-        onClose();
-      } else if (res.status === 403) {
-        // 비밀번호가 틀린 경우 실패 모달 표시
-        console.log('비밀번호 틀림'); // 확인용 로그
-        setDeleteFail(true);
-      } else {
-        // 기타 오류 처리
-        setError('알 수 없는 오류가 발생했습니다.');
-        console.error('삭제 요청 중 오류 발생:', res);
-      }
+      console.log('응답:', res);
+      onClose();
     } catch (err) {
       console.error('삭제 요청 중 오류 발생:', err);
-      console.error(err.response.data); // 에러 응답 출력
-      setError('삭제 요청 중 오류가 발생했습니다.');
+      console.error(err.response.data);
     }
   };
 

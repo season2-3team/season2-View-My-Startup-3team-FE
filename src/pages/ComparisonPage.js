@@ -1,3 +1,10 @@
+import ComparisonList from "../components/ComparisonStatus/ComparisonList";
+
 export default function ComparisonPage() {
-  return;
+  
+  return (
+    <div>
+      <ComparisonList />
+    </div>
+  )
 }

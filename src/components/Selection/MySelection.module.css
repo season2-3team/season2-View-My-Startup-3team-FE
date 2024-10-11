@@ -1,12 +1,19 @@
 .section {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+}
+
+.myNav {
+  width: 100%;
+  position: relative;
+  top: 4rem;
 }
 
 .headerBox {
-  width: 117rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -21,8 +28,8 @@
 }
 
 .borderBox {
-  width: 120rem;
-  height: 30rem;
+  width: 100%;
+  padding: 1rem;
   top: 196px;
   border-radius: 0.4rem;
   border: 1px solid var(--secondary-black-300);
@@ -33,8 +40,8 @@
 }
 
 .innerBox {
-  width: 117rem;
-  height: 27rem;
+  width: 100%;
+  height: 30rem;
   border-radius: 0.4rem;
   background-color: var(--secondary-black-100);
   display: flex;
@@ -74,12 +81,13 @@
 }
 
 .selectedStartup {
+  width: 100%;
   position: relative;
-  top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  box-sizing: border-box;
 }
 
 .startupImg {
@@ -97,7 +105,6 @@
 }
 
 .startupCategory {
-  font-family: Pretendard;
   font-size: 1.4rem;
   font-weight: 500;
   line-height: 1.6rem;
@@ -114,14 +121,19 @@
   color: var(--secondary-gray-100);
   border: none;
   text-decoration: underline;
-  position: relative;
-  bottom: 20rem;
-  left: 53rem;
+  position: absolute;
+  bottom: 17rem;
+  right: 3rem;
   cursor: pointer;
 }
 
+.selectedNav {
+  width: 100%;
+  margin-top: 1rem;
+}
+
 .selectedHeader {
-  width: 117rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -129,7 +141,6 @@
   font-weight: 700;
   line-height: 2.4rem;
   text-align: left;
-  margin-bottom: 2rem;
 }
 
 .addBtn {
@@ -160,9 +171,8 @@
 }
 
 .compareSelectedStartup {
-  width: 12.6rem;
+  width: 12rem;
   height: 18.7rem;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -181,17 +191,11 @@
   left: 4rem;
 }
 
-.myNav {
-  position: relative;
-  top: 4rem;
-}
-
 .resetBtn {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-
   width: 15.9rem;
   height: 4.3rem;
   padding: 0.8rem 2.4rem;
@@ -227,7 +231,6 @@
 }
 
 .doneNav {
-  width: 117rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -242,7 +245,7 @@
 }
 
 .doneCompareBox {
-  width: 117rem;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -251,7 +254,6 @@
 }
 
 .doneCompareTxt {
-  font-family: Pretendard;
   font-size: 2rem;
   font-weight: 700;
   line-height: 2.4rem;
@@ -263,7 +265,6 @@
   min-width: 80rem; /* 최소 너비 설정 추가 */
   margin-top: 1.6rem;
   border-radius: 0.25rem;
-
   overflow: hidden;
 }
 
@@ -276,7 +277,6 @@
 .table th,
 .table td {
   padding: 1rem;
-
   font-size: 1.4rem;
   line-height: 1.7rem;
   text-align: center;
@@ -285,7 +285,6 @@
 
 .table thead {
   border-bottom: 1.6rem solid var(--secondary-black-400);
-
   background-color: var(--secondary-black-100);
   color: white;
   font-weight: 500;
@@ -335,6 +334,7 @@
 }
 
 .comparisonDoneBox {
+  width: 100%;
   margin-bottom: 5rem;
 }
 
@@ -357,18 +357,43 @@
   text-align: center;
 }
 
+.innerBoxMobile {
+  width: 100%;
+  height: 30rem;
+  border-radius: 0.4rem;
+  background-color: var(--secondary-black-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 1199px) and (min-width: 744px) {
+  .innerBox {
+    padding-left: 2rem;
+  }
   /* 태블릿 사이즈에서 첫 번째 열 숨기기 */
-  .table thead th:nth-child(1),
-  .table tbody td:nth-child(1) {
+  table thead th:nth-child(1),
+  table tbody td:nth-child(1) {
     display: none;
   }
 }
 
 @media (max-width: 743px) {
+  .section {
+    padding-right: 2rem;
+  }
+  .innerBoxMobile {
+    flex-wrap: wrap;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .compareSelectedStartup {
+    width: calc(33.33% - 1rem);
+    margin: 0.5rem;
+  }
   /* 모바일 사이즈에서 첫 번째 열 숨기기 */
-  .table thead th:nth-child(1),
-  .table tbody td:nth-child(1) {
+  table thead th:nth-child(1),
+  table tbody td:nth-child(1) {
     display: none;
   }
 }

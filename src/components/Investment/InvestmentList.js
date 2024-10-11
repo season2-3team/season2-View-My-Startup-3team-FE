@@ -6,19 +6,18 @@ import { useState, useCallback } from 'react';
 import { useSort } from '../../contexts/SortContext';
 import { formatAmount } from '../../utils/formatAmount';
 import Pagination from '../Common/Pagination';
-import InvestmentCreate from './InvestmentCreate';
+import { useNavigate } from 'react-router-dom';
 
 export default function InvestmentList() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const { orderBy } = useSort();
-  const [selectedStartup, setSelectedStartup] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   // 데이터 불러오기
   const fetchInvestmentList = useCallback(async () => {
     return await getInvestmentList({
-      limit: 1000 // 모든 데이터를 가져옵니다.
+      limit: 1000
     });
   }, []);
 
@@ -67,8 +66,7 @@ export default function InvestmentList() {
   );
 
   const handleStartupClick = (item) => {
-    setSelectedStartup(item.startup);
-    setIsModalOpen(true);
+    navigate(`/startup/${item.startup.id}`);
   };
 
   return (
@@ -121,12 +119,6 @@ export default function InvestmentList() {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
-      {isModalOpen && (
-        <InvestmentCreate
-          onClose={() => setIsModalOpen(false)}
-          startup={selectedStartup}
-        />
-      )}
     </div>
   );
 }

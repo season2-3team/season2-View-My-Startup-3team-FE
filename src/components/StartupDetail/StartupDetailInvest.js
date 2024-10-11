@@ -1,12 +1,12 @@
-import styles from './StartupDetailInvest.module.css';
-import kebab from '../../assets/ic_kebab.svg';
-import { useState, useEffect } from 'react';
-import Pagination from '../Common/Pagination';
-import { formatAmount } from '../../utils/formatAmount';
-import InvestmentCreate from '../Investment/InvestmentCreate';
-import InvestmentPatch from '../Investment/InvestmentPatch';
-import InvestmentDelete from '../Investment/InvestmentDelete';
-import StartupDetailDropdown from './StartupDetailDropdown';
+import styles from "./StartupDetailInvest.module.css";
+import kebab from "../../assets/ic_kebab.svg";
+import { useState, useEffect } from "react";
+import Pagination from "../Common/Pagination";
+import { formatAmount } from "../../utils/formatAmount";
+import InvestmentCreate from "../Investment/InvestmentCreate";
+import InvestmentPatch from "../Investment/InvestmentPatch";
+import InvestmentDelete from "../Investment/InvestmentDelete";
+import StartupDetailDropdown from "./StartupDetailDropdown";
 
 const MAX_ITEMS = 5;
 
@@ -52,14 +52,14 @@ export default function StartupDetailInvest({ startup, mockInvestor }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownOpen && selectedInvestor && !event.target.closest('.menu')) {
+      if (dropdownOpen && selectedInvestor && !event.target.closest(".menu")) {
         setDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownOpen, selectedInvestor]);
 
@@ -76,7 +76,7 @@ export default function StartupDetailInvest({ startup, mockInvestor }) {
   const startIndex = (currentPage - 1) * pageSize;
   const currentInvestors = mockInvestor.list.slice(
     startIndex,
-    startIndex + pageSize
+    startIndex + pageSize,
   );
 
   return (
@@ -87,41 +87,43 @@ export default function StartupDetailInvest({ startup, mockInvestor }) {
       </div>
       <div>
         <h1>총 {formatAmount(startup.simInvest)}원</h1>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th style={{ width: '8.4rem' }}>투자자 이름</th>
-              <th style={{ width: '8.4rem' }}>순위</th>
-              <th style={{ width: '8.4rem' }}>투자 금액</th>
-              <th style={{ width: '83.6rem' }}>투자 코멘트</th>
-              <th style={{ width: '6.4rem' }}> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentInvestors.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.rank}위</td>
-                <td>{formatAmount(item.investAmount)} 원</td>
-                <td style={{ textAlign: 'left' }}>{item.comment}</td>
-                <td>
-                  <img
-                    src={kebab}
-                    alt="더보기 아이콘"
-                    onClick={() => handleMenuClick(item)}
-                    style={{ cursor: 'pointer' }}
-                  />
-                  {selectedInvestor?.id === item.id && dropdownOpen && (
-                    <StartupDetailDropdown
-                      onPatch={() => handleOpenPatchModal(true)}
-                      onDelete={() => handleOpenDeleteModal(true)}
-                    />
-                  )}
-                </td>
+        <div className={styles.tableSet}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th style={{ width: "8.4rem" }}>투자자 이름</th>
+                <th style={{ width: "8.4rem" }}>순위</th>
+                <th style={{ width: "8.4rem" }}>투자 금액</th>
+                <th style={{ width: "83.6rem" }}>투자 코멘트</th>
+                <th style={{ width: "6.4rem" }}> </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentInvestors.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.rank}위</td>
+                  <td>{formatAmount(item.investAmount)} 원</td>
+                  <td style={{ textAlign: "left" }}>{item.comment}</td>
+                  <td>
+                    <img
+                      src={kebab}
+                      alt="더보기 아이콘"
+                      onClick={() => handleMenuClick(item)}
+                      className={styles.img}
+                    />
+                    {selectedInvestor?.id === item.id && dropdownOpen && (
+                      <StartupDetailDropdown
+                        onPatch={() => handleOpenPatchModal(true)}
+                        onDelete={() => handleOpenDeleteModal(true)}
+                      />
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <Pagination
         currentPage={currentPage}

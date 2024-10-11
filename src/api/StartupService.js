@@ -6,7 +6,7 @@ export async function getStartupList(
   limit = 10,
   order = "simInvest",
   sort = "desc",
-  keyword = ""
+  keyword = "",
 ) {
   try {
     const params = new URLSearchParams({
@@ -17,7 +17,7 @@ export async function getStartupList(
       keyword,
     });
     const response = await fetch(
-      `${STARTUP_API_BASE_URL}?${params.toString()}`
+      `${STARTUP_API_BASE_URL}?${params.toString()}`,
     );
     if (!response.ok) {
       const errorMessage = await response.text();

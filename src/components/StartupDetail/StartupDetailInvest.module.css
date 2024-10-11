@@ -46,13 +46,18 @@
   line-height: 2.387rem;
 }
 
+.tableSet {
+  border-radius: 0.4rem;
+}
+
 .table {
   width: 100%;
 
+  border-collapse: collapse;
   min-width: 80rem;
-  border-radius: 0.4rem;
 
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 
 .table tr:hover {
@@ -73,6 +78,7 @@
 
 .table thead {
   height: 3.9rem;
+  border-radius: 0.4rem;
 
   border-bottom: 1.6rem solid var(--secondary-black-400);
 
@@ -92,4 +98,8 @@
 
 .table tbody tr:not(:last-child) {
   border-bottom: 0.1rem solid var(--secondary-gray-300);
+}
+
+.img {
+  cursor: pointer;
 }

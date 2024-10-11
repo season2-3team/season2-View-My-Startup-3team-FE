@@ -93,47 +93,49 @@ export default function StartupDetailInvest() {
       </div>
       <div>
         <h1>총 {formatAmount(startup.startup.simInvest)}원</h1>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th style={{ width: '8.4rem' }}>투자자 이름</th>
-              <th style={{ width: '8.4rem' }}>순위</th>
-              <th style={{ width: '8.4rem' }}>투자 금액</th>
-              <th style={{ width: '83.6rem' }}>투자 코멘트</th>
-              <th style={{ width: '6.4rem' }}> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {investors.list.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.rank}위</td>
-                <td>{formatAmount(item.investAmount)} 원</td>
-                <td style={{ textAlign: 'left' }}>{item.comment}</td>
-                <td style={{ position: 'relative' }}>
-                  <img
-                    src={kebab}
-                    alt="더보기 아이콘"
-                    onClick={() => handleMenuClick(item)}
-                    style={{ cursor: 'pointer' }}
-                  />
-                  {selectedInvestor?.id === item.id && dropdownOpen && (
-                    <StartupDetailDropdown
-                      onPatch={() => {
-                        setDropdownOpen(false);
-                        handleOpenPatchModal();
-                      }}
-                      onDelete={() => {
-                        setDropdownOpen(false);
-                        handleOpenDeleteModal();
-                      }}
-                    />
-                  )}
-                </td>
+        <div className={styles.wrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th style={{ width: '8.4rem' }}>투자자 이름</th>
+                <th style={{ width: '8.4rem' }}>순위</th>
+                <th style={{ width: '8.4rem' }}>투자 금액</th>
+                <th style={{ width: 'auto' }}>투자 코멘트</th>
+                <th style={{ width: '6.4rem' }}> </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {investors.list.map((item) => (
+                <tr key={item.id}>
+                  <td className={styles.name}>{item.name}</td>
+                  <td>{item.rank}위</td>
+                  <td>{formatAmount(item.investAmount)} 원</td>
+                  <td style={{ textAlign: 'left' }}>{item.comment}</td>
+                  <td style={{ position: 'relative' }}>
+                    <img
+                      src={kebab}
+                      alt="더보기 아이콘"
+                      onClick={() => handleMenuClick(item)}
+                      style={{ cursor: 'pointer' }}
+                    />
+                    {selectedInvestor?.id === item.id && dropdownOpen && (
+                      <StartupDetailDropdown
+                        onPatch={() => {
+                          setDropdownOpen(false);
+                          handleOpenPatchModal();
+                        }}
+                        onDelete={() => {
+                          setDropdownOpen(false);
+                          handleOpenDeleteModal();
+                        }}
+                      />
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <Pagination
         currentPage={currentPage}

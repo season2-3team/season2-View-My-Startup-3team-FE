@@ -23,18 +23,24 @@ export default function StartupDetailInfo() {
   return (
     <>
       <div className={styles.body}>
-        <div className={styles.info}>
-          누적 투자 금액 <h1>{formatAmount(startup.startup.simInvest)} 원</h1>
+        <div className={styles.infos}>
+          <div className={styles.info}>
+            <p>누적 투자 금액</p>
+            <h1>{formatAmount(startup.startup.simInvest)} 원</h1>
+          </div>
+          <div className={styles.info}>
+            <p>매출액</p>
+            <h1>{formatAmount(startup.startup.revenue)} 원</h1>
+          </div>
+          <div className={styles.info}>
+            <p>고용 인원</p>
+            <h1>{startup.startup.employees}명</h1>
+          </div>
         </div>
-        <div className={styles.info}>
-          매출액 <h1>{formatAmount(startup.startup.revenue)} 원</h1>
+        <div className={styles.description}>
+          <h1>기업 소개</h1>
+          <p>{startup.startup.description}</p>
         </div>
-        <div className={styles.info}>
-          고용 인원 <h1>{startup.startup.employees}명</h1>
-        </div>
-      </div>
-      <div className={styles.description}>
-        <h1>기업 소개</h1> {startup.startup.description}
       </div>
     </>
   );

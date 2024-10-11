@@ -2,7 +2,7 @@ import styles from './InvestmentList.module.css';
 import noImageIcon from '../../assets/no-image.png';
 import { getInvestmentList } from '../../api/InvestmentService';
 import useQuery from '../../hooks/useQuery';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useSort } from '../../contexts/SortContext';
 import { formatAmount } from '../../utils/formatAmount';
 import Pagination from '../Common/Pagination';
@@ -17,10 +17,11 @@ export default function InvestmentList() {
   // 데이터 불러오기
   const fetchInvestmentList = useCallback(() => {
     return getInvestmentList({ page: currentPage, limit: pageSize, orderBy });
-  }, [currentPage, orderBy]);
+  }, [currentPage, pageSize, orderBy]);
 
   const [data, isLoading, error] = useQuery(fetchInvestmentList, [
     currentPage,
+    pageSize,
     orderBy
   ]);
 
@@ -29,8 +30,6 @@ export default function InvestmentList() {
   if (error) return <div>Error: {error.message}</div>;
   if (!data || data.list.length === 0)
     return <div className={styles.null}>아직 투자 현황이 없어요.</div>;
-
-  console.log(data);
 
   // 데이터 정렬
   const sortedList = data.list.sort((a, b) => {
@@ -63,10 +62,10 @@ export default function InvestmentList() {
 
   // 페이지네이션
   const totalPages = Math.ceil(data.totalCount / pageSize);
-  const currentList = rankedList.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleStartupClick = (item) => {
     navigate(`/startup/${item.startup.id}`);
@@ -90,7 +89,7 @@ export default function InvestmentList() {
             </tr>
           </thead>
           <tbody>
-            {currentList.map((item) => (
+            {rankedList.map((item) => (
               <tr
                 key={item.id}
                 onClick={() => handleStartupClick(item)}
@@ -120,7 +119,7 @@ export default function InvestmentList() {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={setCurrentPage}
+        onPageChange={handlePageChange}
       />
     </div>
   );

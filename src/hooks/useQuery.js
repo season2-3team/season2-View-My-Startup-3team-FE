@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 
-export default function useQuery(asyncFunction, dependencies) {
+export default function useQuery(
+  asyncFunction,
+  [currentPage, pageSize, orderBy]
+) {
   const [data, setData] = useState(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(null);
@@ -24,7 +27,7 @@ export default function useQuery(asyncFunction, dependencies) {
     return () => {
       isMounted = false;
     };
-  }, dependencies);
+  }, [asyncFunction, currentPage, pageSize, orderBy]);
 
   return [data, pending, error];
 }

@@ -69,16 +69,12 @@ export default function StartupDetailInvest() {
     return <Warn variant="error" title="오류발생" description={error} />;
   }
 
-  if (showLoading) {
+  if (showLoading && !investors) {
     return <div>목록을 불러오는 중입니다....</div>;
   }
 
   if (!startup) {
     return;
-  }
-
-  if (!investors) {
-    return <div>Loading...</div>;
   }
 
   const totalPages = Math.ceil(totalCount / maxItems);
@@ -94,54 +90,64 @@ export default function StartupDetailInvest() {
       <div>
         <h1>총 {formatAmount(startup.startup.simInvest)}원</h1>
         <div className={styles.wrapper}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th style={{ width: '8.4rem' }}>투자자 이름</th>
-                <th style={{ width: '8.4rem' }}>순위</th>
-                <th style={{ width: '8.4rem' }}>투자 금액</th>
-                <th style={{ width: 'auto' }}>투자 코멘트</th>
-                <th style={{ width: '6.4rem' }}> </th>
-              </tr>
-            </thead>
-            <tbody>
-              {investors.list.map((item) => (
-                <tr key={item.id}>
-                  <td className={styles.name}>{item.name}</td>
-                  <td>{item.rank}위</td>
-                  <td>{formatAmount(item.investAmount)} 원</td>
-                  <td style={{ textAlign: 'left' }}>{item.comment}</td>
-                  <td style={{ position: 'relative' }}>
-                    <img
-                      src={kebab}
-                      alt="더보기 아이콘"
-                      onClick={() => handleMenuClick(item)}
-                      style={{ cursor: 'pointer' }}
-                    />
-                    {selectedInvestor?.id === item.id && dropdownOpen && (
-                      <StartupDetailDropdown
-                        onPatch={() => {
-                          setDropdownOpen(false);
-                          handleOpenPatchModal();
-                        }}
-                        onDelete={() => {
-                          setDropdownOpen(false);
-                          handleOpenDeleteModal();
-                        }}
-                      />
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {investors ? (
+            <>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th style={{ width: '8.4rem' }}>투자자 이름</th>
+                    <th style={{ width: '8.4rem' }}>순위</th>
+                    <th style={{ width: '8.4rem' }}>투자 금액</th>
+                    <th style={{ width: 'auto' }}>투자 코멘트</th>
+                    <th style={{ width: '6.4rem' }}> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {investors.list.map((item) => (
+                    <tr key={item.id}>
+                      <td className={styles.name}>{item.name}</td>
+                      <td>{item.rank}위</td>
+                      <td>{formatAmount(item.investAmount)} 원</td>
+                      <td style={{ textAlign: 'left' }}>{item.comment}</td>
+                      <td style={{ position: 'relative' }}>
+                        <img
+                          src={kebab}
+                          alt="더보기 아이콘"
+                          onClick={() => handleMenuClick(item)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        {selectedInvestor?.id === item.id && dropdownOpen && (
+                          <StartupDetailDropdown
+                            onPatch={() => {
+                              setDropdownOpen(false);
+                              handleOpenPatchModal();
+                            }}
+                            onDelete={() => {
+                              setDropdownOpen(false);
+                              handleOpenDeleteModal();
+                            }}
+                          />
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </>
+          ) : (
+            <div className={styles.null}>
+              아직 투자한 기업이 없어요,
+              <br />
+              버튼을 눌러 기업에 투자해보세요!
+            </div>
+          )}
         </div>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
       {isCreateModalOpen && (
         <InvestmentCreate
           onClose={handleCloseCreateModal}

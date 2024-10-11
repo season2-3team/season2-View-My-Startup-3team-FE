@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const COMPARISON_API_BASE_URL = 'http://localhost:3000/api/comparisons';
+const COMPARISON_API_BASE_URL =
+  'https://season2-view-my-startup-3team-be.onrender.com/api/comparisons';
 
 export default function useFetchMyStartup() {
   const [startups, setStartups] = useState([]);

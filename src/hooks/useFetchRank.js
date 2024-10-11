@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const COMPARISON_API_BASE_URL =
-  'https://season2-view-my-startup-3team-be.onrender.com/api/startups';
+const API_HOST = "http://localhost:3000";  //https://season2-view-my-startup-3team-be.onrender.com
+const RANK_API_BASE_URL =
+  `${API_HOST}/api/startups`;
 
 export default function useFetchRank(
   startupId,
@@ -15,7 +16,7 @@ export default function useFetchRank(
   const fetchStartupRank = useCallback(async () => {
     try {
       const response = await fetch(
-        `${COMPARISON_API_BASE_URL}/${startupId}/rank?order=${orderBy}&sort=${sortBy}`
+        `${RANK_API_BASE_URL}/${startupId}/rank?order=${orderBy}&sort=${sortBy}`
       );
 
       if (!response.ok) {

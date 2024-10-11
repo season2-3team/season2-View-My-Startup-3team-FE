@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
+const API_HOST = "http://localhost:3000";  //https://season2-view-my-startup-3team-be.onrender.com
 const COMPARISON_API_BASE_URL =
-  'https://season2-view-my-startup-3team-be.onrender.com/api/comparisons';
+  `${API_HOST}/api/comparisons`;
 
 export default function useFetchCompareResult(
   initialOrder = 'desc',

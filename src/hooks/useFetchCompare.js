@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
+const API_HOST = "http://localhost:3000";  //https://season2-view-my-startup-3team-be.onrender.com
 const SELECTION_API_BASE_URL =
-  'https://season2-view-my-startup-3team-be.onrender.com/api/selections';
+  `${API_HOST}/api/selections`;
 
 export default function useFetchCompare(ids) {
   const [updateStartups, setUpdateStartups] = useState(null);

@@ -14,8 +14,13 @@ import useFetchCancelMySelection from '../../hooks/useFetchCancelMySelection.js'
 import useFetchCancelCompare from '../../hooks/useFetchCancelCompare.js';
 import CompareDropdown from './CompareDropdown.js';
 import InvestModal from './InvestModal.js';
-import useFetchRank from '../../hooks/useFetchRanck.js';
+import useFetchRank from '../../hooks/useFetchRank.js';
 import RankDropdown from './RankDropdown.js';
+import { v4 as uuidv4 } from 'uuid';
+import { useCallback } from 'react';
+
+
+const API_HOST = "http://localhost:3000";
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
@@ -43,6 +48,59 @@ export default function MySelection() {
   );
   const [sortOptionBy, setSortOptionBy] = useState('revenue_desc');
 
+  const [sessionId, setSessionId] = useState(null); // sessionId 상태 추가
+
+  
+
+
+  /* //buff */
+  // sessionId 생성 및 저장
+  useEffect(() => {
+    let storedSessionId = sessionStorage.getItem('sessionId');
+    if (!storedSessionId) {
+      storedSessionId = uuidv4();
+      sessionStorage.setItem('sessionId', storedSessionId);
+    }
+    setSessionId(storedSessionId);
+  }, []);
+
+  // sessionId가 설정되면 기존 선택 정보 불러오기
+  useEffect(() => {
+    if (sessionId) {
+      fetchExistingSelections();
+    }
+  }, [sessionId]);
+
+  // 기존 선택 정보 불러오기 함수 추가
+  const fetchExistingSelections = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${API_HOST}/api/selections?sessionId=${sessionId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('선택 정보를 불러오는 데 실패했습니다.');
+      }
+
+      const data = await response.json();
+      setSelectedStartup(data.selectedStartups || []);
+      setCompareSelectedStartups(data.comparisonStartups || []);
+    } catch (error) {
+      console.error('기존 선택 정보를 불러오는 중 오류 발생:', error);
+    }
+  }, [sessionId]);
+
+
+
+
+
+
   useEffect(() => {
     // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
     const [sortValue, orderValue] = sortOption.split(/_(?=[^_]*$)/);
@@ -68,6 +126,9 @@ export default function MySelection() {
   const handleSelectStartup = (startup) => {
     if (!selectedStartup.some((s) => s.id === startup.id)) {
       setSelectedStartup((prev) => [...prev, startup]);
+      /* //buff */
+      // 선택 시 서버에 전달 (sessionId 포함)
+      fetchMySelection(startup.id, sessionId); // sessionId 전달
     }
   };
 

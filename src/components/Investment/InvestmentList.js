@@ -2,7 +2,7 @@ import styles from './InvestmentList.module.css';
 import noImageIcon from '../../assets/no-image.png';
 import { getInvestmentList } from '../../api/InvestmentService';
 import useQuery from '../../hooks/useQuery';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useSort } from '../../contexts/SortContext';
 import { formatAmount } from '../../utils/formatAmount';
 import Pagination from '../Common/Pagination';
@@ -10,24 +10,27 @@ import { useNavigate } from 'react-router-dom';
 
 export default function InvestmentList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const [pageSize] = useState(10);
   const { orderBy } = useSort();
   const navigate = useNavigate();
 
   // 데이터 불러오기
-  const fetchInvestmentList = useCallback(async () => {
-    return await getInvestmentList({
-      limit: 1000
-    });
-  }, []);
+  const fetchInvestmentList = useCallback(() => {
+    return getInvestmentList({ page: currentPage, limit: pageSize, orderBy });
+  }, [currentPage, orderBy]);
 
-  const [data, isLoading, error] = useQuery(fetchInvestmentList, []);
+  const [data, isLoading, error] = useQuery(fetchInvestmentList, [
+    currentPage,
+    orderBy
+  ]);
 
   // 조건부 렌더링
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!data || data.list.length === 0)
     return <div className={styles.null}>아직 투자 현황이 없어요.</div>;
+
+  console.log(data);
 
   // 데이터 정렬
   const sortedList = data.list.sort((a, b) => {

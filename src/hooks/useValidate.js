@@ -13,13 +13,12 @@ export default function useValidate(initialValues) {
       newError.name = '10자 이내로 입력해주세요.';
     }
 
-    if (
-      !values.comment ||
-      values.comment.length < 10 ||
-      values.comment.length > 100
-    ) {
+    if (!values.comment || values.comment.length < 10) {
       isValid = false;
       newError.comment = '10자 이상 입력해주세요.';
+    } else if (values.comment.length > 100) {
+      isValid = false;
+      newError.comment = '100자 미만으로 입력해주세요.';
     }
 
     if (

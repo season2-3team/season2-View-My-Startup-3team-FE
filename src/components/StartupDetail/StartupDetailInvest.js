@@ -90,7 +90,7 @@ export default function StartupDetailInvest() {
       <div>
         <h1>총 {formatAmount(startup.startup.simInvest)}원</h1>
         <div className={styles.wrapper}>
-          {investors ? (
+          {investors && investors.list.length > 0 ? (
             <>
               <table className={styles.table}>
                 <thead>

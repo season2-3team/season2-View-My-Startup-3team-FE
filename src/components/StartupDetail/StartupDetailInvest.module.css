@@ -37,7 +37,7 @@
   background-color: var(--primary-orange);
 }
 
-.content> :nth-child(2) h1 {
+.content > :nth-child(2) h1 {
   padding: 1.6rem 0;
   border-top: 0.1rem solid var(--secondary-black-100);
 
@@ -52,12 +52,13 @@
   min-width: 80rem;
   border-radius: 0.4rem;
 
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 }
 
 .wrapper {
   overflow-x: auto;
+  border-radius: 0.4rem;
   padding-bottom: 1.2rem;
 }
 
@@ -115,12 +116,10 @@
   font-weight: 400;
   line-height: 1.671rem;
   text-align: center;
-
 }
 
 /***** Tablet *****/
 @media (max-width: 1199px) and (min-width: 744px) {
-
   /* 전체 스크롤바 */
   .wrapper::-webkit-scrollbar {
     width: 100%;
@@ -155,7 +154,7 @@
     line-height: 1.671rem;
   }
 
-  .content> :nth-child(2) h1 {
+  .content > :nth-child(2) h1 {
     font-size: 1.6rem;
     line-height: 1.909rem;
   }

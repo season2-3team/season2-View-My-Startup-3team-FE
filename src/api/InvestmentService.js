@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'https://season2-view-my-startup-3team-be.onrender.com'
 });
 
 instance.interceptors.response.use(

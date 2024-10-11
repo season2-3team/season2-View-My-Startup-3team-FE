@@ -174,6 +174,14 @@ export default function MySelection() {
         <div className={styles.innerBox}>
           {selectedStartup.map((startup) => (
             <div key={startup.id} className={styles.selectedStartup}>
+              {!isComparisonDone && (
+                <button
+                  className={styles.removeBtn}
+                  onClick={() => handleRemoveStartup(startup.id)}
+                >
+                  선택 취소
+                </button>
+              )}
               <img
                 src={startup.image || noImageIcon}
                 alt="startupImg"
@@ -189,14 +197,6 @@ export default function MySelection() {
               <span className={styles.startupCategory}>
                 {startup.category.category}
               </span>
-              {!isComparisonDone && (
-                <button
-                  className={styles.removeBtn}
-                  onClick={() => handleRemoveStartup(startup.id)}
-                >
-                  선택 취소
-                </button>
-              )}
             </div>
           ))}
           {selectedStartup.length === 0 && (
@@ -213,20 +213,22 @@ export default function MySelection() {
         </div>
       </div>
       {!isComparisonDone && selectedStartup.length > 0 && (
-        <div className={styles.section}>
-          <div className={styles.selectedHeader}>
-            <span>어떤 기업이 궁금하세요?</span>
-            <button
-              onClick={handleOpenComparedModal}
-              className={`${styles.addBtn} ${
-                compareSelectedStartups.length >= 5
-                  ? styles.disabledBtn
-                  : styles.addBtn
-              }`}
-              disabled={compareSelectedStartups.length >= 5}
-            >
-              기업 추가하기
-            </button>
+        <>
+          <div className={styles.selectedNav}>
+            <div className={styles.selectedHeader}>
+              <span>어떤 기업이 궁금하세요? (최대 5개)</span>
+              <button
+                onClick={handleOpenComparedModal}
+                className={`${styles.addBtn} ${
+                  compareSelectedStartups.length >= 5
+                    ? styles.disabledBtn
+                    : styles.addBtn
+                }`}
+                disabled={compareSelectedStartups.length >= 5}
+              >
+                기업 추가하기
+              </button>
+            </div>
           </div>
           <div
             className={styles.borderBox}
@@ -234,7 +236,11 @@ export default function MySelection() {
           >
             <div
               style={{ border: selectedStartup.length > 0 ? 'none' : '' }}
-              className={styles.innerBox}
+              className={
+                compareSelectedStartups.length > 0
+                  ? styles.innerBoxMobile
+                  : styles.innerBox
+              }
             >
               {compareSelectedStartups.length === 0 ? (
                 <h2>
@@ -273,7 +279,7 @@ export default function MySelection() {
               )}
             </div>
           </div>
-        </div>
+        </>
       )}
       {!isComparisonDone && (
         <button
@@ -309,16 +315,12 @@ export default function MySelection() {
         />
       )}
       {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
-        <div className={`${styles.section} ${styles.comparisonDoneBox}`}>
-          <div className={isComparisonDone ? styles.doneNav : styles.myNav}>
-            <h2
-              className={isComparisonDone ? styles.doneTxt : styles.headerTxt}
-            >
-              비교 결과 확인하기
-            </h2>
+        <div className={styles.comparisonDoneBox}>
+          <div className={styles.doneNav}>
+            <h2 className={styles.doneTxt}>비교 결과 확인하기</h2>
             <CompareDropdown setSortOption={setSortOption} />
           </div>
-          <div style={{ width: '117rem', overflowX: 'auto' }}>
+          <div style={{ width: '100%', overflowX: 'auto' }}>
             <table className={styles.table}>
               <thead>
                 <tr>
@@ -391,16 +393,12 @@ export default function MySelection() {
         </div>
       )}
       {isComparisonDone && ( // 비교 완료 상태일 때 비교 결과 표시
-        <div className={`${styles.section} ${styles.comparisonDoneBox}`}>
-          <div className={isComparisonDone ? styles.doneNav : styles.myNav}>
-            <h2
-              className={isComparisonDone ? styles.doneTxt : styles.headerTxt}
-            >
-              기업 순위 확인하기
-            </h2>
+        <div className={styles.comparisonDoneBox}>
+          <div className={styles.doneNav}>
+            <h2 className={styles.doneTxt}>기업 순위 확인하기</h2>
             <RankDropdown setSortOptionBy={setSortOptionBy} />
           </div>
-          <div style={{ width: '117rem', overflowX: 'auto' }}>
+          <div style={{ width: '100%', overflowX: 'auto' }}>
             <table className={styles.table}>
               <thead>
                 <tr>

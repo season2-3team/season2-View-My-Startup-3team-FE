@@ -127,3 +127,17 @@
   text-align: center;
   cursor: pointer;
 }
+
+@media (max-width: 1199px) and (min-width: 744px) {
+  .form {
+    position: relative;
+    top: 5rem;
+  }
+}
+
+@media (max-width: 743px) {
+  .form {
+    position: relative;
+    top: 5rem;
+  }
+}

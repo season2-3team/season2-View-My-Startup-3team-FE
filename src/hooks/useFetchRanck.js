@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const COMPARISON_API_BASE_URL = 'http://localhost:3000/api/startups';
+const COMPARISON_API_BASE_URL =
+  'https://season2-view-my-startup-3team-be.onrender.com/api/startups';
 
 export default function useFetchRank(
   startupId,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const SELECTION_API_BASE_URL = 'http://localhost:3000/api/selections';
+const SELECTION_API_BASE_URL =
+  'https://season2-view-my-startup-3team-be.onrender.com/api/selections';
 
 export default function useFetchMySelection(id) {
   const [cancelStartup, setCancelStartup] = useState(null);

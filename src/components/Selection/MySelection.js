@@ -14,6 +14,8 @@ import useFetchCancelMySelection from '../../hooks/useFetchCancelMySelection.js'
 import useFetchCancelCompare from '../../hooks/useFetchCancelCompare.js';
 import CompareDropdown from './CompareDropdown.js';
 import InvestModal from './InvestModal.js';
+import useFetchRank from '../../hooks/useFetchRanck.js';
+import RankDropdown from './RankDropdown.js';
 
 export default function MySelection() {
   const [isModal, setIsModal] = useState(false);
@@ -23,7 +25,7 @@ export default function MySelection() {
   const { fetchMySelection } = useFetchMySelection();
   const { fetchComparison } = useFetchCompare();
   const [isComparisonDone, setIsComparisonDone] = useState(false);
-  const { allResults, fetchResult, setOrder, setSort } = useFetchCompareResult(
+  const { allResults, setOrder, setSort, fetchResult } = useFetchCompareResult(
     'desc',
     'simInvest'
   );
@@ -31,6 +33,15 @@ export default function MySelection() {
   const { fetchCancelComparison } = useFetchCancelCompare();
   const [sortOption, setSortOption] = useState('simInvest_desc');
   const [isInvestModal, setIsInvestModal] = useState(false);
+  const selectedStartupIds = selectedStartup.map((startup) => startup.id);
+  const startupId =
+    selectedStartupIds.length > 0 ? selectedStartupIds[0] : null;
+  const { rankData, setOrderBy, setSortBy } = useFetchRank(
+    startupId,
+    'revenue',
+    'desc'
+  );
+  const [sortOptionBy, setSortOptionBy] = useState('revenue_desc');
 
   useEffect(() => {
     // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
@@ -38,6 +49,13 @@ export default function MySelection() {
     setSort(sortValue);
     setOrder(orderValue);
   }, [sortOption, setOrder, setSort]);
+
+  useEffect(() => {
+    // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
+    const [orderValue, sortValue] = sortOptionBy.split(/_(?=[^_]*$)/);
+    setOrderBy(orderValue);
+    setSortBy(sortValue);
+  }, [sortOptionBy, setSortBy, setOrderBy]);
 
   const handleOpenModal = () => {
     setIsModal(true);
@@ -102,7 +120,6 @@ export default function MySelection() {
       return fetchCancelMySelection(startup.id);
     });
     await Promise.all(promise);
-
     const ids = compareSelectedStartups.map((startup) => startup.id);
     await fetchCancelComparison(ids);
     await fetchResult();
@@ -270,7 +287,9 @@ export default function MySelection() {
               ? false
               : true
           }
-          onClick={handleCompareButtonClick}
+          onClick={() => {
+            handleCompareButtonClick();
+          }}
         >
           기업 비교하기
         </button>
@@ -379,7 +398,7 @@ export default function MySelection() {
             >
               기업 순위 확인하기
             </h2>
-            <CompareDropdown setSortOption={setSortOption} />
+            <RankDropdown setSortOptionBy={setSortOptionBy} />
           </div>
           <div style={{ width: '117rem', overflowX: 'auto' }}>
             <table className={styles.table}>
@@ -395,7 +414,7 @@ export default function MySelection() {
                 </tr>
               </thead>
               <tbody>
-                {allResults.map((result) => (
+                {rankData.map((result) => (
                   <tr
                     key={result.id}
                     className={
@@ -438,7 +457,7 @@ export default function MySelection() {
                       </span>
                     </td>
                     <td className={styles.description}>{result.description}</td>
-                    <td>{result.category.category}</td>
+                    <td>{result.category}</td>
                     <td style={{ textAlign: 'center' }}>
                       {formatAmount(result.simInvest)} 원
                     </td>

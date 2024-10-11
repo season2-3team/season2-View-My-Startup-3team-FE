@@ -16,9 +16,9 @@ export default function useValidate(initialValues) {
     if (!values.comment || values.comment.length < 10) {
       isValid = false;
       newError.comment = '10자 이상 입력해주세요.';
-    } else if (values.comment.length > 100) {
+    } else if (!values.comment || values.comment.length > 100) {
       isValid = false;
-      newError.comment = '100자 미만으로 입력해주세요.';
+      newError.comment = '100자 이내로 입력해주세요.';
     }
 
     if (

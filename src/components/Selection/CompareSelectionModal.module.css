@@ -198,3 +198,10 @@
   margin-top: 1rem;
   color: var(--error-color);
 }
+
+@media (max-width: 743px) {
+  .form {
+    position: relative;
+    top: 5rem;
+  }
+}

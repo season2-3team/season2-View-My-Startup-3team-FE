@@ -1,4 +1,4 @@
-import styles from '../Investment/InvestmentCreate.module.css';
+import styles from './InvestModal.module.css';
 import X from '../../assets/ic_x.svg';
 import visibilityOn from '../../assets/btn_visibility_on.svg';
 import visibilityOff from '../../assets/btn_visibility_off.svg';

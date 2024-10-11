@@ -17,7 +17,7 @@ const MAX_ITEMS = 5;
 export default function StartupDetailInvest() {
   const { id } = useParams();
   const maxItems = MAX_ITEMS;
-  const [currentPage, setCurrentPage] = useState(1); // currentPage 상태를 여기서 관리
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { investors, error, totalCount, showLoading } = useFetchInvestors(
     id,
@@ -34,55 +34,36 @@ export default function StartupDetailInvest() {
   const [selectedInvestor, setSelectedInvestor] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    if (isPatchModalOpen) {
-      console.log('isPatchModalOpen:', isPatchModalOpen);
-    }
-  }, [isPatchModalOpen]);
+  const handleOpenCreateModal = () => setCreateModalOpen(true);
+  const handleCloseCreateModal = () => setCreateModalOpen(false);
 
-  const handleOpenCreateModal = () => {
-    setCreateModalOpen(true);
-  };
+  const handleOpenPatchModal = () => setPatchModalOpen(true);
+  const handleClosePatchModal = () => setPatchModalOpen(false);
 
-  const handleCloseCreateModal = () => {
-    setCreateModalOpen(false);
-  };
-
-  const handleOpenPatchModal = () => {
-    console.log('Patch modal opened');
-    setPatchModalOpen(true);
-  };
-
-  const handleClosePatchModal = () => {
-    setPatchModalOpen(false);
-  };
-
-  const handleOpenDeleteModal = () => {
-    console.log('Delete modal opened');
-    setDeleteModalOpen(true);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setDeleteModalOpen(false);
-  };
+  const handleOpenDeleteModal = () => setDeleteModalOpen(true);
+  const handleCloseDeleteModal = () => setDeleteModalOpen(false);
 
   const handleMenuClick = (investor) => {
     setSelectedInvestor(investor);
-    setDropdownOpen(true);
+    setDropdownOpen((prev) => !prev); // 클릭할 때 드롭다운 열기/닫기
+  };
+
+  const handleClickOutside = (event) => {
+    if (
+      dropdownOpen &&
+      !event.target.closest('.menu') &&
+      !event.target.closest('.kebab-icon')
+    ) {
+      setDropdownOpen(false);
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownOpen && selectedInvestor && !event.target.closest('.menu')) {
-        setDropdownOpen(false);
-      }
-    };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [dropdownOpen, selectedInvestor]);
+  }, []);
 
   if (error) {
     return <Warn variant="error" title="오류발생" description={error} />;
@@ -106,7 +87,9 @@ export default function StartupDetailInvest() {
     <div className={styles.content}>
       <div className={styles.header}>
         <h1>View My Startup에서 받은 투자</h1>
-        <button onClick={handleOpenCreateModal}>기업 투자하기</button>
+        <button onClick={handleOpenCreateModal} style={{ cursor: 'pointer' }}>
+          기업 투자하기
+        </button>
       </div>
       <div>
         <h1>총 {formatAmount(startup.startup.simInvest)}원</h1>
@@ -127,7 +110,7 @@ export default function StartupDetailInvest() {
                 <td>{item.rank}위</td>
                 <td>{formatAmount(item.investAmount)} 원</td>
                 <td style={{ textAlign: 'left' }}>{item.comment}</td>
-                <td>
+                <td style={{ position: 'relative' }}>
                   <img
                     src={kebab}
                     alt="더보기 아이콘"
@@ -137,12 +120,12 @@ export default function StartupDetailInvest() {
                   {selectedInvestor?.id === item.id && dropdownOpen && (
                     <StartupDetailDropdown
                       onPatch={() => {
-                        handleOpenPatchModal();
                         setDropdownOpen(false);
+                        handleOpenPatchModal();
                       }}
                       onDelete={() => {
-                        handleOpenDeleteModal();
                         setDropdownOpen(false);
+                        handleOpenDeleteModal();
                       }}
                     />
                   )}

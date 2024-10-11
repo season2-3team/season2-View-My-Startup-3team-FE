@@ -10,6 +10,7 @@
   border-radius: 1rem;
 
   background-color: var(--secondary-black-400);
+  z-index: 1;
 }
 
 .menu li {

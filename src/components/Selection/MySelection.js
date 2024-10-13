@@ -2,7 +2,7 @@ import styles from './MySelection.module.css';
 import btn_plus from '../../assets/btn_plus.svg';
 import MySelectionModal from './MySelectionModal';
 import CompareSelectionModal from './CompareSelectionModal';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ic_minus from '../../assets/ic_minus.svg';
 import ic_restart from '../../assets/ic_restart.svg';
 import useFetchMySelection from '../../hooks/useFetchMySelection';
@@ -42,6 +42,37 @@ export default function MySelection() {
     'desc'
   );
   const [sortOptionBy, setSortOptionBy] = useState('revenue_desc');
+
+  let sessionId = sessionStorage.getItem('sessionId');
+  const API_HOST = 'https://season2-view-my-startup-3team-be.onrender.com';
+
+  const fetchExistingSelections = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${API_HOST}/api/selections?sessionId=${sessionId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('선택 정보를 불러오는 데 실패했습니다.');
+      }
+
+      const data = await response.json();
+      setSelectedStartup(data.selectedStartups || []);
+      setCompareSelectedStartups(data.comparisonStartups || []);
+    } catch (error) {
+      console.error('기존 선택 정보를 불러오는 중 오류 발생:', error);
+    }
+  }, [sessionId]);
+
+  useEffect(() => {
+    fetchExistingSelections();
+  }, [fetchExistingSelections]);
 
   useEffect(() => {
     // 마지막 언더바를 기준으로 나누기 위해 정규식 사용
@@ -122,7 +153,18 @@ export default function MySelection() {
     await Promise.all(promise);
     const ids = compareSelectedStartups.map((startup) => startup.id);
     await fetchCancelComparison(ids);
-    await fetchResult();
+  };
+
+  const handleCancelCompare = async () => {
+    const ids = compareSelectedStartups.map((startup) => startup.id);
+    await fetchCancelComparison(ids);
+  };
+
+  const handleCancelMy = async () => {
+    const promise = selectedStartup.map((startup) => {
+      return fetchCancelMySelection(startup.id);
+    });
+    await Promise.all(promise);
   };
 
   const handleOpenInvestModal = () => {
@@ -141,7 +183,13 @@ export default function MySelection() {
           <div className={styles.headerBox}>
             <h2 className={styles.headerTxt}>나의 기업을 선택해주세요!</h2>
             {compareSelectedStartups.length > 0 && (
-              <button className={styles.resetBtn} onClick={handleResetAll}>
+              <button
+                className={styles.resetBtn}
+                onClick={() => {
+                  handleResetAll();
+                  handleCancelButtonClick();
+                }}
+              >
                 <img
                   src={ic_restart}
                   alt="loadingLogo"
@@ -177,7 +225,10 @@ export default function MySelection() {
               {!isComparisonDone && (
                 <button
                   className={styles.removeBtn}
-                  onClick={() => handleRemoveStartup(startup.id)}
+                  onClick={() => {
+                    handleRemoveStartup(startup.id);
+                    handleCancelMy();
+                  }}
                 >
                   선택 취소
                 </button>
@@ -257,7 +308,10 @@ export default function MySelection() {
                       src={ic_minus}
                       alt="minus"
                       className={styles.minusIcon}
-                      onClick={() => handleCompareRemoveStartups(startup.id)}
+                      onClick={() => {
+                        handleCompareRemoveStartups(startup.id);
+                        handleCancelCompare();
+                      }}
                     />
                     <img
                       src={startup.image || noImageIcon}

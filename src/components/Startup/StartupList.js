@@ -75,13 +75,13 @@ export default function StartupList() {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th style={{ width: '6.8rem' }}>순위</th>
-              <th style={{ width: '21.3rem' }}>기업명</th>
-              <th style={{ width: '30.4rem' }}>기업소개</th>
-              <th style={{ width: '15.4rem' }}>카테고리</th>
-              <th style={{ width: '15.4rem' }}>누적 투자 금액</th>
-              <th style={{ width: '15.4rem' }}>매출액</th>
-              <th style={{ width: '15.4rem' }}>고용 인원</th>
+              <th>순위</th>
+              <th>기업명</th>
+              <th>기업소개</th>
+              <th>카테고리</th>
+              <th>누적 투자 금액</th>
+              <th>매출액</th>
+              <th>고용 인원</th>
             </tr>
           </thead>
           <tbody>
@@ -126,7 +126,7 @@ export default function StartupList() {
                 <td style={{ textAlign: 'center' }}>
                   {formatAmount(startup.revenue)} 원
                 </td>
-                <td style={{ textAlign: 'right', paddingRight: '5rem' }}>
+                <td style={{ textAlign: 'center' }}>
                   {formatAmount(startup.employees)} 명
                 </td>
               </tr>

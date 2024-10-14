@@ -53,6 +53,42 @@
   border-bottom: 0.1rem solid var(--secondary-gray-300);
 }
 
+/* 열 너비 설정 */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 6.8rem; /* 순위 */
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 21.3rem; /* 기업명 */
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 30.4rem; /* 기업소개 */
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  width: 15.4rem; /* 카테고리 */
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+  width: 15.4rem; /* 누적 투자 금액 */
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+  width: 15.4rem; /* 열: 매출액 */
+}
+
+.table th:nth-child(7),
+.table td:nth-child(7) {
+  width: 15.4rem; /* 고용 인원 */
+}
+
 /* 추가 */
 .table-container {
   width: 100%;
@@ -84,14 +120,57 @@
   line-clamp: 2; /* 표준 속성으로 정의하지만 아직 대부분의 브라우저에서 미지원 */
 }
 
-
-
 @media (max-width: 1199px) and (min-width: 744px) {
   /* 태블릿 사이즈에서 첫 번째 열 숨기기 */
   .table thead th:nth-child(1),
   .table tbody td:nth-child(1) {
     display: none;
   }
+
+  /* 열 너비 설정 */
+  .table th:nth-child(1),
+  .table td:nth-child(1) {
+    width: 6.8rem; /* 순위 */
+  }
+
+  .table th:nth-child(2),
+  .table td:nth-child(2) {
+    width: 15.3rem; /* 기업명 */
+  }
+
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    width: 16rem; /* 기업소개 */
+  }
+
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    width: 9.65rem; /* 카테고리 */
+  }
+
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    width: 9.65rem; /* 누적 투자 금액 */
+  }
+
+  .table th:nth-child(6),
+  .table td:nth-child(6) {
+    width: 9.65rem; /* 열: 매출액 */
+  }
+
+  .table th:nth-child(7),
+  .table td:nth-child(7) {
+    width: 9.65rem; /* 고용 인원 */
+  }  
+
+  .startupName {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 7.2rem; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }  
 }
 
 @media (max-width: 743px) {
@@ -101,4 +180,48 @@
     display: none;
   }
 
+    /* 열 너비 설정 */
+    .table th:nth-child(1),
+    .table td:nth-child(1) {
+      width: 6.8rem; /* 순위 */
+    }
+  
+    .table th:nth-child(2),
+    .table td:nth-child(2) {
+      width: 15.3rem; /* 기업명 */
+    }
+  
+    .table th:nth-child(3),
+    .table td:nth-child(3) {
+      width: 16rem; /* 기업소개 */
+    }
+  
+    .table th:nth-child(4),
+    .table td:nth-child(4) {
+      width: 9.65rem; /* 카테고리 */
+    }
+  
+    .table th:nth-child(5),
+    .table td:nth-child(5) {
+      width: 9.65rem; /* 누적 투자 금액 */
+    }
+  
+    .table th:nth-child(6),
+    .table td:nth-child(6) {
+      width: 9.65rem; /* 열: 매출액 */
+    }
+  
+    .table th:nth-child(7),
+    .table td:nth-child(7) {
+      width: 9.65rem; /* 고용 인원 */
+    }  
+  
+  .startupName {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 7.2rem; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }  
 }

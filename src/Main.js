@@ -6,6 +6,9 @@ import ComparisonPage from './pages/ComparisonPage';
 import InvestmentPage from './pages/InvestmentPage';
 import App from './components/App.js';
 import NotFoundPage from './pages/NotFoundPage.js';
+import TermsPage from './pages/TermsPage.js';
+import PrivacyPage from './pages/PrivacyPage.js';
+import AboutPage from './pages/AboutPage.js';
 
 export default function Main() {
   return (
@@ -17,6 +20,9 @@ export default function Main() {
           <Route path="/my-comparison" element={<MyComparisonPage />} />
           <Route path="/comparison" element={<ComparisonPage />} />
           <Route path="/investment" element={<InvestmentPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

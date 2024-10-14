@@ -1,7 +1,7 @@
 /* 기본 경고 스타일 */
 .warn {
   text-align: center;
-  height: calc(100vh - 6rem - 4rem);
+  height: calc(100vh - 6rem - 60rem);
 }
 
 .warn .icon {

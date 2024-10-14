@@ -8,9 +8,9 @@ const Pagination = ({
   currentPage, 
   totalPages, 
   onPageChange, 
-  pageButtonSize = '4.8rem', 
-  pageButtonBorderRadius='1rem', 
-  pageButtonFontSize='1.8rem' 
+  pageButtonSize,
+  pageButtonBorderRadius,
+  pageButtonFontSize
 }) => {
 
   if (totalPages <= 1) {
@@ -46,18 +46,30 @@ const Pagination = ({
     }
   };
 
+  // 인라인 스타일을 조건부로 설정
+  const buttonStyle = (size, borderRadius, fontSize) => {
+    // props가 전달된 경우에만 인라인 스타일을 적용
+    const style = {};
+    if (size) {
+      style.width = size;
+      style.height = size;
+    }
+    if (borderRadius) {
+      style.borderRadius = borderRadius;
+    }
+    if (fontSize) {
+      style.fontSize = fontSize;
+    }
+    return style;
+  };
+
   return (
     <div className={styles.pagination}>
       {startPage > 1 && (
         <button
           className={styles.paginationButton}
           onClick={handlePrevGroupClick}
-          style={{ 
-            width: pageButtonSize, 
-            height: pageButtonSize,
-            borderRadius: pageButtonBorderRadius,
-            fontSize: pageButtonFontSize
-          }}
+          style={buttonStyle(pageButtonSize, pageButtonBorderRadius, pageButtonFontSize)}
         >
           <img
             src={arrowLeftIcon}
@@ -73,12 +85,7 @@ const Pagination = ({
           onClick={() => {
             onPageChange(page);  // 페이지 변경
           }}
-          style={{ 
-            width: pageButtonSize, 
-            height: pageButtonSize,
-            borderRadius: pageButtonBorderRadius,
-            fontSize: pageButtonFontSize
-          }}
+          style={buttonStyle(pageButtonSize, pageButtonBorderRadius, pageButtonFontSize)}
         >
           {page}
         </button>
@@ -88,12 +95,7 @@ const Pagination = ({
         <button
           className={styles.paginationButton}
           onClick={handleNextGroupClick}
-          style={{ 
-            width: pageButtonSize, 
-            height: pageButtonSize,
-            borderRadius: pageButtonBorderRadius,
-            fontSize: pageButtonFontSize
-          }}
+          style={buttonStyle(pageButtonSize, pageButtonBorderRadius, pageButtonFontSize)}
         >
           <img
             src={arrowRightIcon}

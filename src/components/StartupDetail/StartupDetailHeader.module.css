@@ -1,4 +1,4 @@
-.header {
+.logoBox {
   position: relative;
   display: flex;
   align-items: center;
@@ -43,6 +43,10 @@
 
 /***** Mobile *****/
 @media (max-width: 743px) {
+  .header {
+    margin-right: 1.6rem;
+  }
+
   .header h1 {
     font-size: 2rem;
     line-height: 2.387rem;
@@ -51,7 +55,6 @@
   .header h2 {
     font-size: 1.6rem;
     line-height: 1.909rem;
-
   }
 
   .logo {

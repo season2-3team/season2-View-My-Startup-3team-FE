@@ -1,8 +1,8 @@
-import styles from './StartupDetailInfo.module.css';
-import { formatAmount } from '../../utils/formatAmount';
-import useFetchStartup from '../../hooks/useFetchStartupDetail';
-import Warn from '../Warn';
-import { useParams } from 'react-router-dom';
+import styles from "./StartupDetailInfo.module.css";
+import { formatAmount } from "../../utils/formatAmount";
+import useFetchStartup from "../../hooks/useFetchStartupDetail";
+import Warn from "../Warn";
+import { useParams } from "react-router-dom";
 
 export default function StartupDetailInfo() {
   const { id } = useParams();
@@ -34,12 +34,18 @@ export default function StartupDetailInfo() {
           </div>
           <div className={styles.info}>
             <p>고용 인원</p>
-            <h1>{startup.startup.employees}명</h1>
+            <h1>{formatAmount(startup.startup.employees)}명</h1>
           </div>
         </div>
-        <div className={styles.description}>
-          <h1>기업 소개</h1>
-          <p>{startup.startup.description}</p>
+        <div className={styles.descriptionContainer}>
+          <div className={styles.description}>
+            <h1>기업 소개</h1>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: startup.startup.description.replace(/\n/g, "<br />"),
+              }}
+            />
+          </div>
         </div>
       </div>
     </>

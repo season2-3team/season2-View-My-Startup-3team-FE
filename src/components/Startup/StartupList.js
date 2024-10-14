@@ -114,12 +114,7 @@ export default function StartupList() {
                       }}
                     />
                   </span>
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      verticalAlign: 'middle'
-                    }}
-                  >
+                  <span className={styles.startupName}>
                     {startup.name}
                   </span>
                 </td>

@@ -17,17 +17,11 @@ export default function InvestmentList() {
   // 데이터 불러오기
   const fetchInvestmentList = useCallback(async () => {
     return await getInvestmentList({
-      page: currentPage,
-      limit: pageSize,
-      orderBy
+      limit: 1000
     });
-  }, [currentPage, pageSize, orderBy]);
+  }, []);
 
-  const [data, isLoading, error] = useQuery(fetchInvestmentList, [
-    currentPage,
-    pageSize,
-    orderBy
-  ]);
+  const [data, isLoading, error] = useQuery(fetchInvestmentList, []);
 
   // 조건부 렌더링
   if (isLoading) return <div>Loading...</div>;
@@ -66,6 +60,10 @@ export default function InvestmentList() {
 
   // 페이지네이션
   const totalPages = Math.ceil(data.totalCount / pageSize);
+  const currentList = rankedList.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -93,7 +91,7 @@ export default function InvestmentList() {
             </tr>
           </thead>
           <tbody>
-            {rankedList.map((item) => (
+            {currentList.map((item) => (
               <tr
                 key={item.id}
                 onClick={() => handleStartupClick(item)}

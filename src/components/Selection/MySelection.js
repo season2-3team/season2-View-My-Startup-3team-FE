@@ -384,6 +384,7 @@ export default function MySelection() {
         <MySelectionModal
           onClose={handleCloseModal}
           onSelectStartup={handleSelectStartup}
+          existingSelectedStartups={compareSelectedStartups}
         />
       )}
       {isComparedModal && (

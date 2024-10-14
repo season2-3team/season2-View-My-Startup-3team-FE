@@ -7,7 +7,11 @@ import useFetchRecent from '../../hooks/useFetchRecent.js';
 import { useState } from 'react';
 import noImageIcon from '../../assets/no-image.png';
 
-export default function MySelectionModal({ onClose, onSelectStartup }) {
+export default function MySelectionModal({
+  onClose,
+  onSelectStartup,
+  existingSelectedStartups
+}) {
   const { recentStartups } = useFetchRecent();
   const { startups, searchStartups } = useFetchMyStartup();
   const [searchText, setSearchText] = useState('');
@@ -42,10 +46,11 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
   const handleSelect = (startup) => {
     onSelectStartup(startup);
     onClose();
+    console.log(startup);
   };
+  console.log(existingSelectedStartups);
 
   const inputPadding = searchText ? '1.2rem' : '1.2rem 1.2rem 1.2rem 3.7rem';
-
   return (
     <div className={styles.overlay}>
       <form className={styles.form}>
@@ -105,13 +110,29 @@ export default function MySelectionModal({ onClose, onSelectStartup }) {
                       {startup.startup.category.category}
                     </span>
                   </div>
-                  <button
-                    type="button"
-                    className={styles.selectionBtn}
-                    onClick={() => handleSelect(startup.startup)}
-                  >
-                    선택하기
-                  </button>
+                  {!existingSelectedStartups.some(
+                    (existing) => existing.id === startup.startup.id
+                  ) && (
+                    <button
+                      type="button"
+                      className={styles.selectionBtn}
+                      onClick={() => handleSelect(startup.startup)}
+                    >
+                      선택하기
+                    </button>
+                  )}
+                  {existingSelectedStartups.some(
+                    (existing) => existing.id === startup.startup.id
+                  ) && (
+                    <button
+                      type="button"
+                      className={styles.compareSelectedBtn}
+                      onClick={() => handleSelect(startup.startup)}
+                      disabled={true}
+                    >
+                      비교 기업
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>

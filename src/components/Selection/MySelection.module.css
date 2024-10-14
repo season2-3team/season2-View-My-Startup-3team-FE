@@ -381,6 +381,7 @@
 
 @media (max-width: 743px) {
   .section {
+    width: 100%;
     padding-right: 2rem;
   }
   .innerBoxMobile {

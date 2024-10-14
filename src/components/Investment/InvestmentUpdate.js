@@ -7,20 +7,21 @@ import { patchInvestment } from '../../api/InvestmentService';
 import useValidate from '../../hooks/useValidate';
 import Modal from '../Common/Modal';
 
-export default function InvestmentCreate({
+export default function InvestmentUpdate({
   onClose,
   startup,
   mockInvestor,
   initialValues
 }) {
   const { image, name, categoryName } = startup || {};
-  const { values, errors, handleChange, validate, handleBlur } = useValidate({
-    name: initialValues?.name || '',
-    investAmount: initialValues?.investAmount || '',
-    comment: initialValues?.comment || '',
-    password: initialValues?.password || '',
-    checkPassword: ''
-  });
+  const { values, errors, handleChange, validate, handleBlur, getRawValues } =
+    useValidate({
+      name: initialValues?.name || '',
+      investAmount: initialValues?.investAmount || '',
+      comment: initialValues?.comment || '',
+      password: initialValues?.password || '',
+      checkPassword: ''
+    });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
@@ -51,10 +52,11 @@ export default function InvestmentCreate({
       return;
     }
 
-    const investAmount = parseFloat(values.investAmount);
+    const rawValues = getRawValues();
+    const investAmount = parseFloat(rawValues.investAmount);
 
     try {
-      const investment = { ...values, investAmount };
+      const investment = { ...rawValues, investAmount };
       delete investment.checkPassword;
 
       const updateRes = await patchInvestment(mockInvestor.id, investment);
@@ -62,6 +64,7 @@ export default function InvestmentCreate({
 
       if (updateRes.status === 200) {
         onClose();
+        window.location.reload();
       } else {
         console.log(updateRes.status);
         setError('수정 요청이 실패했습니다.');

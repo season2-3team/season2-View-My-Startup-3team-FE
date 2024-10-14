@@ -4,6 +4,13 @@ export default function useValidate(initialValues) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
 
+  const formatAmount = (value) => {
+    const numericValue = value.replace(/,/g, '');
+    return !isNaN(numericValue) && numericValue !== ''
+      ? Number(numericValue).toLocaleString()
+      : value;
+  };
+
   const validate = () => {
     let isValid = true;
     let newError = {};
@@ -13,20 +20,16 @@ export default function useValidate(initialValues) {
       newError.name = '10자 이내로 입력해주세요.';
     }
 
-    if (
-      !values.comment ||
-      values.comment.length < 10 ||
-      values.comment.length > 100
-    ) {
+    if (!values.comment || values.comment.length < 10) {
       isValid = false;
       newError.comment = '10자 이상 입력해주세요.';
+    } else if (!values.comment || values.comment.length > 100) {
+      isValid = false;
+      newError.comment = '100자 이내로 입력해주세요.';
     }
 
-    if (
-      !values.investAmount ||
-      values.investAmount.length < 1 ||
-      isNaN(values.investAmount)
-    ) {
+    const investAmount = values.investAmount.replace(/,/g, '');
+    if (!investAmount || isNaN(investAmount)) {
       isValid = false;
       newError.investAmount = '숫자로 입력해주세요.';
     }
@@ -48,10 +51,18 @@ export default function useValidate(initialValues) {
   const handleChange = (e) => {
     const { id, value } = e.target;
 
-    setValues({
-      ...values,
-      [id]: value
-    });
+    if (id === 'investAmount') {
+      const formattedValue = formatAmount(value);
+      setValues({
+        ...values,
+        [id]: formattedValue
+      });
+    } else {
+      setValues({
+        ...values,
+        [id]: value
+      });
+    }
 
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -73,11 +84,19 @@ export default function useValidate(initialValues) {
     }));
   };
 
+  const getRawValues = () => {
+    return {
+      ...values,
+      investAmount: values.investAmount.replace(/,/g, '')
+    };
+  };
+
   return {
     values,
     errors,
     validate,
     handleChange,
-    handleBlur
+    handleBlur,
+    getRawValues
   };
 }

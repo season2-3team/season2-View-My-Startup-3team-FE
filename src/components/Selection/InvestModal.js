@@ -14,13 +14,14 @@ export default function InvestModal({ onClose, startup }) {
   const name = selectedStartup?.name;
   const image = selectedStartup?.image;
   const categoryName = selectedStartup.category.category;
-  const { values, errors, handleChange, validate, handleBlur } = useValidate({
-    name: '',
-    investAmount: '',
-    comment: '',
-    password: '',
-    checkPassword: ''
-  });
+  const { values, errors, handleChange, validate, handleBlur, getRawValues } =
+    useValidate({
+      name: '',
+      investAmount: '',
+      comment: '',
+      password: '',
+      checkPassword: ''
+    });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
@@ -52,10 +53,11 @@ export default function InvestModal({ onClose, startup }) {
       return;
     }
 
-    const investAmount = parseFloat(values.investAmount);
+    const rawValues = getRawValues();
+    const investAmount = parseFloat(rawValues.investAmount);
 
     try {
-      const investment = { ...values, investAmount, startupId };
+      const investment = { ...rawValues, investAmount, startupId };
       delete investment.checkPassword;
 
       const res = await createInvestment(investment);
@@ -90,7 +92,7 @@ export default function InvestModal({ onClose, startup }) {
             <h1>기업에 투자하기</h1>
             <img
               src={X}
-              onClick={onClose}
+              onClick={(e) => onClose(e)}
               style={{ cursor: 'pointer' }}
               alt="close btn"
             />
@@ -221,7 +223,7 @@ export default function InvestModal({ onClose, startup }) {
             )}
           </div>
           <div className={styles.buttons}>
-            <button className={styles.cancel} onClick={onClose}>
+            <button className={styles.cancel} onClick={(e) => onClose(e)}>
               취소
             </button>
             <button

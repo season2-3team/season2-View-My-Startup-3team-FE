@@ -31,9 +31,9 @@ export default function InvestmentDelete({ onClose, mockInvestor }) {
     }
 
     try {
-      const res = await deleteInvestment(id, { password });
-      console.log('응답:', res);
+      await deleteInvestment(id, { password });
       onClose();
+      window.location.reload();
     } catch (err) {
       console.error('삭제 요청 중 오류 발생:', err);
       console.error(err.response.data);

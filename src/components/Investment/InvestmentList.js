@@ -65,6 +65,10 @@ export default function InvestmentList() {
     currentPage * pageSize
   );
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   const handleStartupClick = (item) => {
     navigate(`/startup/${item.startup.id}`);
   };
@@ -117,7 +121,7 @@ export default function InvestmentList() {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={setCurrentPage}
+        onPageChange={handlePageChange}
       />
     </div>
   );

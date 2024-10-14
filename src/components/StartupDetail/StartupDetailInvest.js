@@ -1,6 +1,6 @@
 import styles from './StartupDetailInvest.module.css';
 import kebab from '../../assets/ic_kebab.svg';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Pagination from '../Common/Pagination';
 import { formatAmount } from '../../utils/formatAmount';
 import InvestmentCreate from '../Investment/InvestmentCreate';
@@ -33,6 +33,7 @@ export default function StartupDetailInvest() {
 
   const [selectedInvestor, setSelectedInvestor] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleOpenCreateModal = () => setCreateModalOpen(true);
   const handleCloseCreateModal = () => setCreateModalOpen(false);
@@ -45,25 +46,34 @@ export default function StartupDetailInvest() {
 
   const handleMenuClick = (investor) => {
     setSelectedInvestor(investor);
-    setDropdownOpen((prev) => !prev); // 클릭할 때 드롭다운 열기/닫기
+    setDropdownOpen((prev) => !prev);
   };
 
-  const handleClickOutside = (event) => {
-    if (
-      dropdownOpen &&
-      !event.target.closest('.menu') &&
-      !event.target.closest('.kebab-icon')
-    ) {
-      setDropdownOpen(false);
+  const handleDropdownOptionClick = (action) => {
+    setDropdownOpen(false);
+    if (action === 'patch') {
+      handleOpenPatchModal();
+    } else if (action === 'delete') {
+      handleOpenDeleteModal();
     }
   };
 
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownOpen &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [dropdownOpen]);
 
   if (error) {
     return <Warn variant="error" title="오류발생" description={error} />;
@@ -117,16 +127,14 @@ export default function StartupDetailInvest() {
                           style={{ cursor: 'pointer' }}
                         />
                         {selectedInvestor?.id === item.id && dropdownOpen && (
-                          <StartupDetailDropdown
-                            onPatch={() => {
-                              setDropdownOpen(false);
-                              handleOpenPatchModal();
-                            }}
-                            onDelete={() => {
-                              setDropdownOpen(false);
-                              handleOpenDeleteModal();
-                            }}
-                          />
+                          <div ref={dropdownRef}>
+                            <StartupDetailDropdown
+                              onPatch={() => handleDropdownOptionClick('patch')}
+                              onDelete={() =>
+                                handleDropdownOptionClick('delete')
+                              }
+                            />
+                          </div>
                         )}
                       </td>
                     </tr>

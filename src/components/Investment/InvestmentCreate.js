@@ -10,13 +10,14 @@ import InvestmentComplete from './InvestmentComplete';
 
 export default function InvestmentCreate({ onClose, startup }) {
   const { id: startupId, image, name, categoryName } = startup || {};
-  const { values, errors, handleChange, validate, handleBlur } = useValidate({
-    name: '',
-    investAmount: '',
-    comment: '',
-    password: '',
-    checkPassword: ''
-  });
+  const { values, errors, handleChange, validate, handleBlur, getRawValues } =
+    useValidate({
+      name: '',
+      investAmount: '',
+      comment: '',
+      password: '',
+      checkPassword: ''
+    });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
@@ -48,10 +49,11 @@ export default function InvestmentCreate({ onClose, startup }) {
       return;
     }
 
-    const investAmount = parseFloat(values.investAmount);
+    const rawValues = getRawValues();
+    const investAmount = parseFloat(rawValues.investAmount);
 
     try {
-      const investment = { ...values, investAmount, startupId };
+      const investment = { ...rawValues, investAmount, startupId };
       delete investment.checkPassword;
 
       const res = await createInvestment(investment);
@@ -76,6 +78,7 @@ export default function InvestmentCreate({ onClose, startup }) {
   const handleCloseCompleteModal = () => {
     setIsComplete(false);
     onClose();
+    window.location.reload();
   };
 
   return (

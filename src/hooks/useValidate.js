@@ -4,8 +4,11 @@ export default function useValidate(initialValues) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
 
-  const formatNumber = (value) => {
-    return value.replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const formatAmount = (value) => {
+    const numericValue = value.replace(/,/g, '');
+    return !isNaN(numericValue) && numericValue !== ''
+      ? Number(numericValue).toLocaleString()
+      : value;
   };
 
   const validate = () => {
@@ -26,11 +29,7 @@ export default function useValidate(initialValues) {
     }
 
     const investAmount = values.investAmount.replace(/,/g, '');
-    if (
-      !values.investAmount ||
-      values.investAmount.length < 1 ||
-      isNaN(values.investAmount)
-    ) {
+    if (!investAmount || isNaN(investAmount)) {
       isValid = false;
       newError.investAmount = '숫자로 입력해주세요.';
     }
@@ -53,7 +52,7 @@ export default function useValidate(initialValues) {
     const { id, value } = e.target;
 
     if (id === 'investAmount') {
-      const formattedValue = formatNumber(value);
+      const formattedValue = formatAmount(value);
       setValues({
         ...values,
         [id]: formattedValue
@@ -65,7 +64,6 @@ export default function useValidate(initialValues) {
       });
     }
 
-    // 에러 초기화
     setErrors((prevErrors) => ({
       ...prevErrors,
       [id]: ''
@@ -86,11 +84,19 @@ export default function useValidate(initialValues) {
     }));
   };
 
+  const getRawValues = () => {
+    return {
+      ...values,
+      investAmount: values.investAmount.replace(/,/g, '')
+    };
+  };
+
   return {
     values,
     errors,
     validate,
     handleChange,
-    handleBlur
+    handleBlur,
+    getRawValues
   };
 }

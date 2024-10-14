@@ -146,18 +146,26 @@
   .header h1 {
     font-size: 1.6rem;
     line-height: 1.909rem;
+    white-space: nowrap;
   }
 
   .header button {
     height: 3.2rem;
+    width: 9.7rem;
+    padding: 0.75rem 1.2rem;
 
     font-size: 1.4rem;
     line-height: 1.671rem;
+    white-space: nowrap;
   }
 
   .content> :nth-child(2) h1 {
     font-size: 1.6rem;
     line-height: 1.909rem;
+  }
+
+  .headerBox {
+    margin-right: 1.6rem;
   }
 
   /* 전체 스크롤바 */

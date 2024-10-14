@@ -37,13 +37,15 @@ export default function StartupDetailInfo() {
             <h1>{formatAmount(startup.startup.employees)}명</h1>
           </div>
         </div>
-        <div className={styles.description}>
-          <h1>기업 소개</h1>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: startup.startup.description.replace(/\n/g, "<br />"),
-            }}
-          />
+        <div className={styles.descriptionContainer}>
+          <div className={styles.description}>
+            <h1>기업 소개</h1>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: startup.startup.description.replace(/\n/g, "<br />"),
+              }}
+            />
+          </div>
         </div>
       </div>
     </>

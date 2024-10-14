@@ -33,6 +33,7 @@
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 2rem;
+  white-space: nowrap;
 }
 
 .info h1 {
@@ -76,6 +77,10 @@
 
 /***** Mobile *****/
 @media (max-width: 743px) {
+  .infos {
+    margin-right: 1.6rem;
+  }
+
   .info {
     flex-direction: column;
     justify-content: center;
@@ -93,5 +98,9 @@
   .info h1 {
     font-size: 1.4rem;
     line-height: 1.671rem;
+  }
+
+  .descriptionContainer {
+    margin-right: 1.6rem;
   }
 }

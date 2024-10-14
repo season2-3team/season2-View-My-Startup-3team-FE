@@ -31,7 +31,7 @@ export default function InvestmentDelete({ onClose, mockInvestor }) {
     }
 
     try {
-      const res = await deleteInvestment(id, { password });
+      await deleteInvestment(id, { password });
       onClose();
       window.location.reload();
     } catch (err) {

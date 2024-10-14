@@ -176,12 +176,31 @@ export default function MySelection() {
     setIsInvestModal(false);
   };
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 743);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 743);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className={styles.section}>
       <div className={styles.myNav}>
         {!isComparisonDone && (
           <div className={styles.headerBox}>
-            <h2 className={styles.headerTxt}>나의 기업을 선택해주세요!</h2>
+            {isMobile ? (
+              <h2 className={styles.headerTxt}>
+                나의 기업을 <br /> 선택해주세요!
+              </h2>
+            ) : (
+              <h2 className={styles.headerTxt}>나의 기업을 선택해주세요!</h2>
+            )}
+
             {compareSelectedStartups.length > 0 && (
               <button
                 className={styles.resetBtn}
@@ -267,7 +286,14 @@ export default function MySelection() {
         <>
           <div className={styles.selectedNav}>
             <div className={styles.selectedHeader}>
-              <span>어떤 기업이 궁금하세요? (최대 5개)</span>
+              {isMobile ? (
+                <span>
+                  어떤 기업이 궁금하세요? <br /> (최대 5개)
+                </span>
+              ) : (
+                <span>어떤 기업이 궁금하세요? (최대 5개)</span>
+              )}
+
               <button
                 onClick={handleOpenComparedModal}
                 className={`${styles.addBtn} ${

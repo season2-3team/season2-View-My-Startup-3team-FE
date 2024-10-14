@@ -209,6 +209,7 @@
   font-weight: 600;
   line-height: 1.9rem;
   text-align: center;
+  white-space: nowrap;
 }
 
 .beforeBtn {
@@ -390,6 +391,15 @@
   .compareSelectedStartup {
     width: calc(33.33% - 1rem);
     margin: 0.5rem;
+  }
+  .resetBtn,
+  .addBtn,
+  .disabledBtn {
+    white-space: nowrap;
+  }
+  .selectedHeader,
+  .headerTxt {
+    font-size: 1.7rem;
   }
   /* 모바일 사이즈에서 첫 번째 열 숨기기 */
   table thead th:nth-child(1),

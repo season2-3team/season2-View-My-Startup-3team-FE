@@ -1,22 +1,14 @@
 import { useEffect, useState } from 'react';
 import { getInvestors } from '../api/StartupDetailService';
 
-const useFetchInvestors = (
-  id,
-  currentPage,
-  maxItems = 5,
-  initialOrder = 'invest_amount',
-  initialSort = 'desc'
-) => {
+const useFetchInvestors = (id, currentPage, maxItems = 5) => {
   const [investors, setInvestors] = useState([]);
   const [error, setError] = useState(null);
-  const [order, setOrder] = useState(initialOrder);
-  const [sort, setSort] = useState(initialSort);
   const [totalCount, setTotalCount] = useState(0);
 
   const [showLoading, setShowLoading] = useState(false); // 로딩 화면을 표시할지 여부
 
-  const MIN_LOADING_TIME = 1000; // 최소 로딩 시간, 로딩 화면이 짧게 깜빡이는 것을 방지
+  const MIN_LOADING_TIME = 2000; // 최소 로딩 시간, 로딩 화면이 짧게 깜빡이는 것을 방지
 
   useEffect(() => {
     const fetchInvestors = async () => {
@@ -25,13 +17,7 @@ const useFetchInvestors = (
       }, MIN_LOADING_TIME);
 
       try {
-        const investorList = await getInvestors(
-          id,
-          currentPage,
-          maxItems,
-          order,
-          sort
-        );
+        const investorList = await getInvestors(id, currentPage, maxItems);
         setInvestors(investorList.mockInvestors || []);
         setTotalCount(investorList.mockInvestors.totalCount || 0);
       } catch (e) {
@@ -47,10 +33,6 @@ const useFetchInvestors = (
   return {
     investors,
     error,
-    order,
-    setOrder,
-    sort,
-    setSort,
     totalCount,
     showLoading
   };

@@ -24,7 +24,7 @@ export default function InvestmentList() {
   const [data, isLoading, error] = useQuery(fetchInvestmentList, []);
 
   // 조건부 렌더링
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return;
   if (error) return <div>Error: {error.message}</div>;
   if (!data || data.list.length === 0)
     return <div className={styles.null}>아직 투자 현황이 없어요.</div>;

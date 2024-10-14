@@ -44,9 +44,9 @@
 }
 
 .searchImg {
-  position: relative;
-  top: 3.3rem;
-  right: 18rem;
+  position: absolute;
+  left: 3.2rem;
+  bottom: 45.4rem;
 }
 
 .search input {
@@ -65,9 +65,9 @@
 .searchImgBlock {
   display: flex;
   align-items: center;
-  position: relative;
-  bottom: 3.2rem;
-  left: 16.5rem;
+  position: absolute;
+  top: 8.5rem;
+  right: 3rem;
   gap: 1rem;
   cursor: pointer;
 }
@@ -200,13 +200,18 @@
 }
 
 @media (max-width: 743px) {
+  .overlay {
+    width: 100%;
+  }
   .form {
+    width: 100%;
     position: relative;
     top: 5rem;
-    padding: 4rem;
+    padding: 2rem;
     font-size: 1rem;
   }
   .searchImg {
     right: 16rem;
+    top: 8rem;
   }
 }

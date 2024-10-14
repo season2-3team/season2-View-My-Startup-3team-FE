@@ -424,7 +424,7 @@ export default function MySelection() {
                         : ''
                     }
                   >
-                    <td style={{ textAlign: 'left', paddingLeft: '7rem' }}>
+                    <td style={{ textAlign: 'left', paddingLeft: '6.5rem' }}>
                       <span
                         style={{
                           display: 'inline-block',

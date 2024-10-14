@@ -25,7 +25,7 @@
 
 .table thead {
   border-bottom: 1.6rem solid var(--secondary-black-400);
-
+  white-space: nowrap;
   background-color: var(--secondary-black-100);
   color: white;
   font-weight: 500;

@@ -90,7 +90,7 @@ export default function InvestModal({ onClose, startup }) {
             <h1>기업에 투자하기</h1>
             <img
               src={X}
-              onClick={onClose}
+              onClick={(e) => onClose(e)}
               style={{ cursor: 'pointer' }}
               alt="close btn"
             />
@@ -221,7 +221,7 @@ export default function InvestModal({ onClose, startup }) {
             )}
           </div>
           <div className={styles.buttons}>
-            <button className={styles.cancel} onClick={onClose}>
+            <button className={styles.cancel} onClick={(e) => onClose(e)}>
               취소
             </button>
             <button

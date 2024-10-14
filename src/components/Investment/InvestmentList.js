@@ -10,13 +10,17 @@ import { useNavigate } from 'react-router-dom';
 
 export default function InvestmentList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const pageSize = 10;
   const { orderBy } = useSort();
   const navigate = useNavigate();
 
   // 데이터 불러오기
-  const fetchInvestmentList = useCallback(() => {
-    return getInvestmentList({ page: currentPage, limit: pageSize, orderBy });
+  const fetchInvestmentList = useCallback(async () => {
+    return await getInvestmentList({
+      page: currentPage,
+      limit: pageSize,
+      orderBy
+    });
   }, [currentPage, pageSize, orderBy]);
 
   const [data, isLoading, error] = useQuery(fetchInvestmentList, [

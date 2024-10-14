@@ -1,7 +1,7 @@
 .header {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap; /* 모바일에서 검색창과 드롭다운이 줄바꿈 될 수 있도록 설정 */
   gap: 1rem; /* 아이템 간의 간격 */

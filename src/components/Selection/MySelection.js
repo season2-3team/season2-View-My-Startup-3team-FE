@@ -172,8 +172,8 @@ export default function MySelection() {
   };
 
   const handleCloseInvestModal = (e) => {
+    if (e) e.preventDefault();
     setIsInvestModal(false);
-    e.preventDefault();
   };
 
   return (

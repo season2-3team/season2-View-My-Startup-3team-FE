@@ -14,13 +14,14 @@ export default function InvestModal({ onClose, startup }) {
   const name = selectedStartup?.name;
   const image = selectedStartup?.image;
   const categoryName = selectedStartup.category.category;
-  const { values, errors, handleChange, validate, handleBlur } = useValidate({
-    name: '',
-    investAmount: '',
-    comment: '',
-    password: '',
-    checkPassword: ''
-  });
+  const { values, errors, handleChange, validate, handleBlur, getRawValues } =
+    useValidate({
+      name: '',
+      investAmount: '',
+      comment: '',
+      password: '',
+      checkPassword: ''
+    });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
@@ -52,10 +53,11 @@ export default function InvestModal({ onClose, startup }) {
       return;
     }
 
-    const investAmount = parseFloat(values.investAmount);
+    const rawValues = getRawValues();
+    const investAmount = parseFloat(rawValues.investAmount);
 
     try {
-      const investment = { ...values, investAmount, startupId };
+      const investment = { ...rawValues, investAmount, startupId };
       delete investment.checkPassword;
 
       const res = await createInvestment(investment);

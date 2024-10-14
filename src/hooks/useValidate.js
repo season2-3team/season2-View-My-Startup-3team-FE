@@ -4,6 +4,10 @@ export default function useValidate(initialValues) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
 
+  const formatNumber = (value) => {
+    return value.replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   const validate = () => {
     let isValid = true;
     let newError = {};
@@ -21,6 +25,7 @@ export default function useValidate(initialValues) {
       newError.comment = '100자 이내로 입력해주세요.';
     }
 
+    const investAmount = values.investAmount.replace(/,/g, '');
     if (
       !values.investAmount ||
       values.investAmount.length < 1 ||
@@ -47,11 +52,20 @@ export default function useValidate(initialValues) {
   const handleChange = (e) => {
     const { id, value } = e.target;
 
-    setValues({
-      ...values,
-      [id]: value
-    });
+    if (id === 'investAmount') {
+      const formattedValue = formatNumber(value);
+      setValues({
+        ...values,
+        [id]: formattedValue
+      });
+    } else {
+      setValues({
+        ...values,
+        [id]: value
+      });
+    }
 
+    // 에러 초기화
     setErrors((prevErrors) => ({
       ...prevErrors,
       [id]: ''

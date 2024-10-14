@@ -203,5 +203,10 @@
   .form {
     position: relative;
     top: 5rem;
+    padding: 4rem;
+    font-size: 1rem;
+  }
+  .searchImg {
+    right: 16rem;
   }
 }

@@ -16,7 +16,7 @@ const useFetchInvestors = (
 
   const [showLoading, setShowLoading] = useState(false); // 로딩 화면을 표시할지 여부
 
-  const MIN_LOADING_TIME = 1000; // 최소 로딩 시간, 로딩 화면이 짧게 깜빡이는 것을 방지
+  const MIN_LOADING_TIME = 2000; // 최소 로딩 시간, 로딩 화면이 짧게 깜빡이는 것을 방지
 
   useEffect(() => {
     const fetchInvestors = async () => {

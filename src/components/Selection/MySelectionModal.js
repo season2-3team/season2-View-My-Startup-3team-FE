@@ -48,7 +48,6 @@ export default function MySelectionModal({
     onClose();
     console.log(startup);
   };
-  console.log(existingSelectedStartups);
 
   const inputPadding = searchText ? '1.2rem' : '1.2rem 1.2rem 1.2rem 3.7rem';
   return (

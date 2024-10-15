@@ -3,16 +3,19 @@ import X from '../../assets/ic_x.svg';
 import visibilityOn from '../../assets/btn_visibility_on.svg';
 import visibilityOff from '../../assets/btn_visibility_off.svg';
 import Modal from '../Common/Modal';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { deleteInvestment } from '../../api/InvestmentService';
-import InvestmentDeleteFail from './InvestmentDeleteFail';
+import InvestmentPasswordFail from './InvestmentPasswordFail';
+import InvestmentDeleteConfirm from './InvestmentDeleteConfirm';
 
 export default function InvestmentDelete({ onClose, mockInvestor }) {
   const { id, password: storedPassword } = mockInvestor || {};
 
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [deleteFail, setDeleteFail] = useState(false);
+  const [fail, setFail] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const passwordInputRef = useRef(null);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -26,10 +29,26 @@ export default function InvestmentDelete({ onClose, mockInvestor }) {
     e.preventDefault();
 
     if (password !== storedPassword) {
-      setDeleteFail(true);
+      setFail(true);
       return;
     }
 
+    setConfirm(true);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
+  };
+
+  useEffect(() => {
+    if (passwordInputRef.current) {
+      passwordInputRef.current.focus();
+    }
+  }, []);
+
+  const confirmDelete = async () => {
     try {
       await deleteInvestment(id, { password });
       onClose();
@@ -58,11 +77,13 @@ export default function InvestmentDelete({ onClose, mockInvestor }) {
           <h1>비밀번호</h1>
           <div className={styles.password}>
             <input
+              ref={passwordInputRef}
               type={isPasswordVisible ? 'text' : 'password'}
               id="password"
               placeholder="비밀번호를 입력해 주세요"
               value={password}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
             />
             <img
               src={isPasswordVisible ? visibilityOff : visibilityOn}
@@ -75,8 +96,13 @@ export default function InvestmentDelete({ onClose, mockInvestor }) {
           삭제하기
         </button>
       </div>
-
-      {deleteFail && <InvestmentDeleteFail setDeleteFail={setDeleteFail} />}
+      {fail && <InvestmentPasswordFail setFail={setFail} />}
+      {confirm && (
+        <InvestmentDeleteConfirm
+          onDelete={confirmDelete}
+          onClose={() => setConfirm(false)}
+        />
+      )}
     </Modal>
   );
 }

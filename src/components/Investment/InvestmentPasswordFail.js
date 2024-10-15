@@ -1,10 +1,11 @@
-import styles from './InvestmentDeleteFail.module.css';
+import styles from './InvestmentPasswordFail.module.css';
 import X from '../../assets/ic_x.svg';
 import Modal from '../Common/Modal';
+import { useEffect } from 'react';
 
-export default function InvestmentDeleteFail({ setDeleteFail }) {
+export default function InvestmentPasswordFail({ setFail }) {
   const handleCloseFailModal = () => {
-    setDeleteFail(false);
+    setFail(false);
   };
 
   return (
@@ -16,7 +17,7 @@ export default function InvestmentDeleteFail({ setDeleteFail }) {
           style={{ cursor: 'pointer' }}
           alt="close btn"
         />
-        <span>잘못된 비밀번호로 삭제에 실패하셨습니다.</span>
+        <span>잘못된 비밀번호입니다.</span>
         <button className={styles.fail} onClick={handleCloseFailModal}>
           확인
         </button>

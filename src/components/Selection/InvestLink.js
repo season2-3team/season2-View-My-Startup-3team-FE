@@ -1,4 +1,4 @@
-import styles from './InvestLink.module.css';
+import styles from '../Investment/InvestmentComplete.module.css';
 import X from '../../assets/ic_x.svg';
 import Modal from '../Common/Modal';
 import { useNavigate } from 'react-router-dom';

@@ -46,7 +46,6 @@ export default function MySelectionModal({
   const handleSelect = (startup) => {
     onSelectStartup(startup);
     onClose();
-    console.log(startup);
   };
 
   const inputPadding = searchText ? '1.2rem' : '1.2rem 1.2rem 1.2rem 3.7rem';

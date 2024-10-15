@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { patchInvestment } from '../../api/InvestmentService';
 import useValidate from '../../hooks/useValidate';
 import Modal from '../Common/Modal';
+import InvestmentUpdateConfirm from './InvestmentUpdateConfirm';
 
 export default function InvestmentUpdate({
   onClose,
@@ -26,6 +27,7 @@ export default function InvestmentUpdate({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
   const [error, setError] = useState('');
+  const [confirm, setConfirm] = useState(false);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -52,6 +54,10 @@ export default function InvestmentUpdate({
       return;
     }
 
+    setConfirm(true);
+  };
+
+  const confirmUpdate = async () => {
     const rawValues = getRawValues();
     const investAmount = parseFloat(rawValues.investAmount);
 
@@ -60,7 +66,6 @@ export default function InvestmentUpdate({
       delete investment.checkPassword;
 
       const updateRes = await patchInvestment(mockInvestor.id, investment);
-      console.log('Update Response:', updateRes);
 
       if (updateRes.status === 200) {
         onClose();
@@ -227,6 +232,12 @@ export default function InvestmentUpdate({
           </div>
           {error && <div className={styles.error}>{error}</div>}
         </form>
+        {confirm && (
+          <InvestmentUpdateConfirm
+            onUpdate={confirmUpdate}
+            onClose={() => setConfirm(false)}
+          />
+        )}
       </Modal>
     </>
   );

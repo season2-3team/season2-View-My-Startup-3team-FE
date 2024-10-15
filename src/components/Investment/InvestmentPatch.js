@@ -3,14 +3,17 @@ import X from '../../assets/ic_x.svg';
 import visibilityOn from '../../assets/btn_visibility_on.svg';
 import visibilityOff from '../../assets/btn_visibility_off.svg';
 import Modal from '../Common/Modal';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import InvestmentUpdate from './InvestmentUpdate';
+import InvestmentPasswordFail from './InvestmentPasswordFail';
 
 export default function InvestmentPatch({ onClose, mockInvestor, startup }) {
   const { password: storedPassword } = mockInvestor || {};
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [showInvestmentUpdate, setShowInvestmentUpdate] = useState(false);
+  const [fail, setFail] = useState(false);
+  const passwordInputRef = useRef(null);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -24,11 +27,24 @@ export default function InvestmentPatch({ onClose, mockInvestor, startup }) {
     e.preventDefault();
 
     if (password !== storedPassword) {
-      console.log('비밀번호 불일치');
+      setFail(true);
+      return;
     } else {
       setShowInvestmentUpdate(true);
     }
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handlePasswordSubmit(e);
+    }
+  };
+
+  useEffect(() => {
+    if (passwordInputRef.current) {
+      passwordInputRef.current.focus();
+    }
+  }, []);
 
   return (
     <div>
@@ -49,11 +65,13 @@ export default function InvestmentPatch({ onClose, mockInvestor, startup }) {
             <h1>비밀번호</h1>
             <div className={styles.password}>
               <input
+                ref={passwordInputRef}
                 type={isPasswordVisible ? 'text' : 'password'}
                 id="password"
                 placeholder="비밀번호를 입력해 주세요"
                 value={password}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
               />
               <img
                 src={isPasswordVisible ? visibilityOff : visibilityOn}
@@ -67,6 +85,8 @@ export default function InvestmentPatch({ onClose, mockInvestor, startup }) {
           </button>
         </div>
       </Modal>
+
+      {fail && <InvestmentPasswordFail setFail={setFail} />}
 
       {showInvestmentUpdate && (
         <InvestmentUpdate

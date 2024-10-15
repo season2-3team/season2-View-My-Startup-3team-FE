@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { createInvestment } from '../../api/InvestmentService';
 import useValidate from '../../hooks/useValidate';
 import Modal from '../Common/Modal';
-import InvestmentComplete from '../Investment/InvestmentComplete';
+import InvestLink from './InvestLink.js';
 
 export default function InvestModal({ onClose, startup }) {
   const selectedStartup = startup[0]; // 배열의 첫 번째 요소를 선택
@@ -237,7 +237,12 @@ export default function InvestModal({ onClose, startup }) {
           {error && <div className={styles.error}>{error}</div>}
         </form>
       </Modal>
-      {isComplete && <InvestmentComplete onClose={handleCloseCompleteModal} />}
+      {isComplete && (
+        <InvestLink
+          onClose={handleCloseCompleteModal}
+          startup={selectedStartup}
+        />
+      )}
     </>
   );
 }

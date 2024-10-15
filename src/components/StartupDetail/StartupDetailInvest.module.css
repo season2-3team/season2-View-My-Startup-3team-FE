@@ -37,7 +37,7 @@
   background-color: var(--primary-orange);
 }
 
-.content> :nth-child(2) h1 {
+.content > :nth-child(2) h1 {
   padding: 1.6rem 0;
   border-top: 0.1rem solid var(--secondary-black-100);
 
@@ -60,6 +60,7 @@
   overflow-x: auto;
   border-radius: 0.4rem;
   padding-bottom: 1.2rem;
+  overflow: visible;
 }
 
 .table tr:hover {
@@ -120,7 +121,6 @@
 
 /***** Tablet *****/
 @media (max-width: 1199px) and (min-width: 744px) {
-
   /* 전체 스크롤바 */
   .wrapper::-webkit-scrollbar {
     width: 100%;
@@ -159,7 +159,7 @@
     white-space: nowrap;
   }
 
-  .content> :nth-child(2) h1 {
+  .content > :nth-child(2) h1 {
     font-size: 1.6rem;
     line-height: 1.909rem;
   }

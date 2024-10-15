@@ -128,39 +128,35 @@
   }
 
   /* 열 너비 설정 */
-  .table th:nth-child(1),
-  .table td:nth-child(1) {
-    width: 6.8rem; /* 순위 */
-  }
 
   .table th:nth-child(2),
   .table td:nth-child(2) {
-    width: 15.3rem; /* 기업명 */
+    width: 15rem; /* 기업명 */
   }
 
   .table th:nth-child(3),
   .table td:nth-child(3) {
-    width: 16rem; /* 기업소개 */
+    width: 18rem; /* 기업소개 */
   }
 
   .table th:nth-child(4),
   .table td:nth-child(4) {
-    width: 9.65rem; /* 카테고리 */
+    width: 9.15rem; /* 카테고리 */
   }
 
   .table th:nth-child(5),
   .table td:nth-child(5) {
-    width: 9.65rem; /* 누적 투자 금액 */
+    width: 9.15rem; /* 누적 투자 금액 */
   }
 
   .table th:nth-child(6),
   .table td:nth-child(6) {
-    width: 9.65rem; /* 열: 매출액 */
+    width: 9.15rem; /* 열: 매출액 */
   }
 
   .table th:nth-child(7),
   .table td:nth-child(7) {
-    width: 9.65rem; /* 고용 인원 */
+    width: 9.15rem; /* 고용 인원 */
   }  
 
   .startupName {
@@ -179,42 +175,38 @@
   .table tbody td:nth-child(1) {
     display: none;
   }
+  
+ /* 열 너비 설정 */
 
-    /* 열 너비 설정 */
-    .table th:nth-child(1),
-    .table td:nth-child(1) {
-      width: 6.8rem; /* 순위 */
-    }
-  
-    .table th:nth-child(2),
-    .table td:nth-child(2) {
-      width: 15.3rem; /* 기업명 */
-    }
-  
-    .table th:nth-child(3),
-    .table td:nth-child(3) {
-      width: 16rem; /* 기업소개 */
-    }
-  
-    .table th:nth-child(4),
-    .table td:nth-child(4) {
-      width: 9.65rem; /* 카테고리 */
-    }
-  
-    .table th:nth-child(5),
-    .table td:nth-child(5) {
-      width: 9.65rem; /* 누적 투자 금액 */
-    }
-  
-    .table th:nth-child(6),
-    .table td:nth-child(6) {
-      width: 9.65rem; /* 열: 매출액 */
-    }
-  
-    .table th:nth-child(7),
-    .table td:nth-child(7) {
-      width: 9.65rem; /* 고용 인원 */
-    }  
+ .table th:nth-child(2),
+ .table td:nth-child(2) {
+   width: 15rem; /* 기업명 */
+  }
+
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    width: 18rem; /* 기업소개 */
+  }
+
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    width: 9.15rem; /* 카테고리 */
+  }
+
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    width: 9.15rem; /* 누적 투자 금액 */
+  }
+
+  .table th:nth-child(6),
+  .table td:nth-child(6) {
+    width: 9.15rem; /* 열: 매출액 */
+  }
+
+  .table th:nth-child(7),
+  .table td:nth-child(7) {
+    width: 9.15rem; /* 고용 인원 */
+  }  
   
   .startupName {
     display: inline-block;

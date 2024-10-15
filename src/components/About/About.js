@@ -45,7 +45,7 @@ export default function About() {
       </section>
 
       <section>
-        <h2>4. 우리 프로젝트의 특징 및 장점</h2>
+        <h2>4. 프로젝트의 특징 및 장점</h2>
         <ol>
           <li>
             <strong>트랜잭션 처리를 통한 데이터 무결성 유지</strong>
@@ -59,9 +59,9 @@ export default function About() {
           <li>
             <strong>세션 기반의 기업 비교 정보 유지</strong>
             <p>
-              <sapn>
+              <span>
               브라우저를 닫기 전까지 사용자의 기업 비교 정보를 세션을 통해 지속적으로 유지합니다.
-              </sapn>
+              </span>
             </p>
           </li>
           <li>

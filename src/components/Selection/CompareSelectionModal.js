@@ -96,6 +96,12 @@ export default function CompareSelectionModal({
 
   const inputPadding = searchText ? '1.2rem' : '1.2rem 1.2rem 1.2rem 3.7rem';
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   const StartupList = ({
     title,
     startups,
@@ -185,7 +191,7 @@ export default function CompareSelectionModal({
   );
 
   return (
-    <div className={styles.overlay}>
+    <div className={styles.overlay} onClick={handleOverlayClick}>
       <form className={styles.form}>
         <div className={styles.header}>
           <h2>비교할 기업 선택하기</h2>

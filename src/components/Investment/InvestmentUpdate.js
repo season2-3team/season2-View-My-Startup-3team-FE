@@ -24,14 +24,9 @@ export default function InvestmentUpdate({
       checkPassword: ''
     });
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkPasswordVisible, setCheckPasswordVisible] = useState(false);
   const [error, setError] = useState('');
   const [confirm, setConfirm] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
 
   const toggleCheckPasswordVisibility = () => {
     setCheckPasswordVisible(!checkPasswordVisible);
@@ -42,7 +37,6 @@ export default function InvestmentUpdate({
       values.name.trim() !== '' &&
       values.investAmount.trim() !== '' &&
       values.comment.trim() !== '' &&
-      values.password.trim() !== '' &&
       values.checkPassword.trim() !== ''
     );
   };
@@ -160,34 +154,6 @@ export default function InvestmentUpdate({
             />
             {errors.comment && (
               <div className={styles.error}>{errors.comment}</div>
-            )}
-          </div>
-
-          {/* 비밀번호 */}
-          <div className={styles.group}>
-            <label htmlFor="password">비밀번호</label>
-            <div className={styles.password}>
-              <input
-                type={isPasswordVisible ? 'text' : 'password'}
-                id="password"
-                placeholder="비밀번호를 입력해 주세요"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                style={{
-                  border: errors.password
-                    ? '0.1rem solid var(--error-color)'
-                    : '0.1rem solid var(--secondary-gray-200)'
-                }}
-              />
-              <img
-                src={isPasswordVisible ? visibilityOff : visibilityOn}
-                alt={isPasswordVisible ? '비밀번호 표시' : '비밀번호 숨기기'}
-                onClick={togglePasswordVisibility}
-              />
-            </div>
-            {errors.password && (
-              <div className={styles.error}>{errors.password}</div>
             )}
           </div>
 

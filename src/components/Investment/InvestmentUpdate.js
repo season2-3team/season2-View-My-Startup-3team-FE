@@ -1,7 +1,7 @@
 import styles from './InvestmentCreate.module.css';
 import X from '../../assets/ic_x.svg';
-import visibilityOn from '../../assets/btn_visibility_on.svg';
-import visibilityOff from '../../assets/btn_visibility_off.svg';
+import visibilityOff from '../../assets/btn_visibility_on.svg';
+import visibilityOn from '../../assets/btn_visibility_off.svg';
 import { useState } from 'react';
 import { patchInvestment } from '../../api/InvestmentService';
 import useValidate from '../../hooks/useValidate';

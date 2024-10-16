@@ -536,7 +536,7 @@ export default function MySelection() {
                       </span>
                     </td>
                     <td className={styles.description}>{result.description}</td>
-                    <td>{result.category}</td>
+                    <td>{result.categoryName}</td>
                     <td style={{ textAlign: 'center' }}>
                       {formatAmount(result.simInvest)} 원
                     </td>

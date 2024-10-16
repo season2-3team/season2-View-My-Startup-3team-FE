@@ -46,7 +46,7 @@
 .searchImg {
   position: absolute;
   left: 3.2rem;
-  bottom: 45rem;
+  bottom: 46rem;
 }
 
 .search input {
@@ -212,6 +212,9 @@
   }
   .searchImg {
     right: 16rem;
-    top: 8rem;
+    top: 8.5rem;
+  }
+  .searchImgBlock {
+    top: 8.5rem;
   }
 }

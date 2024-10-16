@@ -60,15 +60,18 @@
   min-width: 80rem;
   border-radius: 0.4rem;
 
-  overflow: visible;
   position: relative;
+}
+
+.tableContainer {
+  padding-bottom: 7rem;
 }
 
 .wrapper {
   overflow-x: auto;
+  overflow-y: visible;
   border-radius: 0.4rem;
-  padding-bottom: 1.2rem;
-  overflow: visible;
+  position: relative;
 }
 
 .table tr:hover {
@@ -147,6 +150,11 @@
     border: 0.3rem solid var(--secondary-black-300);
     border-radius: 0.8rem;
   }
+
+  .table thead th:nth-child(1),
+  .table tbody td:nth-child(1) {
+    display: table-cell;
+  }
 }
 
 /***** Mobile *****/
@@ -193,5 +201,10 @@
     background: var(--secondary-black-400);
     border: 0.3rem solid var(--secondary-black-300);
     border-radius: 0.8rem;
+  }
+
+  .table thead th:nth-child(1),
+  .table tbody td:nth-child(1) {
+    display: table-cell;
   }
 }

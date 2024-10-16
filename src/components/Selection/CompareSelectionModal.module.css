@@ -44,9 +44,9 @@
 }
 
 .searchImg {
-  position: absolute;
-  left: 3.2rem;
-  bottom: 46rem;
+  position: relative;
+  top: 3.3rem;
+  right: 17.8rem;
 }
 
 .search input {
@@ -210,10 +210,7 @@
     padding: 2rem;
     font-size: 1rem;
   }
-  .searchImg {
-    right: 16rem;
-    top: 8.5rem;
-  }
+
   .searchImgBlock {
     top: 8.5rem;
   }

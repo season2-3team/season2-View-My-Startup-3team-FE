@@ -45,7 +45,7 @@
 .searchImg {
   position: absolute;
   left: 3.5rem;
-  bottom: 36.5rem;
+  bottom: 37rem;
 }
 
 .search input {
@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   position: absolute;
-  top: 8.5rem;
+  top: 9rem;
   right: 3rem;
   gap: 1rem;
   cursor: pointer;

@@ -9,12 +9,14 @@
   border-radius: 1rem;
 
   background-color: var(--secondary-black-400);
-  z-index: 1;
+  z-index: 10;
+  overflow: visible;
 }
 
 .menu li {
   padding: 1rem;
   cursor: pointer;
+  margin: 0;
 }
 
 .menu li:not(:last-child) {

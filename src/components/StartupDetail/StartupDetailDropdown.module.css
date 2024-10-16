@@ -1,0 +1,24 @@
+.menu {
+  position: absolute;
+
+  right: 2.5rem;
+
+  width: 14.4rem;
+
+  border: 0.1rem solid var(--secondary-gray-200);
+  border-radius: 1rem;
+
+  background-color: var(--secondary-black-400);
+  z-index: 10;
+  overflow: visible;
+}
+
+.menu li {
+  padding: 1rem;
+  cursor: pointer;
+  margin: 0;
+}
+
+.menu li:not(:last-child) {
+  border-bottom: 0.1rem solid var(--secondary-gray-200);
+}

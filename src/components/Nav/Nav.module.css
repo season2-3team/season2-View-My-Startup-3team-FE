@@ -1,0 +1,61 @@
+.nav {
+    border-bottom: 0.1rem solid var(--secondary-black-100);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+
+    max-width: 120rem;
+    min-width: 36.5rem; /* 최소 너비 설정 추가 */
+
+    margin: auto;
+    padding: 0 1.6rem;
+
+    gap: 4rem;
+}
+
+.logo {
+    width: 11.2rem;
+    height: 4rem;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+.menu a {
+    color: var(--secondary-gray-200);
+    text-decoration: none;
+}
+
+.menu li {
+    text-decoration: none;
+    padding: 2.1rem 1.7rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.8rem;
+    text-align: center;
+}
+
+@media (max-width: 743px) {
+    .logo {
+        width: 6.4rem;
+        height:2.3rem;
+    }
+
+    .menu {
+        gap: 0.2rem;
+    }
+    .menu li {
+        text-decoration: none;
+        padding: 1.9rem 0.8rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+        line-height: 1.5rem;
+        text-align: center;
+    }    
+}

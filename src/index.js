@@ -9,7 +9,6 @@ import Main from './Main';
 const sessionId = sessionStorage.getItem('sessionId') || uuidv4();
 
 sessionStorage.setItem('sessionId', sessionId);
-console.log('Your session ID:', sessionId);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
